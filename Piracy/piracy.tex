@@ -1,0 +1,792 @@
+% =====================================================================
+%  PousadaGuide #01 -- Piracy Guide
+%  Como navegar, baixar e executar arquivos com segurança máxima.
+%  Inspirado na Megathread (r/Piracy & FMHY) para a Comunidade Pousada.
+%  Compile com:  latexmk -xelatex piracy.tex   (ou: tectonic piracy.tex)
+% =====================================================================
+\documentclass{pousadaguide}
+% \documentclass[print]{pousadaguide}   % versão para impressão (fundo branco)
+
+% ---- Identidade visual deste guia -----------------------------------
+\guiamascote{piracy-capa}
+\guiaavatar{piracy-avatar}
+\guiagoat{goat}
+\guiamascotepos{.62\paperheight}{-48mm}{4mm}
+
+% ---- Metadados do guia ----------------------------------------------
+\guianumero{01}
+\guiatitulo{Piracy Guide}
+\guiasubtitulo{Como navegar sem armadilhas, baixar com segurança e dominar as melhores ferramentas e Megathreads.}
+\guiaslug{piracy-guide}
+\guiacategoria{segurança \& opsec}
+\guiaversao{v1.0}
+\guiaautor{Bakalhau}
+\guiadata{novembro de 2026}
+\guialicenca{GNU AGPLv3}
+\guialinks{%
+  \textcolor{pgGlow}{\faDiscord}\ \ discord.gg/pousada\\[1mm]
+  \textcolor{pgGlow}{\faGithub}\ \ github.com/pousada\\[1mm]
+  \textcolor{pgGlow}{\faRss}\ \ pousada.substack.com}
+
+\begin{document}
+
+\capa
+\tableofcontents
+
+% =====================================================================
+%  CAPÍTULO 01 -- INTRODUÇÃO, REGRAS DE OURO E LEGENDA
+% =====================================================================
+\comentario{antes de içar as velas, conheça o mapa e os sinais}
+\chapter{Antes de Zarpar}
+
+\begin{missao}[fundamentos e leitura do guia]
+\begin{itemize}
+  \item Compreender a filosofia de segurança da Comunidade Pousada: higiene digital acima de ``antivírus milagrosos''.
+  \item Entender a legenda visual, os selos de recomendação \textbf{GOAT} da Pousadinha e os indicadores de risco.
+  \item Memorizar as 5 Regras de Ouro que evitam 99\% das infecções por malware ao baixar arquivos na internet.
+\end{itemize}
+\end{missao}
+
+Navegar pelos sete mares da internet moderna exige muito mais do que clicar no primeiro botão verde escrito \emph{``DOWNLOAD NOW''}. O ecossistema de downloads gratuitos é repleto de armadilhas criadas para explorar usuários desatentos: anúncios maliciosos (\emph{malvertising}), clones de sites famosos no topo do Google (\emph{SEO poisoning}), encurtadores abusivos e instaladores adulterados com \emph{infostealers} (malwares que roubam cookies de sessão e senhas salvas no navegador).
+
+A boa notícia é que \textbf{baixar arquivos com segurança não depende de sorte}. Inspirado nas lendárias \emph{Megathreads} comunitárias (\texttt{r/Piracy}, \texttt{FMHY} e \texttt{Pirataria.link}), este primeiro \textbf{PousadaGuide} reúne o arsenal de ferramentas auditadas, configurações de blindagem e fontes verificadas para que você navegue com tranquilidade, velocidade e privacidade.
+
+\begin{pousadinha}[A Capitã Pousadinha avisa]
+Bem-vindo a bordo do \textbf{PousadaGuide \#01}! Se você só puder levar uma única lição deste guia inteiro, leve esta: \textbf{nunca use o Google ou o YouTube para procurar ``como baixar X grátis''}. É assim que quase todo mundo pega vírus. Configure seu navegador como ensinamos no Capítulo 02 e use exclusivamente os índices comunitários do Capítulo 07!
+\end{pousadinha}
+
+\section{Legenda Visual e Sistema de Classificação}
+
+Para tornar a consulta rápida e intuitiva, todas as ferramentas, serviços e links citados neste guia foram avaliados pela comunidade e marcados com selos padronizados:
+
+\begin{legenda}[sistema de classificação pousada]
+  \noindent
+  \begin{minipage}[c]{0.16\linewidth}
+    \centering
+    \includegraphics[width=20mm]{goat}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[c]{0.80\linewidth}
+    {\pgmono\bfseries\fontsize{10.5}{13}\selectfont\color{pgTeal}%
+      SELO POUSADINHA “GOAT” (\emph{Greatest Of All Time})}\\[1.5mm]
+    Sempre que você vir o ícone da Pousadinha dando joinha (\goat) ao lado de um nome ou o selo dourado \pgtag[pgBrass]{GOAT // RECOMENDADO} no topo de uma ficha, significa que aquela ferramenta é \textbf{a melhor escolha absoluta da categoria}: segura, amplamente testada pela comunidade, livre de anúncios abusivos e referência técnica.
+  \end{minipage}
+
+  \divisor
+
+  \begin{tabela}{>{\bfseries}l X}
+  \cab{Símbolo / Etiqueta} & \cab{Significado no Guia} \\
+  \goat\ \ \pgtag[pgBrass]{goat} & \textbf{Escolha da Pousada (GOAT):} A recomendação número 1 da categoria. Se estiver em dúvida entre várias opções, escolha esta. \\
+  \pgtag{open source} & \textbf{Código Aberto:} Código-fonte público e auditável pela comunidade global. Risco drasticamente menor de backdoors ou spyware. \\
+  \pgtag{grátis} / \pgtag[pgAmber]{freemium} & \textbf{Modelo de Custo:} Ferramenta 100\% gratuita ou com plano gratuito funcional e recursos extras pagos. \\
+  \pgtag[pgBrass]{pago} & \textbf{Serviço Pago:} Exige assinatura (ex.: serviços de Debrid ou VPNs focadas em anonimato), mas entrega valor real pelo custo. \\
+  \pgtag[pgAlert]{evite} & \textbf{Proibido / Lista Negra:} Software com histórico de spyware, adware, roubo de dados, mineradores ocultos ou falhas graves. \textbf{Não instale.} \\
+  \ok\ \ /\ \ \meio\ \ /\ \ \nope & \textbf{Indicadores de Tabela:} Representam respectivamente \textbf{Sim/Ideal} (\ok), \textbf{Parcial/Com Ressalvas} (\meio) e \textbf{Não/Ruim} (\nope). \\
+  \estrelas{5} & \textbf{Avaliação Técnica:} Nota de 1 a 5 estrelas considerando segurança, leveza, privacidade e facilidade de uso. \\
+  \end{tabela}
+\end{legenda}
+
+\section{As 5 Regras de Ouro da Sobrevivência}
+
+Antes mesmo de instalar qualquer programa, grave estes cinco princípios operacionais:
+
+\begin{enumerate}
+  \item \textbf{Adblock não é opcional, é questão de segurança:} Mais de 90\% das infecções em sites de download acontecem porque o usuário clicou em um botão \emph{``Download''} falso injetado por uma rede de anúncios maliciosos. Navegar sem o \textbf{uBlock Origin} ativo é andar descalço em terreno minado.
+  \item \textbf{Jamais pesquise downloads diretamente no Google, Bing ou YouTube:} Golpistas compram anúncios patrocinados e manipulam resultados de busca para colocar clones de sites famosos (como falsos sites da FitGirl, DODI, qBittorrent ou 7-Zip) no topo. Vídeos no YouTube com links na descrição e arquivos com senha são quase 100\% \emph{infostealers}.
+  \item \textbf{Inspecione a extensão real do arquivo:} Um filme nunca será \cmd{Filme_Dublado_1080p.mkv.exe} ou \cmd{.scr}. Uma música nunca será \cmd{.bat} ou \cmd{.vbs}. Se você baixou um vídeo ou música e veio um executável ou atalho (\cmd{.lnk}), apague imediatamente.
+  \item \textbf{Desconfie de arquivos compactados com senha de fontes desconhecidas:} Malwares costumam vir dentro de arquivos \cmd{.rar} ou \cmd{.zip} protegidos por senha (ex.: \texttt{senha: 1234}) porque a criptografia impede que o Windows Defender e o VirusTotal leiam o conteúdo antes da extração. Só extraia arquivos com senha se vierem de um site verificado da Megathread (onde a senha é padrão daquele grupo específico).
+  \item \textbf{O Antivírus não é uma zona de conforto:} Nenhum antivírus detecta 100\% das ameaças novas. Se a fonte não está nas Megathreads confiáveis e o arquivo exige privilégios de administrador sem motivo, \textbf{não execute} — ou isole-o em uma Sandbox.
+\end{enumerate}
+
+\begin{tldr}
+\textbf{Resumo de Sobrevivência:} Nunca baixe nada buscando no Google ou YouTube. Use um navegador com \textbf{uBlock Origin} ativo, configure \textbf{DNS over HTTPS (DoH)}, verifique se a extensão final do arquivo não é um \cmd{.exe} ou \cmd{.lnk} disfarçado e retire seus links exclusivamente das \textbf{Megathreads} do Capítulo 07.
+\end{tldr}
+
+% =====================================================================
+%  CAPÍTULO 02 -- NAVEGADORES, BLOQUEIO E DNS
+% =====================================================================
+\comentario{sua primeira linha de defesa contra rastreadores e links falsos}
+\chapter{Navegadores, Bloqueio e DNS}
+
+\begin{missao}[blindando a navegação]
+\begin{itemize}
+  \item Escolher um navegador que respeite sua privacidade e mantenha suporte total ao \textbf{uBlock Origin}.
+  \item Fugir de navegadores comerciais recheados de telemetria e spyware (como Opera GX e Chrome).
+  \item Configurar \textbf{DNS over HTTPS (DoH)} para impedir bloqueios de operadoras e filtrar domínios maliciosos.
+  \item Automatizar o pulo de encurtadores de links irritantes com \textbf{Violentmonkey} e Userscripts.
+\end{itemize}
+\end{missao}
+
+O navegador é a janela por onde todo arquivo entra no seu computador. Nos últimos anos, a Google impôs o padrão \textbf{Manifest V3 (MV3)} no ecossistema Chromium, uma mudança arquitetural que limita severamente o poder de bloqueadores de conteúdo como o \textbf{uBlock Origin}. Por isso, a escolha do seu navegador hoje define diretamente o seu nível de segurança.
+
+\section{Navegadores Recomendados (Desktop)}
+
+\begin{ferramenta}[goat,logo=zenbrowser]{Zen Browser}{https://zen-browser.app}{open source, firefox, win, linux, mac}
+Baseado no motor Gecko (Firefox), o \textbf{Zen Browser} combina privacidade rigorosa com o design mais moderno da atualidade: abas verticais organizadas em \emph{Workspaces}, divisão de tela (\emph{Split View}), zero telemetria da Google e compatibilidade total com o \textbf{uBlock Origin} completo. É rápido, elegante e construído pela comunidade. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=librewolf]{LibreWolf}{https://librewolf.net}{open source, hardened, win, linux, mac}
+Fork independente do Firefox focado em \textbf{segurança e privacidade de fábrica (\emph{out-of-the-box})}. Remove toda a telemetria da Mozilla, o Pocket, os atalhos patrocinados e já vem configurado com proteção contra \emph{fingerprinting}, exclusão automática de cookies ao fechar e \textbf{uBlock Origin pré-instalado}. Ideal para quem quer proteção máxima sem precisar mexer em dezenas de opções no \cmd{about:config}. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=mullvad]{Mullvad Browser}{https://mullvad.net/pt/browser}{open source, anti-fingerprinting, win, linux, mac}
+Fruto de uma colaboração histórica entre os engenheiros do \textbf{Tor Project} e a \textbf{Mullvad VPN}. Ele traz todas as proteções avançadas anti-rastreamento do Tor Browser (fazendo a impressão digital do seu navegador parecer idêntica à de milhares de outros usuários), mas opera na internet comum em alta velocidade, sem passar pela rede Tor. \estrelas{5}
+\end{ferramenta}
+
+\subsection{Outras Excelentes Opções no Desktop}
+
+Se você precisa de recursos específicos ou de um navegador secundário baseado em Chromium para algum site incompatível com o Firefox, considere estas opções:
+
+\begin{ferramenta}[recomendado,logo=helium]{Helium}{https://helium.computer}{open source, chromium, win, linux, mac}
+Fork minimalista baseado no \emph{Ungoogled Chromium} projetado para fazer \textbf{zero conexões automáticas} ao iniciar. Não possui contas na nuvem, carteiras cripto ou assistentes de IA indesejados. Seu grande diferencial: já traz o \textbf{uBlock Origin integrado de fábrica} e baixa extensões da Chrome Web Store através de um proxy anônimo para que a Google não rastreie seu IP. \estrelas{4}
+\end{ferramenta}
+
+\begin{ferramenta}[logo=ungoogled-chromium]{Ungoogled Chromium}{https://ungoogled-software.github.io}{open source, chromium, win, linux, mac}
+O navegador Chromium em sua forma mais pura: todos os binários proprietários, serviços em segundo plano e chamadas de telemetria para servidores da Google são arrancados do código-fonte. Exige uma pequena configuração inicial (como instalar a extensão \emph{chromium-web-store}) para gerenciar complementos com facilidade. \estrelas{4}
+\end{ferramenta}
+
+\begin{ferramenta}[logo=firefox]{Firefox}{https://www.mozilla.org/pt-BR/firefox/}{open source, gecko, win, linux, mac}
+O navegador clássico que mantém viva a web aberta fora do monopólio da Google. Continua sendo uma excelente base, mas exige que você acesse as configurações após instalar para desativar a coleta de telemetria, recomendações patrocinadas e integrações comerciais (ou aplique o perfil \textbf{Betterfox} / \textbf{Arkenfox}). \estrelas{4}
+\end{ferramenta}
+
+\begin{ferramenta}[logo=brave]{Brave}{https://brave.com}{open source, chromium, win, linux, mac, android}
+Possui um excelente bloqueador nativo escrito em Rust (\emph{Brave Shields}) que não é afetado pelas limitações do Manifest V3. Contudo, perde pontos por vir de fábrica com \textbf{bloatware comercial} (carteira de criptomoedas, Brave Rewards, VPN paga embutida e Leo AI), exigindo alguns minutos para desativar tudo nas configurações. \estrelas{4}
+\end{ferramenta}
+
+\section{Navegador Recomendado para Android}
+
+No celular, a situação dos navegadores populares é ainda pior: o Chrome para Android sequer suporta extensões (impedindo o uso do uBlock Origin). A solução definitiva para Android é:
+
+\begin{ferramenta}[goat,logo=ironfox]{IronFox}{https://gitlab.com/ironfox-oss/IronFox}{open source, android, gecko, hardened}
+Sucessor espiritual do lendário navegador \emph{Mull} no Android. O \textbf{IronFox} é um fork do Firefox para Android fortemente endurecido com as diretrizes do projeto \emph{DivestOS/Arkenfox}: remove rastreadores proprietários de telemetria, ativa isolamento de sites e oferece \textbf{suporte completo a extensões no celular} — permitindo usar \textbf{uBlock Origin} e \textbf{Violentmonkey} na palma da mão. Pode ser instalado e atualizado facilmente via \textbf{F-Droid} ou \textbf{Obtainium}. \estrelas{5}
+\end{ferramenta}
+
+\section{Navegadores para NÃO USAR}
+
+\begin{perigo}[Fuja de navegadores com spyware e falso marketing]
+Os navegadores abaixo devem ser evitados em qualquer máquina onde você preze por privacidade, desempenho e segurança:
+\begin{itemize}
+  \item \textbf{Opera e Opera GX} \pgtag[pgAlert]{evite}: Apesar do marketing agressivo patrocinando canais de jogos e da estética ``gamer'' cheia de luzes neon, o Opera GX é um pesadelo de privacidade. Controlado pelo consórcio Kunlun Tech, o navegador coleta telemetria invasiva, injeta links patrocinados, consome mais recursos com seus efeitos visuais do que os próprios jogos e promove uma \textbf{``VPN grátis'' que não passa de um proxy HTTP} que registra seus hábitos de navegação.
+  \item \textbf{Google Chrome / Chromium Padrão (sem patches)} \pgtag[pgAlert]{evite}: Transformou-se em uma ferramenta de vigilância publicitária da Google. Com a remoção do suporte ao Manifest V2, o Chrome sabota deliberadamente o funcionamento pleno do \textbf{uBlock Origin}, deixando você mais exposto a anúncios maliciosos e rastreamento cruzado.
+  \item \textbf{Microsoft Edge / Yandex Browser} \pgtag[pgAlert]{evite}: Extremamente carregados de telemetria em nível de sistema operacional, compras forçadas, barras laterais de IA invasivas e envio constante de URLs visitadas para servidores corporativos.
+\end{itemize}
+\end{perigo}
+
+\subsection{Comparativo Geral de Navegadores}
+
+\begin{tabela}{>{\bfseries}l l c c c c}
+\cab{Navegador} & \cab{Motor} & \cab{Zero Telemetria} & \cab{uBlock Completo} & \cab{Sem Bloat} & \cab{Veredito} \\
+Zen Browser \goat     & Gecko    & \ok   & \ok   & \ok   & \pgtag[pgBrass]{goat} \\
+LibreWolf \goat       & Gecko    & \ok   & \ok   & \ok   & \pgtag[pgBrass]{goat} \\
+Mullvad Browser \goat & Gecko    & \ok   & \ok   & \ok   & \pgtag[pgBrass]{goat} \\
+IronFox (Android) \goat & Gecko  & \ok   & \ok   & \ok   & \pgtag[pgBrass]{goat} \\
+Helium                & Blink    & \ok   & \ok   & \ok   & \ok \\
+Ungoogled Chromium    & Blink    & \ok   & \meio & \ok   & \ok \\
+Firefox (Padrão)      & Gecko    & \meio & \ok   & \meio & \ok \\
+Brave                 & Blink    & \meio & \ok   & \nope & \meio \\
+Chrome / Chromium     & Blink    & \nope & \nope & \nope & \pgtag[pgAlert]{evite} \\
+Opera / Opera GX      & Blink    & \nope & \meio & \nope & \pgtag[pgAlert]{evite} \\
+\end{tabela}
+
+\section{Bloqueio de Conteúdo e DNS over HTTPS (DoH)}
+
+\subsection{A Extensão Obrigatória: uBlock Origin}
+
+\begin{ferramenta}[goat,logo=ublock-origin]{uBlock Origin}{https://github.com/gorhill/uBlock}{open source, adblock, seguranca, obrigatorio}
+Criado por Raymond Hill (\emph{gorhill}), o \textbf{uBlock Origin (uBO)} não é um simples bloqueador de propagandas: é um filtrador de conteúdo de banda larga leve em CPU e memória. Ele bloqueia domínios de malware conhecidos, páginas de phishing, scripts de mineração e \emph{pop-unders} invisíveis em sites de torrent e streaming. \estrelas{5}
+\end{ferramenta}
+
+\begin{dica}[Configuração de Elite no uBlock Origin]
+Após instalar o \textbf{uBlock Origin}, clique no ícone da extensão $\rightarrow$ \textbf{Painel de Controle (ícone de engrenagens)} $\rightarrow$ aba \textbf{Listas de filtros} e marque todas as listas das seções \emph{``Proteção contra malwares''}, \emph{``Privacidade''} e \emph{``incômodos''} (como \texttt{AdGuard URL Tracking Protection} e \texttt{AdGuard/uBO -- Cookie Notices}). Clique em \textbf{Aplicar alterações}.
+\end{dica}
+
+\subsection{DNS over HTTPS (DoH): Criptografando e Filtrando a Rede}
+
+Quando você digita um endereço como \texttt{nyaa.si} ou \texttt{fitgirl-repacks.site}, seu computador pergunta a um servidor \textbf{DNS} qual é o endereço IP daquele site. Por padrão, seu computador usa o DNS da sua operadora de internet (Claro, Vivo, Oi, TIM). Isso causa dois problemas:
+\begin{enumerate}
+  \item A operadora vê e registra em texto puro todos os domínios que você acessa;
+  \item No Brasil, bloqueios judiciais ou de operadoras contra sites de torrent e streaming são feitos quase sempre via \textbf{bloqueio simples de DNS} na operadora.
+\end{enumerate}
+
+Ao ativar o \textbf{DoH (DNS over HTTPS)} no navegador ou no sistema operacional, suas consultas DNS passam a trafegar criptografadas via HTTPS, contornando bloqueios de ISP e impedindo bisbilhoteiros na rede.
+
+\begin{ferramenta}[goat,logo=cloudflare]{Cloudflare DNS / cloudflared (1.1.1.1)}{https://one.one.one.one}{doh, baixa latencia, gratis, open source}
+O resolvedor DNS público mais rápido do mundo, com servidores espalhados por diversas capitais brasileiras (garantindo ping mínimo de 2 a 10 ms). Não vende dados a anunciantes e oferece o cliente de linha de comando open source \textbf{cloudflared} para quem deseja rodar um túnel DoH local para todo o sistema operacional. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=adguard,logo2=mullvad]{AdGuard DNS / Mullvad DNS}{https://adguard-dns.io}{doh, adblock dns, anti-tracker, gratis}
+Resolvedores DoH auditados que já aplicam \textbf{listas de bloqueio de anúncios, rastreadores e domínios maliciosos diretamente na resolução de DNS}, antes mesmo da conexão chegar ao navegador. Excelente camada extra de defesa e ideal para bloquear anúncios também no celular (via recurso de \emph{DNS Privado} do Android). \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=quad9]{Quad9 (9.9.9.9)}{https://www.quad9.net}{doh, seguranca, suica, sem fins lucrativos}
+Operado por uma fundação suíça sem fins lucrativos (apoiada pela Global Cyber Alliance), o \textbf{Quad9} cruza cada domínio consultado com dezenas de feeds de inteligência de ameaças em tempo real, bloqueando automaticamente sites de phishing, C2 de malwares e spyware sem registrar o endereço IP do usuário. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[logo=ublockdns]{uBlockDNS}{https://ublockdns.com}{doh, adblock dns, listas de filtro}
+Serviço de DNS over HTTPS focado em bloqueio de anúncios e rastreadores em nível de rede utilizando listas de filtragem populares. Pode ser configurado via endpoint DoH diretamente no navegador sem necessidade de instalar softwares extras. \estrelas{3}
+\end{ferramenta}
+
+\begin{nota}[Nota Técnica e Crítica sobre o uBlockDNS]
+Embora o nome lembre a extensão famosa, vale uma observação importante: \textbf{o serviço uBlockDNS não possui afiliação oficial com Raymond Hill (gorhill)}, criador do uBlock Origin, e seu aplicativo cliente de desktop recebeu críticas técnicas por abrir conexões sem criptografia (\emph{fail-open}) em caso de falha. Por isso ele não recebe o selo GOAT — se quiser usá-lo, prefira apenas colar o endereço DoH no navegador, ou opte pelos endpoints auditados da \textbf{Mullvad} e da \textbf{AdGuard}!
+\end{nota}
+
+\begin{tabela}{>{\bfseries}l l X}
+\cab{Provedor DoH} & \cab{Endpoint HTTPS (para colar no navegador)} & \cab{Foco Principal} \\
+Cloudflare \goat     & {\pgmono\scriptsize https://cloudflare-dns.com/dns-query} & Velocidade máxima e desbloqueio de sites \\
+Mullvad Adblock      & {\pgmono\scriptsize https://adblock.dns.mullvad.net/dns-query} & Bloqueio de anúncios/trackers sem logs \\
+AdGuard DNS          & {\pgmono\scriptsize https://dns.adguard-dns.com/dns-query} & Bloqueio de anúncios (Desktop e Android) \\
+Quad9                & {\pgmono\scriptsize https://dns.quad9.net/dns-query} & Bloqueio de domínios de malware e phishing \\
+uBlockDNS            & {\pgmono\scriptsize https://my.ublockdns.com/dns-query} & Bloqueio via DNS (não-oficial do projeto uBO) \\
+\end{tabela}
+
+\section{Userscripts: Destruindo Encurtadores de Links}
+
+Mesmo em bons sites de download direto, é comum esbarrar em encurtadores de links (como \emph{Linkvertise}, \emph{Ouo.io}, \emph{Shorte.st} ou páginas de espera de 30 segundos) que tentam abrir abas falsas. Com um gerenciador de \textbf{Userscripts}, seu navegador pula essas etapas automaticamente em milissegundos!
+
+\begin{ferramenta}[goat,logo=violentmonkey]{Violentmonkey}{https://violentmonkey.github.io}{open source, userscripts, firefox, chromium}
+O melhor gerenciador de Userscripts da atualidade. Ao contrário do \emph{Tampermonkey} (que fechou seu código-fonte nas versões recentes e passou a incluir telemetria), o \textbf{Violentmonkey} é 100\% open source, ultraleve, respeita sua privacidade e possui sincronização e editor de scripts embutido. \estrelas{5}
+\end{ferramenta}
+
+\subsection{Scripts Essenciais para Instalar no Violentmonkey}
+
+Depois de adicionar o \textbf{Violentmonkey} ao navegador, instale estes scripts pelos repositórios oficiais:
+
+\begin{enumerate}
+  \item \textbf{Bypass All Shortlinks Debloated} \goat — \pglink[codeberg.org/gongchandang49]{https://codeberg.org/gongchandang49/bypass-all-shortlinks-debloated}\\
+  O script mais importante para quem baixa arquivos na web. Versão limpa e auditada (\emph{debloated}) do antigo FastForward: pula automaticamente centenas de encurtadores de links, páginas intermediárias e contadores de espera.
+  \item \textbf{AdGuard Popup Blocker} — \pglink{https://github.com/AdguardTeam/PopupBlocker}\\
+  Script oficial da AdGuard que neutraliza \emph{pop-unders} e cliques sequestrados (\emph{clickjacking}) em sites de streaming e downloads.
+  \item \textbf{Anti-Adblock Killer / uBO Annoyances} — Complementado com scripts auditados do \pglink[GreasyFork]{https://greasyfork.org} para sites que bloqueiam o acesso ao detectar bloqueadores.
+  \item \textbf{Return YouTube Dislike \& SponsorBlock} — \pglink{https://sponsor.ajay.app}\\
+  Essencial para visualizar a barra real de \emph{Dislikes} e pular segmentos patrocinados duvidosos.
+  \item \textbf{Direct Image / Media Unlocker} — Abre mídias diretamente no arquivo original sem overlays.
+\end{enumerate}
+
+\begin{passo}{Instale o Violentmonkey no seu navegador}
+Adicione a extensão \textbf{Violentmonkey} pela loja oficial de complementos do Firefox/Zen/LibreWolf.
+\end{passo}
+
+\begin{passo}{Adicione o Bypass All Shortlinks Debloated}
+Acesse \pglink[o repositório no Codeberg]{https://codeberg.org/gongchandang49/bypass-all-shortlinks-debloated}, clique no arquivo \cmd{.user.js} em \emph{Releases} e confirme a instalação.
+\end{passo}
+
+\begin{passo}{Mantenha apenas scripts de fontes auditadas}
+Só instale scripts hospedados no \textbf{Codeberg}, \textbf{GitHub} ou \textbf{GreasyFork} que possuam código aberto legível (nunca ofuscado).
+\end{passo}
+
+% =====================================================================
+%  CAPÍTULO 03 -- TORRENTS, DEBRID & GERENCIADORES DE DOWNLOAD
+% =====================================================================
+\comentario{como baixar na velocidade máxima da sua fibra sem dores de cabeça}
+\chapter{Torrents, Debrid e Downloads}
+
+\begin{missao}[dominando os protocolos de transferência]
+\begin{itemize}
+  \item Configurar o cliente de torrent definitivo (\textbf{qBittorrent}) e banir clientes cheios de adware (\textbf{µTorrent/BitTorrent}).
+  \item Entender como funcionam os serviços de \textbf{Debrid} (\textbf{TorBox}, \textbf{Real-Debrid}, \textbf{AllDebrid}) e por que eles mudam o jogo.
+  \item Acelerar downloads diretos (DDL) em múltiplas conexões com \textbf{Motrix} e \textbf{JDownloader 2}.
+\end{itemize}
+\end{missao}
+
+Existem duas grandes formas de obter arquivos na internet: via \textbf{P2P (BitTorrent)}, onde você baixa pedaços do arquivo diretamente de outros usuários (\emph{seeders}), e via \textbf{DDL (Direct Download)}, onde o arquivo vem de um servidor central (\emph{file hoster} como Gofile, Pixeldrain, Buzzheavier, Mega ou 1fichier). E, unindo o melhor dos dois mundos, existem os serviços de \textbf{Debrid}.
+
+\section{Clientes de Torrent}
+
+\begin{ferramenta}[goat,logo=qbittorrent]{qBittorrent}{https://www.qbittorrent.org}{open source, torrent, sem anuncios, win, linux, mac}
+A escolha unânime de toda a comunidade mundial de pirataria e privacidade. O \textbf{qBittorrent} é 100\% software livre, não exibe nenhum anúncio, é leve e traz recursos avançados essenciais: \textbf{busca integrada} (que pesquisa em dezenas de trackers ao mesmo tempo sem você abrir o navegador!), leitor de feeds RSS, download sequencial e \textbf{vinculação de interface de rede (\emph{Network Interface Binding})} para garantir que o torrent pare imediatamente se sua VPN cair. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=transmission]{Transmission}{https://transmissionbt.com}{open source, minimalista, linux, mac, win}
+Famoso por ser o cliente padrão na maioria das distribuições Linux e muito popular no macOS. O \textbf{Transmission} foca no minimalismo absoluto: consome pouquíssima memória RAM, tem interfaces nativas em GTK, Qt e Web, e faz exatamente o que precisa sem distrações. \estrelas{4}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=deluge]{Deluge}{https://deluge-torrent.org}{open source, plugins, seedbox, win, linux, mac}
+Construído em uma arquitetura modular onde o motor (\emph{daemon}) é separado da interface gráfica. Isso torna o \textbf{Deluge} perfeito para quem roda um servidor doméstico (NAS / Raspberry Pi) ou \emph{seedbox} e quer controlar os downloads remotamente, além de contar com um rico sistema de plugins em Python. \estrelas{4}
+\end{ferramenta}
+
+\subsection{Clientes de Torrent para NÃO USAR}
+
+\begin{perigo}[Nunca instale µTorrent ou BitTorrent Mainline!]
+\begin{itemize}
+  \item \textbf{µTorrent (uTorrent)} \pgtag[pgAlert]{evite}: No passado distante (versão 2.2.1 de 2010), o µTorrent já foi bom. Hoje, ele é um \textbf{bloatware comercial infestado de anúncios}, ofertas de softwares indesejados (PUPs) no instalador e rastreadores. Em 2015, o µTorrent chegou ao absurdo de instalar silenciosamente o minerador de criptomoedas \emph{EpicScale} na máquina dos usuários sem consentimento claro, consumindo CPU e energia elétrica.
+  \item \textbf{BitTorrent (Cliente Oficial)} \pgtag[pgAlert]{evite}: Pertence à exata mesma empresa do µTorrent (Rainberry Inc.) e é literalmente o mesmo programa com outra cor de ícone e os mesmos anúncios invasivos e telemetria.
+  \item \textbf{BitLord / BitComet / uTorrent Web} \pgtag[pgAlert]{evite}: Fechados, lentos, banidos em diversos trackers privados e cheios de rastreamento.
+\end{itemize}
+\end{perigo}
+
+\begin{dica}[Como vincular o qBittorrent à sua VPN (Kill-Switch infalível)]
+Se você usa VPN para baixar torrents, abra o \textbf{qBittorrent} $\rightarrow$ \kbd{Alt}+\kbd{O} (\textbf{Ferramentas $\rightarrow$ Opções}) $\rightarrow$ aba \textbf{Avançado} $\rightarrow$ em \textbf{Interface de rede}, troque de \emph{``Qualquer interface''} para o adaptador da sua VPN (ex.: \cmd{ProtonVPN}, \cmd{Mullvad} ou \cmd{wg0}). Assim, é matematicamente impossível seu IP real vazar no torrent!
+\end{dica}
+
+\section{Serviços de Debrid: O “Cheat Code” da Pirataria}
+
+Se você já tentou baixar um jogo ou anime antigo via torrent que tinha apenas 1 \emph{seeder} enviando a 30 KB/s, ou tentou baixar um arquivo de 50 GB dividido em 10 partes no \emph{Rapidgator} / \emph{Mega} que exige esperar 3 horas entre cada parte, você precisa conhecer o conceito de \textbf{Debrid}.
+
+\paragraph{Como funciona um Debrid}
+Um serviço de Debrid é uma plataforma paga (geralmente muito barata, custando entre US\$ 3 e US\$ 4 por mês) que atua como um intermediário de altíssima velocidade:
+\begin{enumerate}
+  \item \textbf{Cache Instantâneo de Torrents:} Quando você envia um link Magnet ou arquivo \cmd{.torrent} para o Debrid, os servidores deles baixam o arquivo em conexões de 10 Gbps. Como milhares de usuários usam o serviço, \textbf{95\% dos torrents populares já estão salvos em cache nos servidores deles}. Ou seja: o download para você começa no mesmo segundo, via link HTTPS direto, no limite máximo da sua internet fibra!
+  \item \textbf{Gerador de Links Premium (Multi-Hoster):} Você cola um link restrito do \emph{Mega}, \emph{1fichier}, \emph{Rapidgator}, \emph{Katfile} ou \emph{Nitroflare} no Debrid, e ele converte em um link premium sem limite de velocidade, sem tempo de espera e sem cota diária.
+  \item \textbf{Streaming 4K Instantâneo:} Integrado a aplicativos como \textbf{Stremio} (via addon \emph{Torrentio} ou \emph{Comet}) e \textbf{Hydra Launcher}, um Debrid transforma qualquer torrent em um vídeo ou download instantâneo sem travamentos e sem expor seu IP em redes P2P.
+\end{enumerate}
+
+\begin{ferramenta}[goat,logo=torbox]{TorBox}{https://torbox.app}{debrid, multi-ip, seeding, usenet, pago}
+A recomendação número 1 da Pousada entre os serviços de Debrid atuais. Diferente dos concorrentes antigos, o \textbf{TorBox} \textbf{não bane sua conta se você usar em múltiplos IPs ao mesmo tempo} (você pode usar na TV da sala, no celular no 5G e dividir em casa sem medo!). Além disso, o TorBox faz \emph{seeding} real de volta para a rede BitTorrent (ajudando a manter os torrents vivos), tem interface moderna, API aberta para Hydra Launcher e Stremio, e suporte a Usenet nos planos superiores. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=real-debrid]{Real-Debrid}{https://real-debrid.com}{debrid, maior cache, hosters, pago}
+O serviço mais antigo e com a maior biblioteca de arquivos em cache do planeta. É extremamente rápido e barato (cerca de €16 por 6 meses). \textbf{Atenção às ressalvas:} possui uma regra draconiana de \textbf{apenas 1 endereço IP por vez} (se alguém na sua casa assistir na Wi-Fi enquanto você usa no 4G na rua, sua conta recebe aviso e pode ser banida sem reembolso) e sofreu restrições recentes na sua API de verificação de cache após pressões jurídicas na França. \estrelas{4}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=alldebrid]{AllDebrid}{https://alldebrid.com}{debrid, hosters, extensao, pago}
+Alternativa veterana e muito estável ao Real-Debrid, com excelente suporte a dezenas de servidores de download direto (\emph{file hosters}), ótima extensão de navegador e integração nativa perfeita com o \textbf{JDownloader 2}. \estrelas{4}
+\end{ferramenta}
+
+\subsection{Ecossistema Relacionado: Compartilhando sua Assinatura}
+
+\begin{ferramenta}[recomendado,logo=disbox]{Disbox}{https://github.com/gabrieljcodes/disbox}{open source, torbox, comunidade}
+Serviço criado para que \textbf{você possa compartilhar a sua assinatura do TorBox com a comunidade ou com seus amigos} de um jeito simples e organizado, sem precisar passar a senha da sua conta. Além de permitir que todo mundo use os benefícios do TorBox junto (tanto pelo Discord quanto pelo navegador), o \textbf{Disbox} mantém \textbf{links permanentes para os arquivos} — garantindo que os links de download e streaming não expirem depois de algumas horas! \estrelas{5}
+\end{ferramenta}
+
+\begin{dica}[Por que o Disbox é tão útil para a comunidade?]
+Normalmente, os links de download gerados no TorBox expiram após pouco tempo. Com o \textbf{Disbox}, você consegue dividir sua assinatura do TorBox com o pessoal do servidor e criar links fixos para jogos, filmes ou animes que continuam funcionando sempre que alguém clicar para baixar ou assistir!
+\end{dica}
+
+\section{Gerenciadores de Download Direto (DDL)}
+
+Baixar arquivos grandes (de 10 GB a 150 GB) diretamente pelo gerenciador embutido do navegador é receita para frustração: o navegador abre apenas uma conexão simples (limitando a velocidade) e, se a sua internet oscilar nos 98\%, o download frequentemente falha do zero. Use sempre um gerenciador dedicado:
+
+\begin{ferramenta}[goat,logo=jdownloader2]{JDownloader 2}{https://jdownloader.org}{ddl, multi-partes, debrid, win, linux, mac}
+O rei absoluto para quem baixa jogos, filmes ou pacotes divididos em dezenas de partes (\cmd{.part01.rar}, \cmd{.part02.rar}...). O \textbf{JDownloader 2} monitora sua área de transferência (\emph{LinkGrabber}), verifica online se todas as partes estão ativas antes mesmo de você começar a baixar, integra contas de Debrid (\textbf{TorBox}, \textbf{Real-Debrid}, \textbf{AllDebrid}), resolve timers e extrai os arquivos automaticamente ao terminar. \estrelas{5}
+\end{ferramenta}
+
+\begin{dica}[Baixe o instalador Limpo (Adware-Free) do JDownloader 2!]
+O instalador padrão da página principal do JDownloader no Windows às vezes inclui ofertas opcionais de terceiros. Sempre baixe pelo link oficial \textbf{Adware-Free} mantido pelos próprios desenvolvedores em: \pglink{https://jdownloader.org/jdownloader2} (ou instale via Flatpak no Linux / Winget no Windows com \cmd{winget install AppWork.JDownloader}).
+\end{dica}
+
+\begin{ferramenta}[goat,logo=motrix]{Motrix}{https://motrix.app}{open source, aria2, ddl, torrent, win, linux, mac}
+Gerenciador de downloads moderno, open source e com uma interface gráfica limpa e elegante. Construído sobre o poderoso motor \textbf{aria2}, o \textbf{Motrix} divide cada download HTTP/FTP em até 64 conexões simultâneas para extrair cada gota da sua banda larga, além de suportar downloads de BitTorrent e Magnet links em um único lugar. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=ab-download-manager]{AB Download Manager}{https://abdownloadmanager.com}{open source, moderno, idm-alternative, win, linux}
+A melhor alternativa gratuita e de código aberto ao famoso (porém pago e proprietário) \emph{Internet Download Manager (IDM)}. Possui interface escura nativa muito rápida, filas inteligentes com agendamento de horário, limitador de velocidade e extensão oficial para capturar downloads direto do navegador. \estrelas{4}
+\end{ferramenta}
+
+\begin{ferramenta}[logo=gopeed]{Gopeed (Go Speed)}{https://gopeed.com}{open source, golang, multiplataforma, win, linux, mac, android}
+Gerenciador de downloads de alta performance desenvolvido em \textbf{Go + Flutter}. É ultraleve, disponível tanto para Desktop quanto para Android/iOS, suporta HTTP, BitTorrent e possui um sistema próprio de extensões em JavaScript para baixar de plataformas específicas. \estrelas{4}
+\end{ferramenta}
+
+\begin{tabela}{>{\bfseries}l c c c c X}
+\cab{Gerenciador} & \cab{Livre} & \cab{DDL} & \cab{Torrent} & \cab{Debrid / Hosters} & \cab{Melhor Caso de Uso} \\
+JDownloader 2 \goat & \ok & \ok & \nope & \ok   & Arquivos em múltiplas partes, pastas do Mega/Gofile e integração Debrid \\
+Motrix \goat        & \ok & \ok & \ok   & \nope & Downloads diretos gerais de alta velocidade + torrents simples \\
+AB Download Mgr     & \ok & \ok & \nope & \nope & Substituto direto e moderno do IDM para captura no navegador \\
+Gopeed              & \ok & \ok & \ok   & \meio & Uso multiplataforma (incluindo Android) e leveza extrema \\
+\end{tabela}
+
+\begin{tldr}
+\textbf{Qual combinação usar?} Para torrents puros e gratuitos, use o \textbf{qBittorrent}. Para downloads diretos do navegador, use o \textbf{Motrix}. Se você baixa arquivos divididos em várias partes ou assina o \textbf{TorBox} (Debrid), integre tudo no \textbf{JDownloader 2} e no \textbf{Hydra Launcher} para baixar no limite da sua fibra!
+\end{tldr}
+
+% =====================================================================
+%  CAPÍTULO 04 -- ARSENAL DE PROGRAMAS ESSENCIAIS
+% =====================================================================
+\comentario{extração sem ocupar o dobro de espaço, launchers e reprodução de mídia}
+\chapter{Programas Úteis no Geral}
+
+\begin{missao}[equipando seu sistema operacional]
+\begin{itemize}
+  \item Substituir o obsoleto WinRAR pelo \textbf{7-Zip / NanaZip} e pelo extrator \emph{in-place} \textbf{HatchZip}.
+  \item Centralizar sua biblioteca e downloads de jogos no \textbf{Hydra Launcher}.
+  \item Reproduzir qualquer formato de vídeo ou anime com fidelidade máxima usando \textbf{mpv} e \textbf{VLC}.
+\end{itemize}
+\end{missao}
+
+Depois que o arquivo chega ao seu disco, você precisa das ferramentas certas para descompactá-lo, gerenciá-lo e reproduzi-lo sem dores de cabeça, sem avisos de licença expirada e sem desperdiçar espaço de armazenamento.
+
+\section{Compactação e Extração de Arquivos}
+
+\begin{ferramenta}[goat,logo=7zip]{7-Zip / NanaZip}{https://www.7-zip.org}{open source, extracao, lzma2, win, linux}
+O padrão absoluto em compactação de arquivos. O \textbf{7-Zip} é 100\% gratuito, código aberto, pesa menos de 2 MB e descompacta qualquer formato (\cmd{.7z}, \cmd{.rar}, \cmd{.zip}, \cmd{.tar.gz}, \cmd{.iso}) com velocidade superior. Se você usa \textbf{Windows 11}, recomendamos instalar o \textbf{NanaZip} (\pglink{https://github.com/M2Team/NanaZip}): um fork oficial moderno do 7-Zip que adiciona suporte ao novo menu de contexto do Windows 11, tema escuro nativo e proteções extras de memória. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=hatchzip]{HatchZip}{https://hatchzip.com}{open source, rust, in-place, win, linux, mac}
+Uma verdadeira revolução para quem baixa jogos grandes em SSDs com pouco espaço livre! Extratores tradicionais (como 7-Zip ou WinRAR) exigem que você tenha \textbf{o dobro do espaço livre} no disco (ex.: para extrair um jogo de 150 GB, você precisa de 150 GB para o arquivo \cmd{.zip} + 150 GB para a pasta extraída = 300 GB livres). Escrito em Rust, o \textbf{HatchZip} faz a \textbf{extração \emph{in-place} (no próprio local)}: ele lê o arquivo de trás para frente e, à medida que extrai e verifica cada bloco, vai cortando (\emph{truncating}) o arquivo compactado original, liberando espaço em tempo real! \estrelas{5}
+\end{ferramenta}
+
+\begin{terminal}[bash -- extraindo um jogo gigante sem ter o dobro de espaco livre com HatchZip]
+# 1. Verifica se o arquivo cabe no espaco restante do SSD (sem modificar nada)
+$ hatchzip check Jogo_Gigante_180GB.zip
+
+# 2. Extrai in-place (libera espaco do .zip conforme extrai, seguro contra Ctrl+C)
+$ hatchzip extract Jogo_Gigante_180GB.zip
+
+# 3. Também funciona com arquivos divididos em partes (.7z.001, .zip.001)
+$ hatchzip x Jogo_Dividido.7z.001
+\end{terminal}
+
+\subsection{Compactador para NÃO USAR}
+
+\begin{atencao}[Por que aposentar o WinRAR de vez?]
+\textbf{WinRAR} \pgtag[pgAlert]{evite}: Além de ser um software proprietário pago que incomoda com pop-ups de licença há décadas, o WinRAR acumulou vulnerabilidades críticas graves nos últimos anos — como a famosa falha \cmd{CVE-2023-38831}, explorada ativamente por hackers para executar scripts maliciosos quando o usuário dava duplo clique em uma imagem ou texto aparentemente inofensivo dentro de um arquivo \cmd{.rar}. O \textbf{7-Zip / NanaZip} abre arquivos \cmd{.rar} perfeitamente, é mais rápido, é código aberto e nunca pede para você comprar uma licença.
+\end{atencao}
+
+\section{Launcher de Jogos}
+
+\begin{ferramenta}[goat,logo=hydra]{Hydra Launcher}{https://hydralauncher.gg}{open source, games, torrent, debrid, win, linux}
+Criado por desenvolvedores brasileiros e adotado no mundo inteiro, o \textbf{Hydra Launcher} transforma a experiência de baixar e organizar jogos alternativos em algo tão prático quanto usar a própria Steam. Ele conta com catálogo completo de jogos, gerenciador de downloads integrado (BitTorrent + HTTP direto + suporte nativo a \textbf{TorBox} e \textbf{Real-Debrid}), sistema de conquistas, contagem de horas jogadas e perfil social. \estrelas{5}
+\end{ferramenta}
+
+\begin{pousadinha}[Como funcionam as Fontes (Sources) no Hydra?]
+Por questões legais e de segurança, o \textbf{Hydra Launcher} vem ``vazio'' de links por padrão. Você adiciona as chamadas \textbf{Fontes (Hydra Sources)} através de links JSON curados pela comunidade (que indexam apenas releases oficiais da \emph{FitGirl}, \emph{DODI}, \emph{SteamRIP}, \emph{Online-Fix}, \emph{GOG}, etc.). Sempre pegue seus links JSON de fontes listadas nas Megathreads oficiais (Capítulo 07) — nunca adicione fontes JSON de desconhecidos!
+\end{pousadinha}
+
+\section{Players de Mídia (Vídeo e Áudio)}
+
+Baixar um filme em 4K HDR10 ou um episódio de anime em 10-bit com legendas estilizadas (\cmd{.ass}) e tentar reproduzi-lo no reprodutor padrão do Windows resulta em cores lavadas, legendas quebradas ou avisos pedindo para comprar codecs na Microsoft Store. Estes são os dois melhores players do mundo:
+
+\begin{ferramenta}[goat,logo=mpv]{mpv}{https://mpv.io}{open source, gpu-next, shaders, anime, win, linux, mac}
+O player favorito dos entusiastas de vídeo, cinema e animes. O \textbf{mpv} é focado em qualidade de imagem sem compromissos: possui o melhor mapeamento de tons HDR para telas SDR do mercado, suporte a shaders de upscaling em tempo real via placa de vídeo (como \emph{FSRCNNX} e \emph{Anime4K}) e renderização perfeita de legendas complexas de fansubs (\emph{libass}). Se preferir uma janela com menus mais tradicionais usando o motor do mpv, experimente o \textbf{mpv.net} (Windows), \textbf{Celluloid} (Linux) ou \textbf{IINA} (macOS). \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=vlc]{VLC Media Player}{https://videolan.org/vlc}{open source, codecs, win, linux, mac, android}
+O lendário player do cone laranja. Se um arquivo de vídeo ou áudio existe, o \textbf{VLC} consegue rodá-lo sem instalar nenhum pacote de codecs externo. Possui interface completa para gerenciar faixas de áudio, sincronizar legendas atrasadas (atalhos \kbd{G} e \kbd{H}), abrir streams de rede, converter mídias e reparar arquivos \cmd{.avi} incompletos. \estrelas{5}
+\end{ferramenta}
+
+\subsection{Resumo do Arsenal de Programas}
+
+\begin{tabela}{>{\bfseries}l l c c X}
+\cab{Programa} & \cab{Função} & \cab{Livre} & \cab{Veredito} & \cab{Destaque Principal} \\
+7-Zip / NanaZip \goat & Extrator Geral    & \ok   & \pgtag[pgBrass]{goat} & Ultraleve, abre \texttt{.7z}, \texttt{.rar} e \texttt{.zip} com velocidade máxima \\
+HatchZip \goat        & Extrator In-Place & \ok   & \pgtag[pgBrass]{goat} & Extrai jogos gigantes sem exigir o dobro de espaço livre no SSD \\
+WinRAR                & Extrator Antigo   & \nope & \pgtag[pgAlert]{evite} & Proprietário, pop-ups de licença e histórico de falhas graves \\
+Hydra Launcher \goat  & Launcher de Jogos & \ok   & \pgtag[pgBrass]{goat} & Integra fontes JSON, Torrent, Debrid, conquistas e nuvem de saves \\
+mpv \goat             & Player de Vídeo   & \ok   & \pgtag[pgBrass]{goat} & Qualidade gráfica suprema, shaders Anime4K, HDR e legendas \texttt{.ass} \\
+VLC \goat             & Player Versátil   & \ok   & \pgtag[pgBrass]{goat} & Roda qualquer formato de mídia em qualquer sistema ou celular \\
+\end{tabela}
+
+% =====================================================================
+%  CAPÍTULO 05 -- ANTIVÍRUS, FALSOS POSITIVOS E ISOLAMENTO (OS)
+% =====================================================================
+\comentario{por que o seu melhor antivírus é o isolamento e a procedência}
+\chapter{Antivírus, Segurança e OS}
+
+\begin{missao}[segurança ofensiva e defensiva]
+\begin{itemize}
+  \item Desmistificar a falsa sensação de segurança dos antivírus comerciais e entender os \emph{falsos positivos}.
+  \item Distinguir extensões de arquivos de mídia inofensivas de arquivos executáveis perigosos.
+  \item Auditar arquivos suspeitos com o \textbf{VirusTotal} e saber quando formatar o PC é a única saída.
+  \item Isolar programas e jogos com \textbf{Linux + Bottles} ou \textbf{Windows Sandbox} para impedir qualquer contaminação.
+\end{itemize}
+\end{missao}
+
+\section{A Verdade sobre Antivírus e Falsos Positivos}
+
+Existe um mito perigoso entre usuários iniciantes: \emph{``Posso baixar de qualquer site porque tenho um antivírus instalado e ele vai me avisar se tiver vírus''}. \textbf{Isso é falso.}
+
+Antivírus funcionam primariamente comparando o arquivo com um banco de dados de ameaças já conhecidas ou procurando padrões comportamentais genéricos. Criminosos que distribuem \emph{infostealers} (malwares que roubam suas contas da Steam, Discord, banco e navegador em 2 segundos) criptografam e recompilam seus vírus diariamente (\emph{FUD — Fully Undetectable}) para que nenhum antivírus apite no momento da execução. Portanto, \textbf{nunca use um antivírus como zona de conforto}. Se o site de download não está nas Megathreads confiáveis, \textbf{não baixe}.
+
+\subsection{Por que o Windows Defender apita em Cracks Seguros? (False Flags)}
+
+Por outro lado, quando você baixa um jogo de uma fonte 100\% legítima e auditada da Megathread (como o site oficial da \emph{FitGirl Repacks}, \emph{DODI} ou \emph{SteamRIP}), é muito comum que o \textbf{Windows Defender} coloque o arquivo \cmd{steam_api64.dll}, \cmd{emp.dll} ou \cmd{setup.exe} em quarentena acusando \texttt{HackTool:Win32/Crack!MTB} ou \texttt{VirTool:Win32/Obfuscator}.
+
+Isso acontece por dois motivos técnicos:
+\begin{enumerate}
+  \item \textbf{Heurística de Ofuscação:} Cracks precisam modificar chamadas de memória e usar empacotadores (\emph{packers} como VMProtect) para enganar o DRM do jogo (SteamStub, Denuvo, Arxan). Essas técnicas são tecnicamente parecidas com as usadas por malwares, gerando um \textbf{falso positivo (\emph{false flag})}.
+  \item \textbf{Política antipirataria da Microsoft:} O Windows Defender classifica intencionalmente ferramentas de bypass de licença como \texttt{HackTool} ou \texttt{GameHack} para desencajar o uso de softwares sem licença, mesmo quando o arquivo não contém nenhum código malicioso contra o usuário.
+\end{enumerate}
+
+\begin{dica}[Crie uma Pasta de Exclusão em vez de desativar o Defender inteiro]
+Em vez de desligar a proteção em tempo real do Windows Defender no computador inteiro toda vez que for instalar um jogo, crie uma pasta dedicada (ex.: \cmd{C:\Games_Verificados}) e adicione \textbf{apenas essa pasta} nas \emph{Exclusões} do Windows Security. Extraia e instale nessa pasta somente o que você baixou de fontes oficiais da Megathread!
+\end{dica}
+
+\section{Quais Arquivos são Seguros? (Mídia vs. Executáveis)}
+
+E se você precisar baixar um arquivo de um site menos conhecido (como uma imagem de referência, uma música rara ou um vídeo antigo)? A regra aqui depende do \textbf{formato do arquivo}. Arquivos de mídia pura contêm apenas fluxos de dados (pixels, quadros de vídeo, ondas sonoras) interpretados por um reprodutor — no geral, \textbf{eles não carregam nem executam vírus por conta própria}:
+
+\begin{tabela}{>{\bfseries}l >{\raggedright\arraybackslash}p{44mm} X}
+\cab{Categoria} & \cab{Extensões de Arquivo} & \cab{Nível de Segurança e Observações} \\
+Imagens \ok & {\pgmono\scriptsize .png, .jpg, .jpeg, .webp, .gif, .bmp, .avif, .tiff, .ico} & \textbf{Seguras.} Imagens matriciais não executam código. \emph{Exceção:} arquivos vetoriais \texttt{.svg} abertos direto no navegador podem conter scripts XML/JS. \\
+Vídeos \ok & {\pgmono\scriptsize .mp4, .mkv, .avi, .webm, .mov, .flv, .m4v, .ts, .mpg} & \textbf{Seguros} (quando abertos em players atualizados como \textbf{mpv} ou \textbf{VLC}). Jamais baixe ``codecs'' que um vídeo pedir para instalar! \\
+Áudios \ok & {\pgmono\scriptsize .mp3, .flac, .wav, .ogg, .opus, .m4a, .aac, .wma, .alac} & \textbf{Seguros.} Arquivos de som puros não possuem capacidade de execução de código no sistema. \\
+Textos / HQs \meio & {\pgmono\scriptsize .txt, .md, .srt, .ass, .epub, .cbz, .cbr} & \textbf{Seguros.} \emph{Atenção:} Arquivos \texttt{.pdf} e documentos do Office (\texttt{.docx}, \texttt{.xlsm}) podem conter JavaScript embutido ou Macros maliciosas — nunca habilite macros! \\
+Executáveis \nope & {\pgmono\scriptsize .exe, .msi, .bat, .cmd, .ps1, .vbs, .scr, .lnk, .jar, .reg} & \textbf{Risco Máximo!} Possuem controle total sobre sua conta de usuário. \textbf{Só execute se vier de fonte 100\% confiável da Megathread.} \\
+\end{tabela}
+
+\begin{perigo}[O Golpe da Extensão Dupla Oculta no Windows]
+Por padrão, o Windows esconde a extensão final dos arquivos conhecidos! Assim, um criminoso nomeia um vírus como \cmd{Episodio_01_Dublado.mkv.exe} e coloca o ícone do VLC nele. Para você, aparece apenas \cmd{Episodio_01_Dublado.mkv}. \textbf{Vá imediatamente no Windows Explorer $\rightarrow$ Visualizar $\rightarrow$ Mostrar $\rightarrow$ marque ``Extensões de nomes de arquivos''!}
+\end{perigo}
+
+\section{Checagem Prévia e Antivírus Recomendados}
+
+Antes de executar um arquivo pequeno ou suspeito, você pode submetê-lo a uma análise multi-motor gratuita na nuvem:
+
+\begin{ferramenta}[goat,logo=virustotal]{VirusTotal}{https://www.virustotal.com}{analise online, 70+ motores, sandbox, gratis}
+Plataforma que analisa arquivos (de até 650 MB) e URLs simultaneamente em mais de 70 motores de antivírus e sandboxes comportamentais. \textbf{Como ler o resultado como um profissional:} ignore se 2 ou 3 antivírus desconhecidos acusarem \texttt{Generic.Malware.AI}; observe o que dizem os motores líderes (\emph{Kaspersky}, \emph{ESET}, \emph{Bitdefender}, \emph{Malwarebytes}) e cheque a aba \textbf{Behavior} para ver se o programa tenta ler senhas do navegador ou criar persistência oculta. \estrelas{5}
+\end{ferramenta}
+
+Se ainda assim você fizer questão de utilizar um antivírus dedicado além do Windows Defender (ou um scanner de segunda opinião):
+
+\begin{ferramenta}[recomendado,logo=kaspersky]{Kaspersky}{https://www.kaspersky.com.br}{antivirus, tempo real, heuristica, win}
+Possui historicamente o motor de detecção comportamental (\emph{System Watcher}) mais preciso e com menor impacto de desempenho em jogos do mercado, sendo excelente para travar \emph{ransomwares} e \emph{infostealers} em tempo real. \estrelas{4}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=malwarebytes]{Malwarebytes}{https://www.malwarebytes.com}{scanner sob demanda, anti-malware, win, mac}
+Ideal para ser usado na versão gratuita como \textbf{scanner sob demanda (segunda opinião)}: você instala, roda uma varredura completa quando suspeitar de algum adware ou PUP, limpa o sistema e fecha o programa para não consumir recursos em segundo plano. \estrelas{4}
+\end{ferramenta}
+
+\subsection{Antivírus para NÃO USAR}
+
+\begin{perigo}[Fuja de Avast, AVG e McAfee!]
+\begin{itemize}
+  \item \textbf{Avast e AVG} \pgtag[pgAlert]{evite}: Pertencem à mesma corporação (Gen Digital). Ficaram mundialmente manchados quando investigações revelaram que o Avast coletava e vendia o histórico detalhado de cliques de milhões de usuários através de sua subsidiária \emph{Jumpshot} (resultando em multa milionária da FTC). Além disso, utilizam táticas de \textbf{scareware}: exibem pop-ups falsos dizendo que ``seu IP está exposto e hackers estão vendo sua tela'' apenas para vender assinaturas caras.
+  \item \textbf{McAfee} \pgtag[pgAlert]{evite}: O rei do bloatware pré-instalado em notebooks. Consome quantidades absurdas de CPU e disco, bombardeia a tela com notificações comerciais mesmo depois de expirado e tem taxa de detecção inferior ao próprio Windows Defender.
+\end{itemize}
+\end{perigo}
+
+\subsection{Pegou Vírus ou Suspeita de Infecção? Formate!}
+
+\begin{perigo}[Protocolo de Emergência: Na suspeita real, formate o computador!]
+Se você executou um arquivo duvidoso, a janela piscou e fechou sozinha (comportamento clássico de \emph{infostealer}), ou suas contas começaram a enviar links de golpe no Discord/Instagram: \textbf{não confie na opção ``Remover ameaça'' do antivírus nem na ``Restauração do Sistema'' do Windows}. Malwares modernos injetam persistência profunda em tarefas agendadas, WMI, Registro e processos legítimos do sistema.
+
+\textbf{O único procedimento 100\% seguro é:}
+\begin{enumerate}
+  \item Desconecte o computador da internet imediatamente (puxe o cabo de rede / desligue o Wi-Fi);
+  \item Usando um \textbf{outro dispositivo limpo} (como seu celular no 4G/5G), troque as senhas das suas contas principais (E-mail, Bancos, Steam, Discord), clique em \emph{``Desconectar de todos os dispositivos''} para invalidar os cookies roubados e ative o 2FA;
+  \item Crie um pendrive bootável do Linux ou Windows em um computador limpo, apague todas as partições do disco do sistema durante a instalação e faça uma \textbf{formatação limpa do zero}.
+\end{enumerate}
+\end{perigo}
+
+\section{Sistema Operacional e Isolamento (Sandboxing)}
+
+A forma mais inteligente de lidar com arquivos nos quais você não confia 100\% não é torcer para um antivírus pegá-los — é \textbf{impedir fisicamente que o arquivo tenha acesso ao seu sistema principal} através de isolamento (\emph{sandboxing}) e escolha de Sistema Operacional.
+
+\subsection{Por que dar preferência ao Linux?}
+
+Migrar para o \textbf{Linux} (em distribuições amigáveis e modernas como \emph{Linux Mint}, \emph{Fedora}, \emph{Pop!\_OS}, \emph{Bazzite} ou \emph{Arch/CachyOS}) oferece uma vantagem de segurança gigantesca:
+\begin{itemize}
+  \item \textbf{Imunidade estrutural à maioria dos malwares de pirataria:} Quase 100\% dos malwares embutidos em jogos e programas piratas são escritos para explorar APIs exclusivas do Windows, ler o banco de dados criptografado via \texttt{DPAPI} do Chrome/Edge no Windows ou criar serviços no Registro do Windows.
+  \item \textbf{Controle granular de permissões:} No Linux, programas não ganham acesso administrativo sem sua senha explícita, e tecnologias nativas do kernel (\emph{namespaces}, \emph{cgroups}, \emph{Bubblewrap}) permitem trancar qualquer aplicativo dentro de uma caixa fechada onde ele sequer enxerga sua pasta pessoal (\cmd{/home}).
+\end{itemize}
+
+\begin{ferramenta}[goat,logo=bottles]{Bottles (Linux)}{https://usebottles.com}{open source, linux, wine, sandbox, isolamento}
+A ferramenta definitiva para rodar jogos e programas de Windows no Linux com \textbf{isolamento total}. Instalado via Flatpak, o \textbf{Bottles} cria ambientes Windows independentes (``garrafas''). Como o Bottles roda em uma sandbox isolada do restante do sistema Linux, \textbf{mesmo que um jogo esteja contaminado por um vírus, é impossível que ele infecte o seu PC ou acesse seus arquivos pessoais}. Acabou de jogar ou desconfiou do arquivo? Basta apagar a garrafa com um clique e o ambiente inteiro deixa de existir! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=windows-sandbox]{Windows Sandbox (Windows 10/11 Pro)}{https://aka.ms/windowssandbox}{windows, vm descartavel, isolamento, nativo}
+Recurso nativo do Windows 10 e 11 (edições Pro, Enterprise e Education) que cria uma \textbf{máquina virtual leve e temporária} com uma cópia limpa do Windows. É o lugar ideal no Windows para abrir instaladores ou testar programas nos quais você não confia: nada do que roda dentro do Windows Sandbox consegue escapar para o seu PC real e, \textbf{assim que você fecha a janela, a máquina virtual inteira é apagada da memória RAM}, sem deixar nenhum vestígio. \emph{Contraponto:} exige muito mais memória RAM e CPU do que o isolamento por contêiner do Bottles no Linux. \estrelas{4}
+\end{ferramenta}
+
+\begin{terminal}[powershell -- como ativar o Windows Sandbox no Windows 10/11 Pro]
+# Abra o PowerShell como Administrador e execute:
+$ Enable-WindowsOptionalFeature -FeatureName "Containers-DisposableClientVM" -All -Online
+# Reinicie o computador e procure por "Windows Sandbox" no Menu Iniciar.
+\end{terminal}
+
+% =====================================================================
+%  CAPÍTULO 06 -- PRIVACIDADE, VPNS E REDES ANÔNIMAS
+% =====================================================================
+\comentario{protegendo seu endereço IP e sua identidade na rede}
+\chapter{VPNs e Redes Alternativas}
+
+\begin{missao}[privacidade e anonimato na rede]
+\begin{itemize}
+  \item Entender o cenário jurídico e técnico das VPNs no Brasil em comparação com outros países.
+  \item Escolher apenas VPNs auditadas (\textbf{Proton VPN} e \textbf{Mullvad}) e fugir da armadilha das ``VPNs Grátis''.
+  \item Conhecer o protocolo \textbf{WireGuard} e redes anônimas descentralizadas gratuitas (\textbf{Tor} e \textbf{I2P}).
+\end{itemize}
+\end{missao}
+
+\section{Preciso de VPN para Baixar no Brasil?}
+
+Diferente de países como Estados Unidos, Alemanha ou Japão — onde escritórios de advocacia contratados por estúdios monitoram enxames BitTorrent 24 horas por dia e enviam multas automáticas pesadas através das operadoras de internet —, \textbf{no Brasil você não precisa obrigatoriamente de uma VPN apenas para baixar um torrent doméstico} (pelo menos por enquanto).
+
+\begin{nota}[Por que ainda assim recomendamos o uso de VPN no Brasil?]
+Embora sua internet não vá ser cortada por baixar um filme ou jogo no Brasil, usar uma VPN confiável traz vantagens importantes:
+\begin{itemize}
+  \item \textbf{Oculta seu endereço IP real no enxame P2P:} Sem VPN, qualquer pessoa conectada ao mesmo torrent que você no qBittorrent consegue ver seu endereço IP público, sua cidade aproximada e qual arquivo você está baixando.
+  \item \textbf{Evita cartas de notificação extrajudicial:} Nos últimos anos, algumas operadoras brasileiras passaram a repassar avisos de monitoramento de estúdios estrangeiros. Com VPN, seu provedor sequer sabe que você está usando BitTorrent.
+  \item \textbf{Contorna Traffic Shaping e bloqueios de rota:} Impede que a operadora limite a velocidade de protocolos P2P ou bloqueie o acesso a trackers e sites internacionais.
+\end{itemize}
+\end{nota}
+
+\section{VPNs Recomendadas}
+
+\begin{ferramenta}[goat,logo=proton]{Proton VPN}{https://protonvpn.com}{open source, suica, port-forwarding, freemium}
+Desenvolvida na Suíça pelos criadores do Proton Mail, é 100\% código aberto, passa por auditorias independentes regulares e possui política estrita de \emph{no-logs}. No plano pago, conta com \textbf{Port Forwarding (Redirecionamento de Porta)} — recurso essencial para se conectar a mais peers e conseguir velocidades máximas em torrents com poucos seeders. Além disso, é \textbf{a única VPN do mercado cujo plano gratuito é realmente confiável e sem limite de dados} (subsidiado pelos assinantes pagos, sem vender seus dados; nota: o plano gratuito protege a navegação web, enquanto o suporte a P2P/Torrent requer o plano Plus). \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=mullvad]{Mullvad VPN}{https://mullvad.net/pt}{open source, suecia, anonimato total, pago}
+O padrão-ouro mundial em anonimato e ética. Para criar uma conta na \textbf{Mullvad}, \textbf{você não informa e-mail, nome, telefone nem senha}: o site apenas gera um número aleatório de 16 dígitos que é a sua conta. Possui preço fixo único (€5 por mês, sem pegadinhas de renovação anual), roda todos os seus servidores exclusivamente em memória RAM (sem discos rígidos que possam ser apreendidos) e aceita pagamentos anônimos em criptomoeda (\textbf{Monero}) ou até dinheiro em espécie pelo correio. \estrelas{5}
+\end{ferramenta}
+
+\subsection{VPNs para NÃO USAR: A Armadilha das “VPNs Grátis”}
+
+\begin{perigo}[Nunca use VPNs gratuitas duvidosas!]
+Manter milhares de servidores com links de 10 Gbps ao redor do mundo custa milhões de dólares por mês. \textbf{Se uma VPN promete tudo de graça (com a única exceção do plano gratuito da Proton VPN), o produto sendo vendido é você.} Evite terminantemente:
+\begin{itemize}
+  \item \textbf{Urban VPN e Hola VPN} \pgtag[pgAlert]{evite}: O pior tipo de software existente. Elas funcionam como uma \textbf{rede P2P parasitária (\emph{botnet residencial})}: ao instalar a Urban VPN para ``usar de graça'', o programa transforma o \textbf{seu computador e a sua internet de casa em um nó de saída} que é vendido para terceiros! Isso significa que estranhos (e criminosos) no mundo todo passam a navegar na internet usando o \textbf{seu endereço IP residencial}.
+  \item \textbf{Planet VPN} \pgtag[pgAlert]{evite}: Coleta extensiva de metadados, histórico opaco de propriedade e vazamentos constantes de DNS/WebRTC.
+  \item \textbf{Opera VPN} \pgtag[pgAlert]{evite}: Não é uma VPN real, mas um simples proxy de navegador que não protege nenhum outro programa do PC (como o qBittorrent) e registra dados de tráfego.
+  \item \textbf{Windscribe / extensões de ``VPN Grátis'' da Chrome Web Store} \pgtag[pgAlert]{evite}: Limites severos, políticas inconsistentes ou extensões que injetam scripts publicitários e vendem histórico de navegação.
+\end{itemize}
+\end{perigo}
+
+\subsection{Protocolo Relacionado: WireGuard}
+
+\begin{ferramenta}[recomendado,logo=wireguard]{WireGuard}{https://www.wireguard.com}{open source, protocolo, kernel, win, linux, mac, android}
+Mais do que um aplicativo, o \textbf{WireGuard} é o protocolo criptográfico moderno que revolucionou as VPNs. Enquanto protocolos antigos como \emph{OpenVPN} e \emph{IPsec} possuem mais de 400.000 linhas de código, lentidão para conectar e alto gasto de CPU, o WireGuard tem apenas cerca de 4.000 linhas de código facilmente auditáveis e roda diretamente dentro do kernel Linux. Dica: tanto a \textbf{Proton VPN} quanto a \textbf{Mullvad} permitem baixar arquivos de configuração \cmd{.conf} para você usar diretamente no cliente oficial ultraleve do WireGuard! \estrelas{5}
+\end{ferramenta}
+
+\section{Redes Alternativas (Privacidade e Anonimato 100\% Grátis)}
+
+Se você busca privacidade extrema e anonimato real sem pagar por uma VPN comercial, a comunidade de criptografia mantém duas redes descentralizadas gratuitas e independentes:
+
+\begin{ferramenta}[recomendado,logo=tor]{Tor (The Onion Router)}{https://www.torproject.org}{open source, anonimato, onion, win, linux, mac, android}
+Rede mundial operada por voluntários que embaralha seu tráfego passando por três nós criptografados em camadas (\emph{Guard}, \emph{Middle} e \emph{Exit Node}), impedindo que qualquer site saiba quem ou onde você é, além de dar acesso a serviços ocultos \cmd{.onion} (como espelhos oficiais de bibliotecas de livros como \emph{Anna's Archive} e \emph{Z-Library}). \textbf{Regra importante:} use o \textbf{Tor Browser} apenas para navegar e baixar via navegador; \textbf{nunca rode BitTorrent sobre a rede Tor}, pois isso congestiona a rede voluntária e clientes de torrent podem vazar seu IP real via pacotes UDP fora do túnel Tor. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=i2p]{I2P (Invisible Internet Project)}{https://geti2p.net}{open source, garlic routing, p2p anonimo, win, linux, mac}
+Ao contrário do Tor (que foi criado para acessar a internet comum de forma anônima), a rede \textbf{I2P} é uma rede interna totalmente fechada e descentralizada baseada em \emph{Garlic Routing} (roteamento unidirecional em múltiplos túneis). Seu grande diferencial para a pirataria: \textbf{o I2P foi desenhado desde o nascimento para suportar compartilhamento P2P e BitTorrent 100\% anônimo e gratuito!} Ele já vem com o cliente de torrent integrado \emph{I2PSnark} e também pode ser conectado diretamente às versões recentes do \textbf{qBittorrent}. \estrelas{5}
+\end{ferramenta}
+
+\subsection{Comparativo de Privacidade e Redes}
+
+\begin{tabela}{>{\bfseries}l c c c X}
+\cab{Serviço / Rede} & \cab{Custo} & \cab{Suporte P2P} & \cab{Velocidade} & \cab{Indicação Principal} \\
+Proton VPN \goat  & Freemium & \ok\ (Pago) & Alta  & Melhor equilíbrio geral; Port Forwarding no plano pago e plano grátis seguro para web \\
+Mullvad VPN \goat & Pago (€5)& \ok         & Alta  & Anonimato máximo sem pedir e-mail/dados; servidores 100\% em RAM \\
+Rede Tor          & Grátis   & \nope       & Baixa & Navegação anônima e acesso a bibliotecas \texttt{.onion} (\emph{nunca use para Torrent}) \\
+Rede I2P          & Grátis   & \ok         & Média & Compartilhamento P2P/Torrent 100\% anônimo e gratuito dentro da rede I2P \\
+Urban / Hola / Opera & ``Grátis'' & \nope  & Ruim  & \pgtag[pgAlert]{evite} Vendem sua banda residencial (botnet) e coletam seus dados \\
+\end{tabela}
+
+% =====================================================================
+%  CAPÍTULO 07 -- ÍNDICES, MEGATHREADS E LINKS CONFIÁVEIS
+% =====================================================================
+\comentario{o mapa do tesouro auditado diariamente pela comunidade global}
+\chapter{O Mapa das Megathreads}
+
+\begin{missao}[encontrando tudo com segurança]
+\begin{itemize}
+  \item Entender por que nunca devemos confiar em links estáticos isolados, mas sim em \textbf{Megathreads vivas}.
+  \item Favoritar os 4 grandes diretórios gerais de Jogos, Programas, Filmes, Livros e Músicas.
+  \item Dominar os índices especializados em cultura Otaku e as comunidades seguras de conteúdo \textbf{NSFW (+18)} (Anime/Hentai e IRL).
+\end{itemize}
+\end{missao}
+
+Por que este guia não lista diretamente 500 URLs soltas de sites de torrent e streaming? Porque no universo da pirataria, \textbf{domínios mudam constantemente}. Um site que era seguro no ano passado pode perder seu domínio hoje e ser comprado amanhã por golpistas que passam a espalhar malware usando o mesmo nome.
+
+Por isso, a regra de ouro é utilizar os \textbf{Índices Comunitários Vivos (Megathreads)}: páginas mantidas em repositórios Git por centenas de voluntários e especialistas de segurança que testam os sites diariamente, atualizam os endereços oficiais e removem na mesma hora qualquer site que apresente comportamento suspeito!
+
+\section{Grandes Índices Gerais (Jogos, Programas, Filmes, Livros e Tudo)}
+
+\begin{ferramenta}[goat,logo=fmhy]{FMHY (FREEMEDIAHECKYEAH)}{https://fmhy.net}{megathread, maior indice do mundo, tudo, curadoria}
+Simplesmente o maior, mais completo e mais bem mantido diretório de conteúdo gratuito e ferramentas da internet mundial. Atualizado dezenas de vezes todos os dias, o \textbf{FMHY} cobre absolutamente tudo: Jogos de PC e Emulação, Filmes e Séries, Música, Livros Acadêmicos, Softwares de Windows/Linux/Mac, Inteligência Artificial, Cursos e Ferramentas de Privacidade. Os melhores sites de cada categoria são marcados com uma estrela (\faStar) pelos moderadores. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=reddit]{r/Piracy Megathread}{https://rentry.org/megathread}{megathread, reddit, classico, jogos e midia}
+A lendária Megathread da comunidade \texttt{r/Piracy} do Reddit que serviu de inspiração direta para este guia. Mais enxuta e direta ao ponto que o FMHY, ela separa apenas a nata dos sites mais seguros para baixar jogos (\emph{FitGirl}, \emph{DODI}, \emph{SteamRIP}, \emph{CS.RIN.RU}), softwares (\emph{M0nkrus}, \emph{Massgrave/MAS} para ativação segura open source do Windows/Office), filmes e esportes, destacando os \textbf{GOATs} de cada seção. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=pirataria-link]{Pirataria.link (Megathread Brasil)}{https://pirataria.link/}{megathread br, dublados, pt-br, comunidade nacional}
+O porto seguro da comunidade brasileira! Enquanto as Megathreads internacionais focam em conteúdo em inglês, o \textbf{Pirataria.link} reúne os melhores sites, trackers, canais do Telegram e acervos verificados com foco no Brasil: filmes e séries \textbf{dublados e legendados em PT-BR}, livros em português, apostilas de concursos, artigos acadêmicos nacionais, futebol ao vivo e IPTV. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=ripped-guide]{Ripped.guide}{https://ripped.guide}{indice curado, jogos, emulacao, musica, software}
+Diretório moderno, muito rápido e rigorosamente curado pela comunidade com excelente organização para quem procura ROMs e ISOs de consoles para emulação, jogos de PC, ripagem de áudio em qualidade \emph{lossless} (FLAC) e ferramentas de código aberto. \estrelas{5}
+\end{ferramenta}
+
+\section{Índices de Cultura Otaku (Animes, Mangás, Novels e Jogos JP)}
+
+A comunidade de animes e mangás possui alguns dos diretórios mais organizados e tecnicamente exigentes de toda a internet:
+
+\begin{ferramenta}[goat,logo=everythingmoe]{EverythingMoe}{https://everythingmoe.com/}{anime, manga, light novel, ranking em tempo real}
+O ranking definitivo do mundo otaku. O \textbf{EverythingMoe} avalia e classifica centenas de sites de streaming de anime, leitura de mangás, bancos de dados, trackers de torrent (como o \emph{Nyaa.si}), aplicativos mobile (como \emph{Mihon} e \emph{Aniyomi}) e leitores de Light Novels, mostrando exatamente os prós, contras e status online de cada site. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=wotaku]{Wotaku.wiki}{https://wotaku.wiki}{wiki otaku, nyaa, seadex, visual novels, guias}
+Muito mais do que uma lista de links, a \textbf{Wotaku.wiki} é uma enciclopédia técnica impecável. Ela ensina como configurar o player \textbf{mpv} para qualidade máxima de anime, como usar os índices \emph{SeaDex} e \emph{Sneedex} (que apontam qual grupo de fansub/encode lançou a melhor versão de Blu-ray de cada anime da história), além de reunir as melhores fontes de Visual Novels, música japonesa (Doujin/Touhou/OSTs) e aprendizado de japonês. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=theindex]{TheIndex.moe}{https://theindex.moe}{catalogo otaku, filtros visuais, apps, comunidades}
+Catálogo visual extremamente limpo que permite filtrar sites de animes, mangás e novels por idioma, presença ou ausência de anúncios, qualidade de vídeo (1080p / Blu-ray), suporte a aplicativos Android/iOS e tipos de mídia. \estrelas{4}
+\end{ferramenta}
+
+\section{Índices e Comunidades NSFW (+18)}
+
+Sites de conteúdo adulto gratuitos fora dos diretórios curados estão entre os maiores focos de \emph{malvertising} (pop-ups agressivos, falsos alertas de vírus e executáveis disfarçados). Se você consome mídias, mangás/doujinshis, jogos +18 ou conteúdos de criadores, \textbf{jamais navegue sem o uBlock Origin ativo} e utilize exclusivamente estas plataformas consolidadas pela comunidade:
+
+\subsection{Anime, Hentai, Doujinshi e Jogos (+18)}
+
+\begin{ferramenta}[goat,logo=sukebei]{Sukebei Nyaa}{https://sukebei.nyaa.si}{torrent, hentai, doujinshi, visual novels, jav}
+O braço oficial \textbf{+18} do lendário tracker \emph{Nyaa.si} e a maior fonte mundial de torrents para cultura otaku adulta. Reúne lançamentos de Hentai em qualidade máxima (Blu-ray / 1080p sem censura e sem marca d'água de sites de streaming), pacotes completos de Doujinshis, jogos japoneses (\emph{Visual Novels} e rips da \emph{DLsite}), obras de áudio/ASMR (\emph{RJ codes}) e JAV. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=f95zone]{F95zone}{https://f95zone.to}{jogos +18, visual novels, renpy, mods, forum moderado}
+A maior e mais segura comunidade mundial voltada para \textbf{jogos adultos, Visual Novels (+18), animações 3D, traduções e mods} (feitos em \emph{Ren'Py}, \emph{RPG Maker}, \emph{Unity} e \emph{Unreal}). Diferente de sites aleatórios no Google, cada thread de download no \textbf{F95zone} passa por checagem obrigatória de malware pelos moderadores e conta com avaliações e patches da comunidade. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=e-hentai]{E-Hentai (e ExHentai)}{https://e-hentai.org}{doujinshi, manga +18, cg, artbooks, arquivo}
+A maior biblioteca preservacionista de \textbf{Doujinshis, Mangás +18, CGs de jogos e Artbooks} da internet mundial. Possui um sistema avançado de busca por etiquetas (\emph{tags} de artista, paródia, personagem e idioma — incluindo traduções em português), download direto via arquivo ou torrent oficial e integração perfeita com o leitor Android \textbf{Mihon}. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=hitomi]{Hitomi.la}{https://hitomi.la}{leitor web, doujinshi, manga +18, filtro por idioma}
+Leitor online ultrarrápido que espelha o acervo de Doujinshis, Mangás e CGs de artistas com carregamento instantâneo no navegador e filtro fácil por idioma (\emph{Portuguese}, \emph{English}, \emph{Japanese}). \textbf{Atenção:} acesse sempre com o \textbf{uBlock Origin} ligado, pois sem bloqueador o site exibe banners e pop-ups intrusivos. \estrelas{4}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=pawchive]{Pawchive}{https://pawchive.pw/}{sucessor do kemono, patreon, fanbox, arquivo publico}
+Sucessor espiritual do famoso \emph{Kemono}. O \textbf{Pawchive} funciona como um grande arquivo colaborativo: usuários que assinam criadores pagos em plataformas como \textbf{Patreon} e \textbf{Pixiv Fanbox} conectam e doam o acesso de suas assinaturas ao site, e o sistema \textbf{baixa e arquiva automaticamente todas as postagens, ilustrações, animações e pacotes exclusivos}, deixando todo o conteúdo público e gratuito para a comunidade! \estrelas{5}
+\end{ferramenta}
+
+\subsection{IRL e Fóruns de Criadores (+18)}
+
+\begin{ferramenta}[goat,logo=simpcity]{SimpCity}{https://simpcity.cr}{forum +18, irl, criadores, leaks, ddl}
+O maior e mais ativo fórum comunitário da atualidade dedicado ao compartilhamento e indexação de conteúdos exclusivos de criadoras, modelos e influenciadoras (\emph{OnlyFans}, \emph{Fansly}, \emph{Patreon}, etc.). Os tópicos são organizados por criadora e os pacotes de fotos e vídeos são hospedados em servidores rápidos de download direto (como \emph{Bunkr}, \emph{Cyberdrop}, \emph{Gofile} e \emph{Pixeldrain}). Note que exige criar uma conta gratuita para visualizar os links. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=socialmediagirls]{SocialMediaGirls (SMG Forums)}{https://forums.socialmediagirls.com}{forum +18, irl, modelos, comunidade veterana}
+Comunidade veterana e massiva focada em modelos e influenciadoras de redes sociais, com milhares de threads atualizadas diariamente pelos membros, pedidos da comunidade e espelhos de arquivos em servidores de DDL. \estrelas{4}
+\end{ferramenta}
+
+\begin{dica}[Como baixar álbuns inteiros do SimpCity e SMG com 1 clique]
+Não baixe fotos ou vídeos um por um no navegador! Quando abrir um álbum do \emph{Bunkr}, \emph{Cyberdrop}, \emph{Gofile} ou \emph{Pixeldrain} postado no \textbf{SimpCity} ou \textbf{SocialMediaGirls}, basta copiar a URL da página do álbum com o \textbf{JDownloader 2} aberto: o \emph{LinkGrabber} captura todos os vídeos e imagens da pasta automaticamente e baixa tudo na velocidade máxima!
+\end{dica}
+
+\section{Checklist Final de Segurança da Pousada}
+
+Antes de começar sua jornada de downloads, passe os olhos nesta lista de verificação rápida para garantir que seu sistema está 100\% blindado:
+
+\begin{checklist}
+  \feito Navegador seguro instalado (\textbf{Zen Browser}, \textbf{LibreWolf} ou \textbf{Mullvad Browser} no PC; \textbf{IronFox} no Android).
+  \feito Extensão \textbf{uBlock Origin} instalada e com listas de proteção contra malware ativadas.
+  \feito \textbf{DNS over HTTPS (DoH)} configurado (\textbf{Cloudflare}, \textbf{Mullvad Adblock}, \textbf{Quad9} ou \textbf{uBlockDNS}).
+  \feito \textbf{Violentmonkey} instalado com o script \textbf{Bypass All Shortlinks Debloated}.
+  \feito Opção \emph{``Mostrar extensões dos tipos de arquivo conhecidos''} ativada no gerenciador de arquivos.
+  \feito \textbf{qBittorrent} instalado no lugar do µTorrent/BitTorrent.
+  \feito \textbf{7-Zip / NanaZip} e \textbf{HatchZip} instalados no lugar do WinRAR.
+  \feito \textbf{Motrix} ou \textbf{JDownloader 2} configurados para downloads diretos grandes.
+  \feito Megathreads (\textbf{FMHY}, \textbf{r/Piracy}, \textbf{Pirataria.link} e \textbf{EverythingMoe}) salvas na barra de favoritos.
+  \opcional Serviço de Debrid (\textbf{TorBox}) contratado e integrado ao \textbf{Hydra Launcher} / \textbf{Stremio}.
+  \opcional \textbf{Proton VPN} ou \textbf{Mullvad VPN} configurada via \textbf{WireGuard} e vinculada ao qBittorrent.
+  \opcional Ambiente de isolamento (\textbf{Bottles} no Linux ou \textbf{Windows Sandbox} no Windows) pronto para arquivos duvidosos.
+\end{checklist}
+
+\section{Glossário Rápido do Marinheiro}
+
+\begin{description}
+  \item[Seeder / Leecher] \emph{Seeder} é quem já tem o arquivo completo e continua enviando pedaços para ajudar a comunidade; \emph{Leecher} é quem está baixando o arquivo no momento. Sempre que puder, deixe o torrent semeando!
+  \item[DDL (Direct Download)] Download feito diretamente de um servidor web (como Gofile, Pixeldrain, Buzzheavier ou Mega), sem usar a rede P2P BitTorrent.
+  \item[Debrid] Serviço intermediário que baixa torrents em servidores próprios de altíssima velocidade (entregando via HTTPS direto do cache) e desbloqueia links premium de servidores de arquivos.
+  \item[Repack vs. Pre-Installed] Um \emph{Repack} (como os da FitGirl ou DODI) comprime fortemente o instalador do jogo para economizar internet na hora de baixar, mas demora mais para instalar no PC. Um jogo \emph{Pre-Installed} (como no SteamRIP) já vem pronto para extrair e jogar.
+  \item[False Positive (False Flag)] Alerta falso do antivírus causado pelo fato de cracks legítimos modificarem arquivos \texttt{.dll} de DRM de forma semelhante a empacotadores de código.
+\end{description}
+
+\divisor
+
+\begin{pousadinha}[Bons ventos e downloads seguros!]
+Agora você tem todo o conhecimento e as ferramentas que separam um marinheiro de primeira viagem de um verdadeiro veterano da Pousada! Se encontrar um site novo incrível, tiver dúvida se um arquivo é seguro ou quiser sugerir melhorias para a próxima versão deste guia, apareça no nosso Discord. Compartilhe este PDF com seus amigos para que ninguém mais caia em armadilhas na internet!
+\end{pousadinha}
+
+\contracapa
+\end{document}

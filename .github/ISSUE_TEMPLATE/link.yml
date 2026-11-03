@@ -1,0 +1,37 @@
+name: 🔗 Sugerir ou reportar link
+description: Sugira uma ferramenta/site para um guia, ou avise que um link quebrou ou ficou suspeito.
+title: "[link] "
+labels: ["links"]
+body:
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Tipo
+      options:
+        - Sugestão de ferramenta/site
+        - Link quebrado
+        - Link suspeito / comprometido (malware, domínio sequestrado)
+        - Correção de informação
+    validations:
+      required: true
+  - type: input
+    id: guia
+    attributes:
+      label: Guia
+      placeholder: "#01 Piracy Guide"
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: detalhes
+    attributes:
+      label: Detalhes
+      description: Por que entrar, sair ou mudar? Se for suspeito, conte o que aconteceu.
+    validations:
+      required: true

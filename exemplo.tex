@@ -1,0 +1,185 @@
+% =====================================================================
+%  exemplo.tex -- Documento de exemplo do sistema visual PousadaGuide
+%  Compile com:  latexmk -xelatex exemplo.tex     (ou: tectonic exemplo.tex)
+% =====================================================================
+\documentclass{pousadaguide}
+% \documentclass[print]{pousadaguide}   % versão para impressão (fundo branco)
+
+% ---- Metadados do guia ---------------------------------------------
+\guianumero{00}
+\guiatitulo{Guia de Exemplo}
+\guiasubtitulo{Um tour por todos os componentes do sistema visual dos PousadaGuides.}
+\guiaslug{exemplo}
+\guiacategoria{sistema visual}
+\guiaversao{v1.0}
+\guiaautor{Bakalhau}
+\guiadata{novembro de 2026}
+\guialicenca{GNU AGPLv3}
+\guialinks{%
+  \textcolor{pgGlow}{\faDiscord}\ \ discord.gg/pousada\\[1mm]
+  \textcolor{pgGlow}{\faGithub}\ \ github.com/pousada\\[1mm]
+  \textcolor{pgGlow}{\faRss}\ \ pousada.substack.com}
+
+\begin{document}
+
+\capa
+\tableofcontents
+
+% =====================================================================
+\comentario{antes de tudo, entenda o terreno}
+\chapter{Primeiros passos}
+
+\begin{missao}
+\begin{itemize}
+  \item Entender como um PousadaGuide é estruturado.
+  \item Conhecer as caixas de destaque e quando usar cada uma.
+  \item Rodar seu primeiro comando no terminal com segurança.
+\end{itemize}
+\end{missao}
+
+Este é o texto corrido do guia, usando \textbf{IBM Plex Sans} para leitura
+confortável em tela. Títulos, rótulos e código usam \textbf{IBM Plex Mono}, que
+dá o ar ``terminal'' da identidade. Você pode usar \emph{ênfase}, links como
+\pglink{https://fmhy.net}, links com texto como \pglink[o repositório]{https://github.com},
+código em linha como \cmd{sudo pacman -Syu} e atalhos como
+\kbd{Ctrl}+\kbd{Shift}+\kbd{Del}.
+
+\section{Caixas de destaque}
+
+Use as caixas com moderação: elas chamam atenção justamente por serem raras.
+
+\begin{nota}
+Informação neutra, contexto ou curiosidade que complementa o texto.
+\end{nota}
+
+\begin{dica}[atalho útil]
+Boas práticas e truques que economizam tempo. O texto entre colchetes vira o
+título da caixa.
+\end{dica}
+
+\begin{atencao}
+Algo que pode dar errado se o leitor não prestar atenção, mas sem risco grave.
+\end{atencao}
+
+\begin{perigo}[nunca faça isso]
+Risco real de segurança, perda de dados ou exposição. Use só quando for sério.
+\end{perigo}
+
+\begin{tldr}
+Resumo de uma seção longa em duas ou três linhas, para quem está com pressa.
+\end{tldr}
+
+\begin{pousadinha}
+Oi! Eu apareço quando o guia quer falar mais de perto com você, explicar algo
+de um jeito mais leve ou dar aquela dica de quem já quebrou a cara antes.
+\end{pousadinha}
+
+\section{Terminal e código}
+
+\subsection{Comandos de shell}
+
+O \texttt{\$} fica destacado automaticamente e comentários com \texttt{\#}
+ficam esmaecidos:
+
+\begin{terminal}[bash -- ~/downloads]
+# atualiza o sistema (Arch / Manjaro)
+$ sudo pacman -Syu
+
+# confere o hash de um arquivo baixado
+$ sha256sum ubuntu-24.04-desktop-amd64.iso
+a1b2c3d4e5f6...  ubuntu-24.04-desktop-amd64.iso
+\end{terminal}
+
+\subsection{Arquivos de código}
+
+\begin{codigo}[language=JavaScript]{exemplo.user.js}
+// ==UserScript==
+// @name         Olá Pousada
+// @match        https://*/*
+// ==/UserScript==
+(function () {
+  'use strict';
+  const msg = "Bem-vindo à Pousada!"; // comentário com acentuação
+  console.log(msg);
+})();
+\end{codigo}
+
+\subsubsection{Nível mais profundo de título}
+
+Subseções usam \texttt{>>} e o terceiro nível usa \texttt{//}, como comentários
+de código.
+
+% =====================================================================
+\comentario{o arsenal recomendado pela comunidade}
+\chapter{Ferramentas}
+
+\section{Fichas de ferramenta}
+
+\begin{ferramenta}[recomendado]{Zen Browser}{https://zen-browser.app}{open source, firefox, win, linux, mac}
+Navegador baseado no Firefox, focado em privacidade e com uma interface limpa
+com abas verticais. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}{qBittorrent}{https://www.qbittorrent.org}{open source, torrent, win, linux, mac}
+Cliente de torrent livre, sem anúncios, com busca integrada e suporte a filtros
+de IP. \estrelas{4}
+\end{ferramenta}
+
+\section{Comparativos}
+
+\begin{tabela}{>{\bfseries}l X c c c}
+\cab{Cliente} & \cab{Observação} & \cab{Livre} & \cab{Anúncios} & \cab{Leve} \\
+qBittorrent  & Melhor equilíbrio geral          & \ok & \ok   & \meio \\
+Transmission & Minimalista, ótimo no Linux/macOS & \ok & \ok   & \ok   \\
+Deluge       & Extensível via plugins           & \ok & \ok   & \ok   \\
+µTorrent     & Evite: anúncios e histórico ruim & \nope & \nope & \meio \\
+\end{tabela}
+
+Etiquetas avulsas: \pgtag{open source} \pgtag[pgAmber]{freemium}
+\pgtag[pgAlert]{evite} \pgtag[pgBrass]{beta}
+
+\section{Passo a passo}
+
+\begin{passo}{Baixe o instalador oficial}
+Sempre pelo site oficial do projeto ou pelo gerenciador de pacotes do seu sistema.
+\end{passo}
+
+\begin{passo}{Verifique a integridade}
+Compare o hash \cmd{SHA-256} com o publicado na página de download.
+\end{passo}
+
+\begin{passo}{Instale e configure}
+Siga as configurações recomendadas da próxima seção.
+\end{passo}
+
+\section{Listas}
+
+\begin{itemize}
+  \item Itens de lista usam o prompt \texttt{>} como marcador.
+  \begin{itemize}
+    \item E o segundo nível usa um traço.
+  \end{itemize}
+  \item Simples e legível.
+\end{itemize}
+
+\begin{enumerate}
+  \item Listas numeradas usam dois dígitos.
+  \item Como contadores de terminal.
+\end{enumerate}
+
+\begin{checklist}
+  \feito uBlock Origin instalado
+  \feito DNS com bloqueio configurado
+  \item VPN configurada
+  \opcional Debrid contratado
+\end{checklist}
+
+\divisor
+
+\begin{description}
+  \item[Debrid] Serviço que baixa o arquivo por você em servidores rápidos.
+  \item[Seed] Quem continua compartilhando o arquivo depois de baixar.
+\end{description}
+
+\contracapa
+\end{document}

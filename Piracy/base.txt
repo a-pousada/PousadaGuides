@@ -1,0 +1,135 @@
+Torrent
+Clientes Torrents
+Qbittorrent 🐐
+Deluge
+Transmission
+
+Não usar:
+µTorrent
+BitTorrent
+
+Debrid
+Torbox 🐐
+RealDebrid
+AllDebrid
+
+Relacionados
+Disbox
+
+Navegador
+Zen Browser 🐐
+LibreWolf 🐐
+Mullvad Browser 🐐
+Brave
+Firefox
+Ungoogled Chromium
+Helium
+
+Android:
+IronFox
+
+
+Não usar:
+Chromium
+Opera GX
+Opera
+
+Ublock Origin
+DoH:
+uBlockDNS 🐐
+Cloudflared 🐐
+Quad9
+
+Scripts:
+Violentmonkey 🐐
+
+
+https://codeberg.org/gongchandang49/bypass-all-shortlinks-debloated
+cite scripts úteis
+
+Anti-virus
+Explique que o antivirus não é confiável e não deve ser usado como zona de conforto achando que está seguro. Alguns programas você terá que desativar o Windows Defender porque ele faz false flag em alguns arquivos. Se você não confia ou o download estiver num site fora da lista de sites seguros, não baixe (Algumas exceções se forem arquivos de mídia que no geral são seguros e não carregam vírus: imagem, png, jpg, (cite o resto), vídeo: mp4, mkv, avi (cite o resto) aúdio: mp3, wav (cite o resto). Se você pegou virus ou suspeita, formate o computador, é o mais seguro
+
+Site útil pra ser usado antes de instalar e quiser checar: Virus Total
+
+Mas se mesmo assim você precisar de um antivirus, as recomendações são Kaspersky e Malwarebytes
+
+Não use:
+Avast
+AVG
+McAfee
+
+Programas Uteis no Geral
+
+Compactação e Extração
+7zip/Nanazip 🐐
+Hatchzip 🐐
+
+Não usar:
+Winrar
+
+Gerenciadores de Download
+Motrix 🐐
+JDownloader 2 🐐
+AB Download Manager
+Gopeed
+
+Launcher de Jogos
+Hydra Launcher 🐐
+
+Players de Mídia
+Vlc 🐐
+Mpv 🐐
+
+Sistema Operacional
+
+Explique em dar preferencia ao Linux por ter muito menos virus possiveis, e ter ferramentas melhores de controle
+
+Linux: Bottles (Isola o jogo, sendo impossivel de contaminar o resto do PC, caso contaminado)
+Windows: Sandbox (Máquina virtual do próprio windows que apaga a cada reinicialização, também impede de virus fugir, mas é bem mais pesado
+
+Use quando precisar executar um arquivo que você não confia
+
+Vps
+
+No Brasil, você não precisa necessárimente usar VPNs (por enquanto), mas por questões de privacidade e anonimato é recomendado
+
+ProtonVPN 🐐
+Mullvad 🐐
+
+Não usar:
+Planet VPN
+Urban VPN
+Windscribe
+Opera VPN
+Ou qualquer outra VPN que diga que é grátis (A maioria vai roubar seus dados e não são confiaveis, exceção para o plano gratuíto da Proton)
+
+Programas relacionados
+Wireguard
+
+Redes Alternativas (Recomendado se você busca privacidade e anonimato grátis)
+I2P
+Tor
+
+Links de Sites Geral (Games, Programas, etc):
+https://rentry.org/megathread
+https://pirataria.link/
+https://everythingmoe.com/
+https://fmhy.net
+https://ripped.guide
+https://wotaku.wiki
+https://theindex.moe
+
+NSFW
+
+Anime/Hentai
+https://sukebei.nyaa.si
+https://f95zone.to
+https://pawchive.pw/
+https://e-hentai.org
+https://hitomi.la
+
+IRL/Porno
+https://forums.socialmediagirls.com
+https://simpcity.cr
+
