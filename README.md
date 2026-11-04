@@ -137,6 +137,9 @@ PousadaGuides/
 
 ## ✍️ Criando um novo guia
 
+> [!TIP]
+> **Manual completo para pessoas e agentes de IA:** Consulte o [**AGENTS.md**](AGENTS.md) para o tutorial completo e detalhado de como criar novos temas do zero, padronizar logos, gerar banners temáticos e utilizar todos os componentes da classe [`pousadaguide.cls`](pousadaguide.cls).
+
 1. Crie uma pasta (ex.: `Linux/`) com um link para a classe: `ln -s ../pousadaguide.cls Linux/`
 2. Coloque a capa/avatar do guia em `Linux/assets/` (os recursos de `assets/` já são encontrados automaticamente).
 3. Escreva o `.tex`:
