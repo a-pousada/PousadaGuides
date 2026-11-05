@@ -7,7 +7,7 @@
 # PousadaGuide #01 — Piracy Guide
 
 **Como navegar sem armadilhas, baixar com segurança e dominar as melhores ferramentas e Megathreads.**<br>
-<sub>Inspirado na lendária Megathread do <code>r/Piracy</code> e no FMHY · 39 páginas revisadas pela comunidade</sub>
+<sub>Inspirado na lendária Megathread do <code>r/Piracy</code> e no FMHY · 43 páginas revisadas pela comunidade</sub>
 
 <br>
 

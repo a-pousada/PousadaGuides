@@ -19,7 +19,7 @@
 \guiasubtitulo{Como navegar sem armadilhas, baixar com segurança e dominar as melhores ferramentas e Megathreads.}
 \guiaslug{piracy-guide}
 \guiacategoria{segurança \& opsec}
-\guiaversao{v1.0}
+\guiaversao{v1.1}
 \guiaautor{Bakalhau}
 \guiadata{novembro de 2026}
 \guialicenca{GNU AGPLv3}
@@ -284,6 +284,7 @@ Só instale scripts hospedados no \textbf{Codeberg}, \textbf{GitHub} ou \textbf{
 \begin{itemize}
   \item Configurar o cliente de torrent definitivo (\textbf{qBittorrent}) e banir clientes cheios de adware (\textbf{µTorrent/BitTorrent}).
   \item Entender como funcionam os serviços de \textbf{Debrid} (\textbf{TorBox}, \textbf{Real-Debrid}, \textbf{AllDebrid}) e por que eles mudam o jogo.
+  \item Integrar o \textbf{Stremio} com Debrid usando os melhores addons da atualidade (\textbf{AIOStreams} e \textbf{Comet}).
   \item Acelerar downloads diretos (DDL) em múltiplas conexões com \textbf{Motrix} e \textbf{JDownloader 2}.
 \end{itemize}
 \end{missao}
@@ -350,6 +351,26 @@ Serviço criado para que \textbf{você possa compartilhar a sua assinatura do To
 
 \begin{dica}[Por que o Disbox é tão útil para a comunidade?]
 Normalmente, os links de download gerados no TorBox expiram após pouco tempo. Com o \textbf{Disbox}, você consegue dividir sua assinatura do TorBox com o pessoal do servidor e criar links fixos para jogos, filmes ou animes que continuam funcionando sempre que alguém clicar para baixar ou assistir!
+\end{dica}
+
+\subsection{Stremio + Debrid: O Cinema Infinito em Casa}
+
+Se existe uma combinação que revolucionou o consumo de filmes e séries, é a união do \textbf{Stremio} com uma conta de \textbf{Debrid} (\textbf{TorBox} ou \textbf{Real-Debrid}). Ao invés de você esperar horas para baixar um arquivo de 50 GB e ocupar seu SSD, o Debrid transmite o vídeo instantaneamente via HTTPS na velocidade máxima da sua conexão, com legendas em múltiplos idiomas e áudio sem compressão, sem semear na rede P2P e sem expor seu IP real.
+
+\begin{ferramenta}[goat,logo=stremio]{Stremio}{https://www.stremio.com}{open source, media center, streaming, multi-plataforma}
+A central multimídia moderna e definitiva para filmes, séries e canais. O \textbf{Stremio} sincroniza toda a sua biblioteca, histórico e extensões na nuvem entre PC (Windows/Linux/Mac), celulares e Smart TVs (Android TV, Samsung e LG). Opera via addons remotos seguros e, pareado com uma conta de \textbf{Debrid}, proporciona reprodução instantânea em 4K HDR com zero buffering. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=aiostreams]{AIOStreams}{https://github.com/Viren070/AIOStreams}{open source, stremio, agregador, debrid, usenet}
+O agregador definitivo (\emph{All-In-One}). Em vez de instalar dezenas de addons individuais no Stremio (que deixam o aplicativo pesado), o \textbf{AIOStreams} centraliza e orquestra os melhores scrapers da comunidade (\emph{Torrentio}, \emph{Comet}, \emph{MediaFusion}, \emph{TorBox Scraper}, etc.) sob uma única extensão. Permite filtrar fontes por idioma (priorizando áudio dublado e legendas em português), ordenar por velocidade e configurar múltiplos Debrids. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=comet]{Comet}{https://github.com/g0ldyy/comet}{open source, stremio, scraper ultrarrapido, debrid, cache}
+Desenvolvido em Python assíncrono (\emph{FastAPI}), o \textbf{Comet} é o scraper mais rápido do Stremio. Integra-se nativamente a indexadores Prowlarr/Zilean, possui sistema próprio de cache instantâneo de Debrid (\textbf{TorBox}, \textbf{Real-Debrid}, \textbf{AllDebrid}, \textbf{Premiumize}) e proxy integrado para contornar restrições de IP. É a melhor opção de fonte redundante no AIOStreams quando outros addons enfrentam filas. \estrelas{5}
+\end{ferramenta}
+
+\begin{dica}[E o famoso Torrentio?]
+O \textbf{Torrentio} foi o addon veterano que popularizou o Debrid no Stremio. Ele continua sendo ótimo, mas sua infraestrutura pública frequentemente sofre com lentidão em horários de pico. A melhor prática moderna é configurar o \textbf{AIOStreams} incluindo o \textbf{Comet} e o \textbf{TorBox/Torrentio} como fontes: se um oscilar, o outro assume na hora sem travar seu filme!
 \end{dica}
 
 \section{Gerenciadores de Download Direto (DDL)}
@@ -437,8 +458,15 @@ $ hatchzip x Jogo_Dividido.7z.001
 Criado por desenvolvedores brasileiros e adotado no mundo inteiro, o \textbf{Hydra Launcher} transforma a experiência de baixar e organizar jogos alternativos em algo tão prático quanto usar a própria Steam. Ele conta com catálogo completo de jogos, gerenciador de downloads integrado (BitTorrent + HTTP direto + suporte nativo a \textbf{TorBox} e \textbf{Real-Debrid}), sistema de conquistas, contagem de horas jogadas e perfil social. \estrelas{5}
 \end{ferramenta}
 
-\begin{pousadinha}[Como funcionam as Fontes (Sources) no Hydra?]
-Por questões legais e de segurança, o \textbf{Hydra Launcher} vem ``vazio'' de links por padrão. Você adiciona as chamadas \textbf{Fontes (Hydra Sources)} através de links JSON curados pela comunidade (que indexam apenas releases oficiais da \emph{FitGirl}, \emph{DODI}, \emph{SteamRIP}, \emph{Online-Fix}, \emph{GOG}, etc.). Sempre pegue seus links JSON de fontes listadas nas Megathreads oficiais (Capítulo 07) — nunca adicione fontes JSON de desconhecidos!
+\begin{pousadinha}[Onde encontrar as Fontes (Sources) do Hydra com segurança?]
+Por questões legais e de segurança, o \textbf{Hydra Launcher} vem ``vazio'' de links por padrão. Você precisa adicionar as chamadas \textbf{Fontes (Hydra Sources)}, que são URLs em formato JSON com o catálogo de jogos indexados diretamente de repackers e grupos confiáveis (\emph{FitGirl}, \emph{DODI}, \emph{SteamRIP}, \emph{Empress}, \emph{Online-Fix}, \emph{GOG}, etc.).
+
+\textbf{O lugar oficial e curado pela comunidade para pegar sources verificadas é:}
+\begin{center}
+\pglink[library.hydra.wiki/sources]{https://library.hydra.wiki/sources}
+\end{center}
+
+Basta abrir a biblioteca no navegador, copiar os links das fontes desejadas e colar no Hydra em \textbf{Configurações $\rightarrow$ Fontes de Download $\rightarrow$ Adicionar Fonte}. \textbf{Atenção:} nunca adicione links JSON de pessoas desconhecidas no Discord ou no Telegram, pois fontes maliciosas podem apontar para instaladores adulterados com malware!
 \end{pousadinha}
 
 \section{Players de Mídia (Vídeo e Áudio)}
@@ -671,7 +699,7 @@ Urban / Hola / Opera & ``Grátis'' & \nope  & Ruim  & \pgtag[pgAlert]{evite} Ven
 \begin{itemize}
   \item Entender por que nunca devemos confiar em links estáticos isolados, mas sim em \textbf{Megathreads vivas}.
   \item Favoritar os 4 grandes diretórios gerais de Jogos, Programas, Filmes, Livros e Músicas.
-  \item Dominar os índices especializados em cultura Otaku e as comunidades seguras de conteúdo \textbf{NSFW (+18)} (Anime/Hentai e IRL).
+  \item Dominar os índices especializados em cultura Otaku, os clientes modernos de streaming de animes (\textbf{Seanime}, \textbf{Shiru}, \textbf{Anilili}) e as comunidades seguras de conteúdo \textbf{NSFW (+18)} (Anime/Hentai e IRL).
 \end{itemize}
 \end{missao}
 
@@ -712,6 +740,39 @@ Muito mais do que uma lista de links, a \textbf{Wotaku.wiki} é uma enciclopédi
 \begin{ferramenta}[recomendado,logo=theindex]{TheIndex.moe}{https://theindex.moe}{catalogo otaku, filtros visuais, apps, comunidades}
 Catálogo visual extremamente limpo que permite filtrar sites de animes, mangás e novels por idioma, presença ou ausência de anúncios, qualidade de vídeo (1080p / Blu-ray), suporte a aplicativos Android/iOS e tipos de mídia. \estrelas{4}
 \end{ferramenta}
+
+\subsection{Clientes e Players de Anime: O Streaming P2P Moderno}
+
+Para quem consome animes com frequência, a era de sofrer com players travando em sites repletos de anúncios invasivos ou de gerenciar downloads manuais no navegador acabou. A comunidade desenvolveu ecossistemas completos de código aberto que unem busca de torrents em alta fidelidade (\emph{Nyaa.si} / \emph{SeaDex}), reprodução instantânea via streaming e sincronização automática com a sua lista no \textbf{AniList} ou \textbf{MyAnimeList}:
+
+\begin{ferramenta}[goat,logo=seanime]{Seanime}{https://seanime.app}{open source, anime, manga, torrent, debrid, anilist, win, linux, mac}
+O centro de mídia definitivo para cultura otaku no computador. Desenvolvido em Go + TypeScript, o \textbf{Seanime} roda como um servidor local ultrarrápido com interface gráfica deslumbrante. Ele sincroniza episódios assistidos automaticamente no seu \textbf{AniList}, conta com player embutido movido pelo poderoso motor do \textbf{mpv} (com suporte nativo a shaders \emph{Anime4K} para upscaling em tempo real), reproduz torrents diretamente sem esperar o download terminar, suporta contas de Debrid (\textbf{TorBox} e \textbf{Real-Debrid}), inclui leitor nativo de mangás e automação inteligente por RSS para baixar lançamentos da temporada sozinho. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=shiru]{Shiru}{https://shiru.app}{open source, anime, torrent streaming, anilist, win, linux, mac, android}
+Fork comunitário aprimorado e independente do \emph{Hayase}. Criado pela comunidade para entregar um aplicativo desktop e mobile focado em streaming direto de torrents de anime com zero tempo de espera, interface escura moderna e sincronização instantânea com o \textbf{AniList}. O projeto surgiu após graves atritos com a governança fechada e o comportamento tóxico/contencioso do criador original do Hayase, trazendo melhorias consistentes de performance, correção de falhas antigas e uma equipe de desenvolvimento verdadeiramente acolhedora e aberta a contribuições. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[logo=hayase]{Hayase}{https://hayase.watch}{anime, torrent streaming, anilist, desktop}
+O aplicativo que originalmente popularizou a ideia de streaming P2P direto para um player de anime com rastreamento no AniList. Embora funcional para quem já o possui instalado, o projeto sofreu com o abandono de extensões e posturas polêmicas de seu mantenedor principal. A recomendação atual da comunidade é migrar para o fork ativo \textbf{Shiru} ou recorrer ao pacote de extensões \textbf{anitorrent}. \estrelas{3}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=anitorrent]{anitorrent}{https://github.com/anh9000/anitorrent}{open source, hayase, shiru, fontes nyaa, seadex, auto-update}
+Pacote de extensões indispensável para usuários de \textbf{Hayase} e \textbf{Shiru}. Como os scrapers nativos antigos foram descontinuados e pararam de encontrar fontes, o \textbf{anitorrent} resolve a busca de forma definitiva fornecendo 6 fontes de torrents auto-atualizáveis (\emph{Nyaa.si}, \emph{AnimeTosho}, \emph{SeaDex}, \emph{SubsPlease}, \emph{Yameii dubs} e \emph{ToonsHub}) através de um único link de importação no menu de extensões. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=anilili]{Anilili}{https://github.com/sanilili/Anilili}{open source, android, android tv, danmaku, anilist, streaming}
+Aplicativo nativo escrito em Kotlin e Jetpack Compose para \textbf{Android e Android TV / Fire TV}. Além de catálogo ágil com reprodução multi-fontes, download para assistir offline e sincronização com AniList/MAL, o grande diferencial do \textbf{Anilili} é o suporte a \textbf{Danmaku} — comentários da comunidade que passam flutuando pela tela em tempo real sincronizados com as cenas do episódio (estilo \emph{Bilibili} e \emph{Niconico}), trazendo a diversão e a resenha de assistir junto com a comunidade direto na sua TV! \estrelas{5}
+\end{ferramenta}
+
+\begin{tabela}{>{\bfseries}l c c c c X}
+\cab{Aplicativo} & \cab{Livre} & \cab{Torrent / Debrid} & \cab{AniList} & \cab{Plataforma} & \cab{Destaque Principal} \\
+Seanime \goat   & \ok & \ok & \ok & Desktop / Web & Media center supremo, mpv Anime4K, mangás e RSS \\
+Shiru \goat     & \ok & \ok & \ok & Win / Mac / Linux / Android & Fork ativo e aprimorado do Hayase, rápido e moderno \\
+Anilili         & \ok & \ok & \ok & Android / TV  & Danmaku (comentários na tela), perfeito para TV \\
+Hayase          & \ok & \ok & \ok & Desktop       & Pioneiro original (recomendado migrar para o Shiru) \\
+anitorrent      & \ok & \ok & --- & Extensões     & Repositório de fontes Nyaa/SeaDex para Shiru e Hayase \\
+\end{tabela}
 
 \section{Índices e Comunidades NSFW (+18)}
 
@@ -767,7 +828,8 @@ Antes de começar sua jornada de downloads, passe os olhos nesta lista de verifi
   \feito \textbf{7-Zip / NanaZip} e \textbf{HatchZip} instalados no lugar do WinRAR.
   \feito \textbf{Motrix} ou \textbf{JDownloader 2} configurados para downloads diretos grandes.
   \feito Megathreads (\textbf{FMHY}, \textbf{r/Piracy}, \textbf{Pirataria.link} e \textbf{EverythingMoe}) salvas na barra de favoritos.
-  \opcional Serviço de Debrid (\textbf{TorBox}) contratado e integrado ao \textbf{Hydra Launcher} / \textbf{Stremio}.
+  \opcional Serviço de Debrid (\textbf{TorBox}) integrado ao \textbf{Hydra Launcher} e ao \textbf{Stremio} (via \textbf{AIOStreams} e \textbf{Comet}).
+  \opcional Clientes modernos de anime (\textbf{Seanime}, \textbf{Shiru} ou \textbf{Anilili}) conectados ao \textbf{AniList}.
   \opcional \textbf{Proton VPN} ou \textbf{Mullvad VPN} configurada via \textbf{WireGuard} e vinculada ao qBittorrent.
   \opcional Ambiente de isolamento (\textbf{Bottles} no Linux ou \textbf{Windows Sandbox} no Windows) pronto para arquivos duvidosos.
 \end{checklist}
