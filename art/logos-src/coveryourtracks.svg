@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 402 300" width="100%" height="100%">
+  <defs>
+    <style>
+      
+      .paw { fill: #1b3824; }
+      .title {
+        fill: #f4ab19;
+        font-family: 'Montserrat', 'Arial Black', sans-serif;
+        font-weight: 800;
+        font-size: 51px;
+        letter-spacing: 0.5px;
+      }
+    </style>
+  </defs>
+
+  <!-- Pegada ao fundo -->
+  <g class="paw">
+    <!-- Almofada principal (palma) -->
+    <path d="M 41,165 C 33,128 60,113 95,123 C 128,132 162,152 195,179 C 225,204 218,248 186,268 C 160,284 128,275 112,243 C 96,214 50,205 41,165 Z" />
+
+    <!-- Dedo 1 (Esquerda) e Garra 1 -->
+    <path d="M 85,103 C 75,85 95,58 122,55 C 134,54 132,75 118,92 C 106,106 92,114 85,103 Z" />
+    <path d="M 131,47 C 127,43 151,21 157,24 C 161,27 146,52 139,51 C 135,50 133,49 131,47 Z" />
+
+    <!-- Dedo 2 (Meio-Esquerda) e Garra 2 -->
+    <path d="M 134,113 C 124,95 148,54 176,55 C 193,56 188,88 171,108 C 157,124 141,126 134,113 Z" />
+    <path d="M 183,46 C 179,42 206,15 212,18 C 216,21 200,51 193,50 C 189,49 186,48 183,46 Z" />
+
+    <!-- Dedo 3 (Centro-Topo) e Garra 3 -->
+    <path d="M 182,135 C 173,118 197,64 226,64 C 245,64 242,107 224,131 C 210,150 190,150 182,135 Z" />
+    <path d="M 227,53 C 222,49 253,13 259,16 C 264,19 249,59 241,58 C 236,57 231,56 227,53 Z" />
+
+    <!-- Dedo 4 (Centro-Direita) e Garra 4 -->
+    <path d="M 216,170 C 206,152 222,112 248,110 C 266,109 266,152 250,173 C 237,189 223,184 216,170 Z" />
+    <path d="M 248,98 C 244,94 265,57 271,60 C 275,62 266,103 259,103 C 254,103 251,101 248,98 Z" />
+
+    <!-- Dedo 5 (Direita-Baixo) e Garra 5 -->
+    <path d="M 224,220 C 215,207 232,174 256,171 C 269,169 266,205 251,223 C 239,236 230,230 224,220 Z" />
+    <path d="M 257,160 C 253,157 272,126 277,128 C 280,130 272,165 265,165 C 261,165 259,163 257,160 Z" />
+  </g>
+
+  <!-- Textos principais -->
+  <text x="48" y="119" class="title">COVER</text>
+  <text x="51" y="177" class="title">YOUR</text>
+  <text x="51" y="235" class="title">TRACKS</text>
+</svg>

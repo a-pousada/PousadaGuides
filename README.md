@@ -30,6 +30,7 @@ Cada guia é um PDF bonito, organizado e revisado pela comunidade — gerado a p
 | | Guia | Conteúdo | Download |
 |:-:|---|---|:-:|
 | <a href="#01--piracy-guide"><img src="docs/previews/piracy-capa.png" width="110" alt="Capa Piracy Guide"></a> | [**#01 — Piracy Guide**](#01--piracy-guide)<br><sub>segurança & opsec · v1.1 · 43 páginas</sub> | Como navegar sem armadilhas, baixar com segurança e dominar as melhores ferramentas e Megathreads. Inspirado na Megathread do `r/Piracy` e no FMHY. | [**Tela**](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy.pdf)<br>[Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy-impressao.pdf) |
+| <a href="#02--privacy-guide"><img src="docs/previews/privacy-capa.png" width="110" alt="Capa Privacy Guide"></a> | [**#02 — Privacy Guide**](#02--privacy-guide)<br><sub>privacidade & anonimato · v1.0 · 44 páginas</sub> | Do zero ao anonimato prático: higiene digital, criptografia, sistemas livres e soberania dos seus dados. Inspirado em PrivacyGuides e EFF. | [**Tela**](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf)<br>[Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy-impressao.pdf) |
 | — | **#00 — Guia de Exemplo** | Tour por todos os componentes do sistema visual (para quem vai escrever guias). | [PDF](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-00-Exemplo.pdf) |
 
 > [!TIP]
@@ -67,6 +68,37 @@ Cada guia é um PDF bonito, organizado e revisado pela comunidade — gerado a p
 
 > [!IMPORTANT]
 > O guia tem caráter **educativo e de segurança digital**: ensina a evitar malware, golpes e rastreamento. Você é responsável por respeitar as leis do seu país.
+
+### 🛡️ #02 — Privacy Guide
+
+<a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf">
+  <img src="docs/banner-privacy.png" alt="PousadaGuide #02 — Privacy Guide (Clique para baixar o PDF)" width="100%">
+</a>
+
+<p align="center">
+  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf"><b>📥 Baixar Guia em PDF (Tela)</b></a> ·
+  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy-impressao.pdf"><b>🖨️ Versão para Impressão</b></a> ·
+  <a href="Privacy/"><b>📁 Ver Pasta do Guia</b></a>
+</p>
+
+<table>
+<tr>
+<td width="33%"><img src="docs/previews/privacy-capa.png" alt="Capa"></td>
+<td width="33%"><img src="docs/previews/privacy-sumario.png" alt="Sumário"></td>
+<td width="33%"><img src="docs/previews/privacy-ferramentas.png" alt="Fichas de ferramentas"></td>
+</tr>
+</table>
+
+| Capítulo | O que você aprende |
+|---|---|
+| **01 · Fundamentos & Threat Model** | O mito do "não tenho nada a esconder", modelo de ameaça em 4 perguntas e tabela de adversários |
+| **02 · Senhas, Cofres & 2FA** | Bitwarden, KeePassXC, abandono do SMS, SIM swap, Ente Auth, Aegis, 2FAS e chaves de segurança FIDO2/YubiKey |
+| **03 · Identidade, E-mail & Mensageiros** | E-mails E2EE (Proton, Tuta), aliases (SimpleLogin, Addy.io), SimpleX Chat, Signal, Bitchat, Session e redes federadas (Matrix, Fluxer, Nostr, Mastodon) |
+| **04 · Navegação Anônima & Anti-Fingerprinting** | Browser fingerprinting, Mullvad Browser, LibreWolf, Tor Browser, SearXNG, DuckDuckGo e Kagi |
+| **05 · Metadados (EXIF), Notas & Nuvem Soberana** | Limpeza de metadados EXIF, notas seguras (Obsidian, Notesnook) e nuvem criptografada (Cryptomator, Syncthing, VeraCrypt) |
+| **06 · Sistemas Operacionais Livres & Blindagem** | Linux com LUKS, compartimentalização com Qubes OS, mitigação no Windows (WinUtil e alerta anti-Ghost Spectre), GrapheneOS, Obtainium e RethinkDNS |
+| **07 · VPNs, VPS & Redes Anônimas** | Obscura VPN (Two-Party), Mullvad, Proton VPN, AirVPN (Port Forwarding), VPS soberana, protocolos anti-DPI (sing-box com VLESS+REALITY e Hysteria 2), Tor, I2P e Tails OS |
+| **08 · O Mapa da Privacidade, Auditoria & Checklist** | PrivacyGuides, KYCnot.me, Awesome Privacy, EFF SSD, TOS;DR, HIBP, Exodus, checklist em 3 fases e glossário essencial |
 
 ---
 
@@ -118,17 +150,21 @@ PousadaGuides/
 │   ├── piracy.tex
 │   ├── base.txt            #   anotações/rascunho original do guia
 │   └── assets/             #   capa e avatar específicos deste guia
+├── Privacy/                # #02 — Privacy Guide
+│   ├── privacy.tex
+│   └── assets/             #   capa e avatar temáticos cypherpunk
 ├── assets/                 # recursos compartilhados entre guias
 │   ├── logo-*.png          #   logo Pousada (creme/teal)
 │   ├── pousadinha*.png     #   mascote padrão + avatar
 │   ├── goat.png            #   selo GOAT
 │   └── logos/              #   logos dos serviços (128×128, padronizados)
 ├── art/                    # artes originais em alta e fontes dos logos (SVG/PNG)
-├── docs/                   # banners (geral com Teacher e por guia com Pirata), previews
+├── docs/                   # banners e prévias para o README
 │   ├── banner.png          #   banner geral do projeto (clicável -> lista de guias)
 │   ├── banner-piracy.png   #   banner temático #01 (clicável -> download do PDF)
+│   ├── banner-privacy.png  #   banner temático #02 (clicável -> download do PDF)
 │   ├── social-preview.png  #   card para compartilhamento em redes (1280×640)
-│   ├── banner/             #   fontes TikZ dos banners (banner.tex, banner-piracy.tex)
+│   ├── banner/             #   fontes TikZ dos banners
 │   └── previews/           #   prévias das páginas para o README
 └── .github/workflows/      # build + release automáticos
 ```

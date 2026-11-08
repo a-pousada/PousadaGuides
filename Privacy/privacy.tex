@@ -1,0 +1,826 @@
+% =====================================================================
+%  PousadaGuide #02 -- Privacy & Security Guide
+%  Como blindar suas contas, comunicações, dados, redes e sistema operacional.
+%  Inspirado no PrivacyGuides.org, EFF & KYCnot.me para a Comunidade Pousada.
+%  Compile com:  latexmk -xelatex privacy.tex   (ou: tectonic privacy.tex)
+% =====================================================================
+\documentclass{pousadaguide}
+% \documentclass[print]{pousadaguide}   % versão para impressão (fundo branco)
+
+% ---- Identidade visual deste guia -----------------------------------
+\guiamascote{privacy-capa}
+\guiaavatar{privacy-avatar}
+\guiagoat{goat}
+\guiamascotepos{.62\paperheight}{-48mm}{4mm}
+
+% ---- Metadados do guia ----------------------------------------------
+\guianumero{02}
+\guiatitulo{Privacy Guide}
+\guiasubtitulo{Como blindar suas senhas, comunicações, dados pessoais, redes e sistemas contra vigilância, vazamentos e rastreadores.}
+\guiaslug{privacy-guide}
+\guiacategoria{privacidade \& opsec}
+\guiaversao{v1.0}
+\guiaautor{Bakalhau}
+\guiadata{novembro de 2026}
+\guialicenca{GNU AGPLv3}
+\guialinks{%
+  \textcolor{pgGlow}{\faDiscord}\ \ discord.gg/pousada\\[1mm]
+  \textcolor{pgGlow}{\faGithub}\ \ github.com/pousada\\[1mm]
+  \textcolor{pgGlow}{\faRss}\ \ pousada.substack.com}
+
+\begin{document}
+
+\capa
+\tableofcontents
+
+% =====================================================================
+%  CAPÍTULO 01 -- FUNDAMENTOS, MODELO DE AMEAÇA E REGRAS DE OURO
+% =====================================================================
+\comentario{antes de erguer os escudos, entenda o que você está protegendo}
+\chapter{Antes de Blindar}
+
+\begin{missao}[fundamentos de privacidade e opsec]
+\begin{itemize}
+  \item Distinguir claramente \textbf{Segurança}, \textbf{Privacidade} e \textbf{Anonimato} no mundo digital.
+  \item Construir um \textbf{Modelo de Ameaça (\emph{Threat Model})} realista, sem cair em paranoia.
+  \item Dominar as 5 Regras de Ouro que impedem o roubo de contas, o rastreamento em massa e o vazamento de dados pessoais.
+\end{itemize}
+\end{missao}
+
+Existe um argumento clássico repetido por quem nunca sofreu um vazamento de dados: \emph{``Não tenho nada a esconder, por que me importaria com privacidade?''}. Dizer que você não precisa de privacidade porque não faz nada de errado é o mesmo que dizer que não precisa de liberdade de expressão porque não tem nada a dizer.
+
+Na internet moderna, seus e-mails, fotos, localização, histórico de compras e conversas privadas são coletados silenciosamente por corretores de dados (\emph{data brokers}), grandes corporações de publicidade e governos — ou pior, expostos em megavazamentos que alimentam golpes de engenharia social e roubo de identidade. Este segundo \textbf{PousadaGuide} foi desenhado para devolver a você o controle sobre sua vida digital usando criptografia real e ferramentas de código aberto.
+
+\begin{pousadinha}[A Capitã Pousadinha avisa]
+Bem-vindo ao \textbf{PousadaGuide \#02}! Privacidade não é um interruptor de ``tudo ou nada'' — você não precisa ir morar no mato usando chapéu de alumínio. Cada camada que você adota (trocar o gerenciador de senhas, migrar do Gmail, usar aliases) já reduz drasticamente sua superfície de ataque. Comece pelo básico nos Capítulos 02 e 03!
+\end{pousadinha}
+
+\section{Segurança vs. Privacidade vs. Anonimato}
+
+Embora caminhem juntos, esses três conceitos resolvem problemas diferentes:
+
+\begin{itemize}
+  \item \textbf{Segurança (Trancar a porta de casa):} Garante que apenas pessoas autorizadas acessem seus dispositivos e contas. Ex.: usar um cofre de senhas forte, autenticação em dois fatores (2FA) e manter o sistema atualizado.
+  \item \textbf{Privacidade (Fechar as cortinas da janela):} Garante que ninguém veja \emph{o que} você está fazendo, mesmo que saibam quem você é. Ex.: usar \textbf{Proton Mail} ou \textbf{Signal}, onde o provedor sabe que você tem uma conta, mas a criptografia ponta-a-ponta impede que leiam suas mensagens.
+  \item \textbf{Anonimato (Usar uma máscara na multidão):} Desvincula completamente a sua identidade real das suas ações na rede. Ex.: navegar via rede \textbf{Tor} ou pagar a \textbf{Mullvad VPN} / \textbf{Obscura VPN} com Monero sem informar nome ou e-mail.
+\end{itemize}
+
+\section{Legenda Visual e Sistema de Classificação}
+
+\begin{legenda}[sistema de classificação pousada]
+  \noindent
+  \begin{minipage}[c]{0.16\linewidth}
+    \centering
+    \includegraphics[width=20mm]{goat}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[c]{0.80\linewidth}
+    {\pgmono\bfseries\fontsize{10.5}{13}\selectfont\color{pgTeal}%
+      SELO POUSADINHA “GOAT” (\emph{Greatest Of All Time})}\\[1.5mm]
+    Sempre que você vir o ícone da Pousadinha dando joinha (\goat) ao lado de um nome ou o selo dourado \pgtag[pgBrass]{GOAT // RECOMENDADO} no topo de uma ficha, significa que aquela ferramenta é \textbf{a referência técnica absoluta da categoria}: código aberto auditado, criptografia sólida e histórico impecável.
+  \end{minipage}
+
+  \divisor
+
+  \begin{tabela}{>{\bfseries}l X}
+  \cab{Símbolo / Etiqueta} & \cab{Significado no Guia} \\
+  \goat\ \ \pgtag[pgBrass]{goat} & \textbf{Escolha da Pousada (GOAT):} A recomendação número 1 da categoria. Se estiver em dúvida entre várias opções, escolha esta. \\
+  \pgtag{open source} & \textbf{Código Aberto:} Código-fonte público e auditável. Em segurança e criptografia, nunca confie em caixas-pretas proprietárias. \\
+  \pgtag{e2ee} & \textbf{Criptografia Ponta-a-Ponta:} Seus dados são trancados no seu dispositivo antes de subir para a nuvem; nem a empresa dona do servidor consegue lê-los (\emph{Zero-Knowledge}). \\
+  \pgtag{grátis} / \pgtag[pgAmber]{freemium} & \textbf{Modelo de Custo:} Ferramenta 100\% gratuita ou com plano gratuito funcional sustentado por recursos extras pagos. \\
+  \pgtag[pgAlert]{evite} & \textbf{Proibido / Lista Negra:} Serviços conhecidos por vigilância publicitária, coleta abusiva de metadados, código fechado inseguro ou vazamentos graves. \\
+  \ok\ \ /\ \ \meio\ \ /\ \ \nope & \textbf{Indicadores de Tabela:} Representam respectivamente \textbf{Sim/Ideal} (\ok), \textbf{Parcial/Com Ressalvas} (\meio) e \textbf{Não/Ruim} (\nope). \\
+  \estrelas{5} & \textbf{Avaliação Técnica:} Nota de 1 a 5 estrelas considerando segurança, privacidade, usabilidade e transparência. \\
+  \end{tabela}
+\end{legenda}
+
+\section{As 5 Regras de Ouro da Privacidade e OpSec}
+
+\begin{enumerate}
+  \item \textbf{Jamais salve senhas no navegador nem repita a mesma senha:} Os malwares do tipo \emph{infostealer} roubam todas as senhas salvas no Chrome, Edge e Opera em menos de 2 segundos. Use exclusivamente um cofre dedicado criptografado (\textbf{Bitwarden} ou \textbf{KeePassXC}).
+  \item \textbf{Autenticação em Dois Fatores (2FA) nunca deve depender apenas de SMS:} O SMS é vulnerável a golpes de \emph{SIM Swap} (clonagem de chip na operadora). Use aplicativos geradores de códigos TOTP (\textbf{Ente Auth} ou \textbf{Aegis}) ou chaves físicas FIDO2.
+  \item \textbf{Trate seu e-mail principal como seu CPF:} Nunca entregue seu endereço de e-mail real para lojas, fóruns ou cadastros aleatórios. Use \textbf{Aliases de E-mail} (\textbf{SimpleLogin} ou \textbf{Addy.io}) para criar um endereço descartável exclusivo para cada site.
+  \item \textbf{Se é gratuito e vem de uma Big Tech, o produto é você:} Serviços como Gmail, Google Fotos, Chrome e WhatsApp financiam sua infraestrutura bilionária perfilando seu comportamento e metadados.
+  \item \textbf{Sem Código Aberto e sem E2EE, não existe privacidade real:} Políticas de privacidade são apenas promessas jurídicas que mudam da noite para o dia; a matemática da criptografia ponta-a-ponta auditada é a única garantia real.
+\end{enumerate}
+
+\begin{tldr}
+\textbf{Resumo de Sobrevivência:} Tire suas senhas do navegador e migre para o \textbf{Bitwarden} ou \textbf{KeePassXC}. Ative o 2FA com \textbf{Ente Auth} ou \textbf{Aegis}. Troque o Gmail/Outlook por \textbf{Proton Mail} ou \textbf{Tuta} blindados com máscaras do \textbf{SimpleLogin}, e converse por \textbf{Signal}, \textbf{Matrix} ou \textbf{Fluxer}.
+\end{tldr}
+
+% =====================================================================
+%  CAPÍTULO 02 -- GERENCIADORES DE SENHA E AUTENTICAÇÃO (2FA)
+% =====================================================================
+\comentario{como criar senhas impossíveis de quebrar sem precisar decorar nenhuma}
+\chapter{Cofres de Senha e 2FA}
+
+\begin{missao}[blindando o acesso às suas contas]
+\begin{itemize}
+  \item Substituir senhas fracas ou repetidas por um cofre criptografado (\textbf{Bitwarden} na nuvem ou \textbf{KeePassXC} offline).
+  \item Entender por que salvar senhas no navegador ou no LastPass é um convite para o desastre.
+  \item Configurar Autenticação em Dois Fatores (2FA) segura e com backup criptografado usando \textbf{Ente Auth} e \textbf{Aegis}.
+\end{itemize}
+\end{missao}
+
+O cérebro humano não foi feito para memorizar 150 senhas aleatórias de 24 caracteres como \cmd{9#kP!mV2$xL8@qR5&zW0}. Por isso, o usuário comum comete o erro fatal de usar a mesma senha (ou pequenas variações dela) em tudo. Quando um único fórum ou loja sofre um vazamento de banco de dados, criminosos usam robôs (\emph{Credential Stuffing}) para testar essa mesma combinação no seu e-mail, banco, Steam e redes sociais em segundos.
+
+Com um \textbf{Gerenciador de Senhas}, você só precisa memorizar \textbf{uma única Senha Mestra (\emph{Master Password})} forte, e o cofre gera e preenche senhas únicas e indecifráveis para cada site.
+
+\section{Gerenciadores de Senha Recomendados}
+
+\begin{ferramenta}[goat,logo=bitwarden]{Bitwarden}{https://bitwarden.com}{open source, e2ee, nuvem, self-host, win, linux, mac, android, ios}
+A melhor recomendação geral para 99\% das pessoas. O \textbf{Bitwarden} sincroniza suas senhas gratuitamente entre todos os seus dispositivos (PC, celular e extensões de navegador) usando criptografia \emph{Zero-Knowledge} (seus dados são trancados com AES-256 antes de saírem do seu aparelho). É 100\% código aberto, passa por auditorias de segurança anuais independentes e ainda permite que usuários avançados rodem seu próprio servidor em casa usando a implementação leve em Rust chamada \textbf{Vaultwarden}. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=keepassxc]{KeePassXC}{https://keepassxc.org}{open source, offline, local, kdbx, win, linux, mac}
+O padrão-ouro para quem exige soberania total e não quer suas senhas em \textbf{nenhuma nuvem}. Escrito em C++ moderno, o \textbf{KeePassXC} guarda todas as suas credenciais em um único arquivo local fortemente criptografado (\cmd{.kdbx}) no seu disco rígido ou pendrive. Conta com integração nativa segura para navegadores, gerador de códigos 2FA (TOTP), suporte a chaves físicas (YubiKey) e agente SSH integrado. Para abrir o mesmo arquivo \cmd{.kdbx} no celular, use o \textbf{KeePassDX} (Android) ou \textbf{Strongbox} (iOS). \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=protonpass]{Proton Pass}{https://proton.me/pass}{open source, e2ee, aliases integrados, suica, freemium}
+Desenvolvido pelos criadores do Proton Mail na Suíça, o \textbf{Proton Pass} é uma alternativa moderna excelente ao Bitwarden. Seu grande diferencial é ter o gerador de \textbf{Aliases de E-mail} nativamente embutido: ao criar uma conta num site novo, ele cria na mesma hora um e-mail máscara exclusivo E uma senha aleatória forte com um único clique. \estrelas{5}
+\end{ferramenta}
+
+\begin{nota}[KeePassXC vs. KeePass Clássico: Qual a diferença?]
+Não confunda o moderno \textbf{KeePassXC} com o antigo \textbf{KeePass 2.x} (de 2003):
+\begin{itemize}
+  \item \textbf{KeePass Clássico (Evite para novos setups):} Embora seu formato de arquivo seja seguro, o programa original depende do framework antigo \texttt{.NET/Mono}, tem interface datada, exige instalar plugins de terceiros (que ampliam a superfície de ataque) para conversar com o navegador e já teve disputas de segurança sobre gatilhos de exportação em texto puro (\texttt{CVE-2023-32784}).
+  \item \textbf{KeePassXC (Use este!):} É o fork comunitário reescrito nativamente em C++/Qt para Windows, Linux e macOS, com todas as funções modernas embutidas e sem depender de plugins externos.
+\end{itemize}
+\end{nota}
+
+\section{Gerenciadores de Senha para NÃO USAR}
+
+\begin{perigo}[Onde você NUNCA deve guardar suas senhas!]
+\begin{itemize}
+  \item \textbf{Gerenciador Embutido de Navegadores (Chrome, Edge, Opera, Brave)} \pgtag[pgAlert]{evite}: Guardar senhas no navegador é o erro de segurança mais explorado da atualidade. Qualquer malware do tipo \emph{infostealer} executado na sua máquina chama a API do próprio sistema operacional (\texttt{DPAPI}) e extrai todas as suas senhas salvas no navegador em texto puro em milissegundos, sem pedir senha mestra!
+  \item \textbf{LastPass} \pgtag[pgAlert]{evite}: Software de código fechado com um histórico desastroso de falhas. Em 2022, hackers invadiram a infraestrutura do LastPass e roubaram cópias completas dos cofres de senhas de milhões de clientes — e descobriu-se que o LastPass sequer criptografava as URLs dos sites salvos nos cofres.
+  \item \textbf{Dashlane / Kaspersky / Norton Password Manager} \pgtag[pgAlert]{evite}: Soluções proprietárias fechadas, caras ou amarradas a suítes comerciais pesadas.
+\end{itemize}
+\end{perigo}
+
+\begin{dica}[Como criar uma Senha Mestra inquebrável e fácil de lembrar (Passphrase)]
+Para a Senha Mestra do seu Bitwarden ou KeePassXC, use uma \textbf{Passphrase (Frase-Senha)} gerada pelo método \emph{Diceware}: escolha 5 ou 6 palavras aleatórias separadas por símbolos ou números, como \cmd{Martelo-Neblina-42-Tangerina-Vulcao-Relogio}. Ela tem altíssima entropia matemática (impossível de quebrar por força bruta), mas é muito fácil de digitar e memorizar!
+\end{dica}
+
+\section{Autenticadores de 2FA (Dois Fatores)}
+
+Ter uma senha forte não basta se você não ativar a \textbf{Autenticação em Dois Fatores (2FA)}. Sempre prefira chaves físicas (\textbf{YubiKey / Nitrokey}) ou aplicativos geradores de código temporário de 6 dígitos (\textbf{TOTP}):
+
+\begin{ferramenta}[goat,logo=ente]{Ente Auth}{https://ente.io/auth}{open source, e2ee, multiplataforma, gratis, win, linux, mac, android, ios}
+O melhor aplicativo de 2FA da atualidade. O \textbf{Ente Auth} é 100\% código aberto, gratuito, funciona tanto no celular (Android/iOS) quanto no computador (Desktop/Web) e resolve o maior medo de quem usa 2FA: \textbf{se você perder ou tiver o celular roubado, seus códigos estão salvos na nuvem com criptografia ponta-a-ponta (E2EE)}. Além disso, já mostra na tela o próximo código que vai entrar quando o contador está acabando! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=aegis]{Aegis Authenticator}{https://getaegis.app}{open source, android, offline, backup criptografado, gratis}
+A escolha definitiva no Android para quem prefere que seus códigos 2FA jamais toquem a internet. O \textbf{Aegis} não pede permissão de rede, protege o aplicativo com biometria/senha e permite configurar backups automáticos criptografados na memória do aparelho (que você pode sincronizar via \textbf{Syncthing} com seu PC). \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=2fas]{2FAS Authenticator}{https://2fas.com}{open source, 2fa, e2ee, backup nuvem, android, ios}
+Aplicativo moderno, intuitivo e com foco em usabilidade. O \textbf{2FAS} possui extensões oficiais para navegadores que enviam notificações push para aprovar logins no celular sem precisar digitar o token manualmente. Permite backup criptografado ponta-a-ponta na nuvem do Google Drive ou iCloud sem abrir mão das chaves locais. \estrelas{5}
+\end{ferramenta}
+
+\subsection{Autenticadores 2FA para NÃO USAR}
+
+\begin{perigo}[Cuidado com o aprisionamento e falhas no 2FA]
+\begin{itemize}
+  \item \textbf{Twilio Authy} \pgtag[pgAlert]{evite}: Código fechado, descontinuou seus aplicativos de Desktop (Windows/Linux/Mac), bloqueia a exportação fácil das suas sementes 2FA e sofreu um vazamento massivo em 2024 que expôs 33 milhões de números de telefone de usuários.
+  \item \textbf{Google Authenticator / Microsoft Authenticator} \pgtag[pgAlert]{evite}: Código fechado, telemetria constante e histórico de sincronização em nuvem que inicialmente sequer possuía criptografia ponta-a-ponta (permitindo que a Google/Microsoft tivesse acesso às chaves).
+\end{itemize}
+\end{perigo}
+
+\subsection{Comparativo de Cofres de Senha e 2FA}
+
+\begin{tabela}{>{\bfseries}l l c c c c}
+\cab{Ferramenta} & \cab{Função} & \cab{Open Source} & \cab{E2EE / Local} & \cab{Multiplataforma} & \cab{Veredito} \\
+Bitwarden \goat  & Cofre (Nuvem/Self) & \ok   & \ok   & \ok     & \pgtag[pgBrass]{goat} \\
+KeePassXC \goat  & Cofre (100\% Local)& \ok   & \ok   & \ok     & \pgtag[pgBrass]{goat} \\
+Proton Pass      & Cofre + Aliases    & \ok   & \ok   & \ok     & \ok \\
+Ente Auth \goat  & 2FA (Nuvem E2EE)   & \ok   & \ok   & \ok     & \pgtag[pgBrass]{goat} \\
+Aegis \goat      & 2FA (Offline)      & \ok   & \ok   & Android & \pgtag[pgBrass]{goat} \\
+2FAS             & 2FA (Nuvem E2EE)   & \ok   & \ok   & \ok     & \ok \\
+LastPass / Authy & Cofre / 2FA        & \nope & \meio & \nope   & \pgtag[pgAlert]{evite} \\
+Cofre do Browser & Navegador          & \nope & \nope & \meio   & \pgtag[pgAlert]{evite} \\
+\end{tabela}
+
+% =====================================================================
+%  CAPÍTULO 03 -- E-MAIL SEGURO, ALIASES, MENSAGEIROS E FEDIVERSO
+% =====================================================================
+\comentario{blindando sua caixa de entrada, conversas privadas e comunidades}
+\chapter{E-mail, Aliases e Mensageiros}
+
+\begin{missao}[comunicação à prova de bisbilhoteiros e censura]
+\begin{itemize}
+  \item Migrar do Gmail e Outlook para provedores com criptografia real (\textbf{Proton Mail} e \textbf{Tuta}).
+  \item Dominar o ``Cheat Code'' dos \textbf{Aliases de E-mail} (\textbf{SimpleLogin} e \textbf{Addy.io}) para nunca mais receber spam nem ter seu e-mail vazado.
+  \item Adotar mensageiros instantâneos verdadeiramente privados (\textbf{Signal} e \textbf{SimpleX}) e redes descentralizadas (\textbf{Matrix}, \textbf{Fluxer}, \textbf{Nostr} e \textbf{Mastodon}).
+\end{itemize}
+\end{missao}
+
+Seu endereço de e-mail é a chave mestra da sua identidade digital: quem controla seu e-mail consegue clicar em \emph{``Esqueci minha senha''} e tomar o controle de quase todas as suas contas. No entanto, usar provedores comerciais gratuitos significa entregar anos de recibos financeiros, passagens aéreas, exames médicos e cadastros para algoritmos de perfilamento.
+
+\section{Provedores de E-mail Criptografados}
+
+\begin{ferramenta}[goat,logo=protonmail]{Proton Mail}{https://proton.me/mail}{open source, e2ee, suica, zero-knowledge, freemium}
+O provedor de e-mail seguro mais famoso e completo do mundo, sediado em Genebra (protegido pelas rigorosas leis de privacidade da Suíça). No \textbf{Proton Mail}, todos os e-mails armazenados na sua caixa de entrada são criptografados com sua chave privada (\emph{Zero-Access Encryption}) — nem a própria Proton consegue ler suas mensagens. Inclui bloqueador automático de pixels de rastreamento (\emph{spy pixels}), proteção contra links de phishing e integração com Proton Calendar e Proton Drive. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=tuta]{Tuta (antigo Tutanota)}{https://tuta.com}{open source, e2ee, pos-quantico, alemanha, freemium}
+A alternativa mais purista em criptografia e software livre, sediada na Alemanha. Enquanto o Proton Mail usa o padrão PGP (que criptografa o corpo do e-mail, mas deixa a linha de Assunto legível), o \textbf{Tuta} usa um protocolo próprio que \textbf{criptografa absolutamente tudo — incluindo o Assunto do e-mail, a agenda de contatos e o calendário} — já utilizando criptografia híbrida resistente a computadores quânticos (\emph{TutaCrypt}). Além disso, seu aplicativo para Android funciona 100\% sem depender do Google Play Services (disponível no F-Droid). \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=mailbox]{Mailbox.org / Posteo}{https://mailbox.org}{alemanha, pgp, imap padrao, pago, sem anuncios}
+Duas excelentes alternativas alemãs independentes que custam apenas €1 por mês. São ideais para quem faz questão de usar clientes de e-mail tradicionais (como \textbf{Thunderbird} no PC ou \textbf{FairEmail / Thunderbird Mobile} no Android) via IMAP/SMTP padrão sem precisar de programas de ponte (\emph{Bridge}). \estrelas{4}
+\end{ferramenta}
+
+\subsection{Provedores de E-mail para NÃO USAR}
+
+\begin{perigo}[Abandone o Gmail, Outlook/Hotmail e Yahoo!]
+\begin{itemize}
+  \item \textbf{Gmail (Google)} \pgtag[pgAlert]{evite}: A Google armazena todos os seus e-mails sem criptografia de conhecimento zero. Seus metadados de comunicação, recibos de compras, reservas de viagens e interações alimentam o maior ecossistema de rastreamento publicitário do planeta — e um bloqueio automatizado da sua Conta Google pode trancar você para fora do seu e-mail, fotos, drive e celular Android de uma só vez!
+  \item \textbf{Outlook / Hotmail (Microsoft)} \pgtag[pgAlert]{evite}: O novo aplicativo Outlook para Windows e Web compartilha dados com centenas de parceiros comerciais da Microsoft, exibe anúncios disfarçados de e-mails na caixa de entrada e sincroniza inclusive credenciais de contas externas nos servidores da Microsoft.
+  \item \textbf{Yahoo Mail / UOL / BOL} \pgtag[pgAlert]{evite}: Protagonistas dos maiores vazamentos de dados da história da internet (mais de 3 bilhões de contas comprometidas no caso do Yahoo) e escaneamento agressivo da caixa de entrada para fins publicitários.
+\end{itemize}
+\end{perigo}
+
+\section{Aliases de E-mail: O “Cheat Code” da Privacidade}
+
+Mesmo depois de criar seu \textbf{Proton Mail} ou \textbf{Tuta}, se você sair entregando o mesmo endereço (\texttt{seunome@proton.me}) para 100 sites diferentes, qualquer loja que sofrer um vazamento vai expor seu e-mail real para listas de spam e golpistas. A solução definitiva são os \textbf{Serviços de Alias (Máscaras de E-mail)}.
+
+\paragraph{Como funciona um Alias}
+O serviço cria um endereço único para cada site onde você se cadastra (ex.: \cmd{kabum.8x9a@passmail.net} para a KaBuM!, \cmd{steam.4k2p@aleeas.com} para a Steam). Todos os e-mails enviados para esses endereços são redirecionados instantaneamente para o seu Proton Mail ou Tuta real.
+\begin{enumerate}
+  \item \textbf{Compartimentalização total:} Nenhum site sabe qual é o seu e-mail verdadeiro;
+  \item \textbf{Dedo-duro de vazamentos:} Se você receber spam no endereço \cmd{lojaX.99a@...}, você sabe na hora que foi a \emph{Loja X} que vendeu ou vazou seus dados;
+  \item \textbf{Kill-Switch de 1 clique:} Basta pausar ou apagar aquele alias específico no painel e o spam morre para sempre, sem afetar nenhuma outra conta sua!
+\end{enumerate}
+
+\begin{ferramenta}[goat,logo=simplelogin]{SimpleLogin (by Proton)}{https://simplelogin.io}{open source, aliases, dominios proprios, suica, freemium}
+O gerador de máscaras de e-mail mais completo do mercado, adquirido pela Proton e integrado nativamente ao \textbf{Proton Pass}. Permite gerar aliases aleatórios direto pela extensão do navegador, responder e-mails mantendo a máscara (sem revelar seu endereço real ao destinatário) e criptografar os e-mails encaminhados com sua chave PGP. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=addy]{Addy.io (AnonAddy)}{https://addy.io}{open source, aliases, self-host, freemium}
+Alternativa britânica independente, 100\% código aberto e extremamente generosa no plano gratuito (permite aliases ilimitados no formato padrão \cmd{qualquercoisa@seuusuario.anonaddy.com}) ou planos pagos de apenas US\$ 1/mês para usar domínios personalizados. \estrelas{5}
+\end{ferramenta}
+
+\section{Mensageiros Instantâneos}
+
+\begin{ferramenta}[recomendado,logo=signal]{Signal}{https://signal.org}{open source, e2ee, zero metadados, gratis, android, ios, desktop}
+O padrão-ouro mundial em mensagens privadas, mantido por uma fundação sem fins lucrativos e recomendado por criptógrafos do mundo inteiro (como Edward Snowden e Bruce Schneier). Ao contrário do WhatsApp, o \textbf{Signal} não criptografa apenas o texto da mensagem: ele utiliza tecnologias como \emph{Sealed Sender} e \emph{Private Contact Discovery} para que \textbf{nem o próprio servidor do Signal saiba quem está conversando com quem, quais grupos você participa ou qual é a sua foto de perfil}. Além disso, permite ocultar seu número de telefone usando apenas um nome de usuário (\emph{username}). \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=simplex]{SimpleX Chat}{https://simplex.chat}{open source, e2ee, sem telefone, sem id de usuario, descentralizado}
+Para quem busca anonimato extremo: o \textbf{SimpleX Chat} é a primeira rede de mensagens que \textbf{não possui nenhum identificador de usuário} — não pede número de telefone, não pede e-mail e sequer gera um ID fixo na rede (operando através de filas de mensagens unidirecionais temporárias). \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=bitchat]{Bitchat}{https://github.com/permissionlesstech/bitchat}{open source, p2p, bluetooth mesh, nostr, sem internet, off-grid, e2ee}
+Mensageiro peer-to-peer revolucionário desenhado para funcionar \textbf{mesmo quando a internet cai ou é desligada por governos em censura ou protestos}. O \textbf{Bitchat} cria uma rede mesh local descentralizada via \textbf{Bluetooth de Baixa Energia (BLE) e Wi-Fi Direct}: suas mensagens pulam de aparelho em aparelho até chegar ao destinatário, com criptografia de ponta a ponta. Quando há conexão com a internet, ele também sincroniza canais públicos e salas de chat globais através de relays abertos do protocolo \textbf{Nostr}. \estrelas{5}
+\end{ferramenta}
+
+\subsection{Mensageiros onde você NÃO tem Privacidade}
+
+\begin{perigo}[O mito do Telegram e o rastreamento no WhatsApp e Discord]
+\begin{itemize}
+  \item \textbf{Telegram (Conversas normais e Grupos)} \pgtag[pgAlert]{evite}: Existe um mito perigoso de que o Telegram é um aplicativo criptografado. \textbf{Por padrão, o Telegram NÃO usa criptografia ponta-a-ponta (E2EE)!} Todas as suas conversas comuns, mídias e grupos ficam salvos e acessíveis nos servidores do Telegram usando o protocolo MTProto. A criptografia E2EE só existe se você iniciar manualmente um ``Chat Secreto'' (que não funciona em grupos nem no PC).
+  \item \textbf{WhatsApp (Meta)} \pgtag[pgAlert]{evite}: Embora use o protocolo Signal para criptografar o conteúdo das mensagens, o aplicativo tem código fechado e coleta uma quantidade brutal de \textbf{metadados} para a Meta: com quem você fala, a que horas, por quanto tempo, seu IP, sua agenda de contatos inteira e localização.
+  \item \textbf{Discord} \pgtag[pgAlert]{evite}: Excelente para comunidades públicas e jogos, mas \textbf{possui zero criptografia ponta-a-ponta em mensagens de texto (DMs e servidores)}. Tudo o que você escreve no Discord é lido, indexado e armazenado em texto puro nos servidores deles. Nunca envie documentos, senhas ou dados sensíveis pelo Discord!
+\end{itemize}
+\end{perigo}
+
+\section{Comunidades, Redes Descentralizadas e Fediverso}
+
+Sair de mensageiros fechados para o \textbf{Signal} resolve suas conversas individuais, mas e quando você precisa organizar uma comunidade inteira (como no Discord) ou participar de redes sociais (como Twitter/X e Reddit) sem ficar refém da censura, venda de dados ou mudanças arbitrárias de uma única empresa? A resposta está nos \textbf{protocolos federados e descentralizados}:
+
+\begin{ferramenta}[goat,logo=matrix]{Matrix (via Element / Cinny)}{https://matrix.org}{open source, protocolo federado, e2ee, self-host, win, linux, mac, android, ios}
+O padrão aberto definitivo para comunicação federada em tempo real. Assim como no e-mail (onde alguém do \texttt{@proton.me} fala com alguém do \texttt{@tuta.com}), no protocolo \textbf{Matrix} qualquer pessoa ou comunidade pode rodar seu próprio servidor (\emph{Homeserver}, como \emph{Synapse} ou \emph{Conduwuit}) e conversar com usuários de qualquer outro servidor do mundo, mantendo \textbf{criptografia ponta-a-ponta (E2EE) por padrão} em mensagens e chamadas. Os melhores clientes para usar o Matrix são o \textbf{Element} (\pglink{https://element.io}, completo para celular e PC) e o \textbf{Cinny} (\pglink{https://cinny.in}, com interface limpa e elegante). \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=fluxer]{Fluxer}{https://github.com/fluxerapp/fluxer}{open source, discord alternative, livekit, self-host, federacao, win, linux, mac}
+Para comunidades de jogos e amigos, migrar do Discord para o Matrix às vezes assusta usuários leigos pela diferença de interface. O \textbf{Fluxer} é a alternativa \textbf{menos radical e mais prática da atualidade}: um projeto 100\% código aberto (licença GNU AGPLv3, nascido na Suécia) construído para ser visualmente \textbf{quase um clone 1:1 do Discord}, permitindo que qualquer pessoa use canais de texto, cargos, emojis customizados sem pagar Nitro e chamadas de voz/vídeo de baixíssima latência (movidas por \emph{Erlang/OTP}, \emph{Rust/WASM} e \emph{LiveKit}) sem curva de aprendizado. O grande diferencial: além de permitir \emph{self-hosting} completo, foi desenhado com suporte a criptografia em chamadas/texto e implementação própria de federação entre instâncias! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=nostr]{Nostr (Damus / Amethyst / Primal)}{https://nostr.com}{open source, protocolo criptografico, sem servidor central, chaves npub/nsec, bitcoin}
+Sigla para \emph{``Notes and Other Stuff Transmitted by Relays''}, o \textbf{Nostr} é o protocolo de rede social mais simples e resistente à censura já criado. No Nostr, \textbf{você não cria uma conta em um servidor nem usa e-mail ou senha}: sua identidade é apenas um par de chaves criptográficas (\cmd{npub}, sua chave pública que funciona como seu \texttt{@usuario}; e \cmd{nsec}, sua chave privada que assina suas postagens). Você publica suas notas em múltiplos transmissores independentes (\emph{Relays}): se um servidor tentar banir você, basta apontar seu aplicativo (\textbf{Amethyst} no Android, \textbf{Damus} no iOS ou \textbf{Primal} na Web) para outro relay e você mantém 100\% dos seus seguidores e postagens! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=mastodon]{Fediverso \& Mastodon (ActivityPub)}{https://joinmastodon.org}{open source, activitypub, rede social federada, sem algoritmo, gratis}
+O \textbf{Fediverso} é uma constelação de milhares de servidores independentes que conversam entre si através do protocolo aberto \textbf{ActivityPub} (padronizado pela W3C). Seu maior representante é o \textbf{Mastodon} (substituto livre do Twitter/X), ao lado do \textbf{Lemmy} (substituto do Reddit) e do \textbf{PeerTube} (substituto do YouTube). Não possui algoritmos viciantes manipulando seu feed, não tem anúncios rastreadores e, se o administrador do seu servidor mudar as regras, você pode migrar seu perfil para outra instância levando todos os seus seguidores junto. \estrelas{4}
+\end{ferramenta}
+
+\subsection{Comparativo Geral de Comunicação e Redes}
+
+\begin{tabela}{>{\bfseries}l l c c c c}
+\cab{Serviço / Rede} & \cab{Categoria} & \cab{Open Source} & \cab{E2EE} & \cab{Descentralizado} & \cab{Veredito} \\
+Proton Mail \goat & E-mail          & \ok   & \ok   & \meio & \pgtag[pgBrass]{goat} \\
+Tuta \goat        & E-mail          & \ok   & \ok   & \meio & \pgtag[pgBrass]{goat} \\
+SimpleLogin \goat & Alias E-mail    & \ok   & \ok   & \ok   & \pgtag[pgBrass]{goat} \\
+Gmail / Outlook   & E-mail          & \nope & \nope & \nope & \pgtag[pgAlert]{evite} \\
+SimpleX Chat \goat & Mensageiro      & \ok   & \ok   & \ok   & \pgtag[pgBrass]{goat} \\
+Signal             & Mensageiro      & \ok   & \ok   & \nope & \ok \\
+Bitchat            & Mesh / Offline  & \ok   & \ok   & \ok   & \ok \\
+Fluxer \goat      & Clone Discord   & \ok   & \ok   & \ok   & \pgtag[pgBrass]{goat} \\
+Matrix \goat      & Chat / VoIP     & \ok   & \ok   & \ok   & \pgtag[pgBrass]{goat} \\
+Nostr \goat       & Rede Social     & \ok   & \meio & \ok   & \pgtag[pgBrass]{goat} \\
+Mastodon          & Fediverso       & \ok   & \nope & \ok   & \ok \\
+Telegram / Discord& Chat Comercial  & \meio & \nope & \nope & \pgtag[pgAlert]{evite} \\
+\end{tabela}
+
+% =====================================================================
+%  CAPÍTULO 04 -- NAVEGAÇÃO, BUSCADORES E DNS PRIVADO
+% =====================================================================
+\comentario{pesquisando e navegando sem alimentar o monopólio de vigilância}
+\chapter{Navegação e Buscadores}
+
+\begin{missao}[eliminando rastreadores e fingerprinting na web]
+\begin{itemize}
+  \item Entender o que é \textbf{Browser Fingerprinting} e como os navegadores endurecidos neutralizam essa técnica.
+  \item Substituir o Google Search e o Bing por motores de busca privados (\textbf{Brave Search}, \textbf{SearXNG} e \textbf{DuckDuckGo}).
+  \item Filtrar telemetria de aplicativos e Smart TVs diretamente na rede com \textbf{Quad9}, \textbf{Mullvad DNS} e \textbf{NextDNS / AdGuard Home}.
+\end{itemize}
+\end{missao}
+
+Como vimos no \textbf{PousadaGuide \#01}, usar navegadores como Chrome, Opera GX ou Edge é entregar todo o seu histórico de navegação para redes publicitárias. Porém, mesmo quando você apaga os cookies ou abre uma ``Aba Anônima'', os sites continuam rastreando você através de uma técnica muito mais sutil: o \textbf{Fingerprinting (Impressão Digital do Navegador)}.
+
+\section{Blindagem contra Fingerprinting nos Navegadores}
+
+Quando você acessa um site, scripts invisíveis leem dezenas de características técnicas da sua máquina: resolução exata da tela, modelo da placa de vídeo (WebGL), fontes instaladas no sistema, fuso horário, idioma e nível da bateria. Combinados, esses dados criam um código único que identifica você mesmo sem cookies.
+
+\begin{dica}[Qual navegador escolher para cada perfil de privacidade?]
+Relembrando e aprofundando o arsenal do Guia \#01 para o foco em privacidade:
+\begin{itemize}
+  \item \textbf{Para Anonimato contra Fingerprinting:} Use o \textbf{Mullvad Browser} \goat\ (\pglink{https://mullvad.net/pt/browser}) ou o \textbf{Tor Browser}. Eles forçam uma janela padronizada (\emph{Letterboxing}) e mascaram seu hardware para que seu PC pareça idêntico ao de milhares de outros usuários.
+  \item \textbf{Para Uso Diário Blindado no Desktop:} Use o \textbf{LibreWolf} \goat\ (\pglink{https://librewolf.net}) ou o \textbf{Zen Browser} \goat\ (\pglink{https://zen-browser.app}) sempre acompanhados da extensão \textbf{uBlock Origin}.
+  \item \textbf{Para Android:} Use o \textbf{IronFox} \goat\ (\pglink{https://gitlab.com/ironfox-oss/IronFox}) com uBlock Origin, ou o \textbf{Cromite} (\pglink{https://github.com/uazo/cromite}) se precisar de uma base Chromium endurecida.
+\end{itemize}
+\end{dica}
+
+\section{Buscadores Privados (Fugindo do Google e Bing)}
+
+De nada adianta ter um navegador privado se a primeira coisa que você faz ao abri-lo é digitar todos os seus interesses, dúvidas médicas, problemas pessoais e pesquisas no \textbf{Google Search}. Mude o buscador padrão do seu navegador para uma destas opções:
+
+\begin{ferramenta}[goat,logo=brave]{Brave Search}{https://search.brave.com}{indice proprio, sem rastreamento, goggles, gratis}
+O melhor buscador privado para o dia a dia. Ao contrário da maioria dos buscadores alternativos (que apenas alugam os resultados do Bing por trás dos panos), o \textbf{Brave Search} construiu um \textbf{índice próprio e independente da web}. Não rastreia suas buscas, não cria perfil de usuário e possui o recurso \emph{Goggles}, que permite reordenar resultados priorizando fóruns técnicos e blogs reais em vez de sites cheios de SEO spam. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=searxng]{SearXNG}{https://searx.space}{open source, metabuscador, self-host, zero logs, gratis}
+O rei da privacidade em buscas. O \textbf{SearXNG} é um metabuscador livre que consulta simultaneamente dezenas de motores (Google, Brave, DuckDuckGo, Qwant, Wikipedia, GitHub, Arch Wiki) através de um servidor intermediário, removendo seu endereço IP, cookies e cabeçalhos de navegador antes da pesquisa chegar aos buscadores. Você pode usar qualquer uma das instâncias públicas auditadas em \texttt{searx.space} ou rodar sua própria instância em casa via Docker em 2 minutos! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=duckduckgo]{DuckDuckGo / Startpage}{https://duckduckgo.com}{privacidade, bangs, simples, gratis}
+Bons substitutos práticos ao Google. O \textbf{DuckDuckGo} (baseado principalmente no índice do Bing) se destaca pelos famosos atalhos \textbf{!Bangs} (digitar \cmd{!gh disbox} pesquisa direto no GitHub; \cmd{!yt linux} vai direto ao YouTube; \cmd{!w criptografia} abre a Wikipédia), enquanto o \textbf{Startpage} entrega os resultados exatos do Google removendo os rastreadores. \estrelas{4}
+\end{ferramenta}
+
+\section{DNS Privado e Bloqueio em Nível de Rede (Self-Hosted)}
+
+Além dos provedores públicos de DNS over HTTPS (DoH) como \textbf{Quad9} (\cmd{https://dns.quad9.net/dns-query}) e \textbf{Mullvad DNS} (\cmd{https://adblock.dns.mullvad.net/dns-query}), você pode bloquear a telemetria de todo o seu Wi-Fi residencial (incluindo Smart TVs, celulares e sistemas operacionais):
+
+\begin{ferramenta}[goat,logo=adguard]{AdGuard Home / Technitium / Pi-hole}{https://github.com/AdguardTeam/AdGuardHome}{open source, dns local, roteador, self-host, gratis}
+Transforma qualquer servidor caseiro, Raspberry Pi ou roteador com \textbf{OpenWrt} em uma muralha de privacidade para toda a sua casa. O \textbf{AdGuard Home} (ou o poderoso \textbf{Technitium DNS Server} para quem quer resolução recursiva local avançada) intercepta todas as consultas DNS da sua rede local, bloqueia domínios de telemetria do Windows, anúncios em Smart TVs e rastreadores de aplicativos no celular, encaminhando o tráfego limpo via DoH/DoT/DNSCrypt. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=nextdns]{NextDNS}{https://nextdns.io}{doh, painel na nuvem, listas customizadas, freemium}
+Funciona como um ``Pi-hole / AdGuard Home na nuvem'' sem você precisar manter um servidor ligado em casa. Permite escolher dezenas de listas de bloqueio (como \emph{OISD} e \emph{HaGeZi}), bloquear telemetria nativa da Samsung/Xiaomi/Windows/Apple e funciona tanto em casa quanto no 4G/5G do celular. Grátis até 300.000 consultas por mês. \estrelas{5}
+\end{ferramenta}
+
+% =====================================================================
+%  CAPÍTULO 05 -- NUVEM, CRIPTOGRAFIA DE ARQUIVOS E METADADOS
+% =====================================================================
+\comentario{protegendo suas fotos, documentos e backups fora do alcance das Big Techs}
+\chapter{Nuvem, Arquivos e Metadados}
+
+\begin{missao}[criptografia em repouso e sincronização soberana]
+\begin{itemize}
+  \item Substituir o Google Fotos e o Google Drive por nuvens com criptografia ponta-a-ponta (\textbf{Ente Photos}, \textbf{Proton Drive} e \textbf{Filen}).
+  \item Trancar arquivos sensíveis antes de subi-los para qualquer nuvem usando \textbf{Cryptomator} e \textbf{VeraCrypt}.
+  \item Sincronizar pastas diretamente entre seu PC e celular sem nuvem usando \textbf{Syncthing} e limpar metadados de fotos (\textbf{EXIF}).
+\end{itemize}
+\end{missao}
+
+Guardar fotos pessoais e documentos em serviços como Google Fotos, Google Drive, OneDrive ou iCloud sem proteção extra significa que os servidores dessas empresas escaneiam cada imagem com algoritmos de visão computacional. Se um algoritmo interpretar erroneamente uma foto médica ou familiar, sua conta inteira pode ser banida permanentemente sem direito a apelação humana — além do risco constante de vazamentos.
+
+\section{Galeria de Fotos e Nuvem com Criptografia Ponta-a-Ponta (E2EE)}
+
+\begin{ferramenta}[goat,logo=ente]{Ente Photos}{https://ente.io}{open source, e2ee, google photos alternative, win, linux, mac, android, ios}
+O substituto definitivo para o Google Fotos e o iCloud Fotos. O \textbf{Ente Photos} é 100\% código aberto, auditado e armazena todas as suas fotos e vídeos com criptografia ponta-a-ponta redundante em múltiplos datacenters na Europa. Mesmo sendo criptografado, possui busca inteligente por rostos, objetos e lugares — porque \textbf{a inteligência artificial de reconhecimento roda localmente no processador do seu celular/PC}, nunca nos servidores deles! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=protondrive]{Proton Drive / Filen.io}{https://proton.me/drive}{open source, e2ee, zero-knowledge, nuvem, freemium}
+Para substituir o Google Drive e o OneDrive, tanto o \textbf{Proton Drive} (Suíça) quanto o \textbf{Filen.io} (\pglink{https://filen.io}, sediado na Alemanha) oferecem armazenamento em nuvem onde tanto o conteúdo dos arquivos quanto os nomes das pastas e metadados são criptografados no seu dispositivo antes do upload. \estrelas{5}
+\end{ferramenta}
+
+\section{Criptografia Local e Sincronização P2P (Sem Nuvem)}
+
+E se você já tem 1 TB ou 2 TB contratados no Google Drive, OneDrive ou Dropbox e não quer pagar outra assinatura de nuvem? Simples: \textbf{criptografe os arquivos no seu computador antes que a nuvem veja o que tem dentro!}
+
+\begin{ferramenta}[goat,logo=cryptomator]{Cryptomator}{https://cryptomator.org}{open source, criptografia em nuvem, aes-256, win, linux, mac, android}
+Criado especificamente para blindar nuvens públicas (Google Drive, OneDrive, Dropbox, Mega). O \textbf{Cryptomator} cria uma pasta de cofre virtual no seu computador: tudo o que você joga lá dentro é criptografado individualmente (incluindo os nomes dos arquivos e estrutura de pastas) antes de sincronizar com a nuvem. Para o Google ou a Microsoft, sua nuvem terá apenas arquivos embaralhados indecifráveis! Gratuito no Desktop (Windows/Linux/Mac). \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=veracrypt]{VeraCrypt}{https://www.veracrypt.fr}{open source, criptografia de disco, pendrive, volumes ocultos, win, linux, mac}
+A ferramenta lendária para criptografia de discos inteiros, pendrives, HDs externos e contêineres de arquivos. O \textbf{VeraCrypt} suporta algoritmos combinados (AES + Twofish + Serpent) e possui o famoso recurso de \textbf{Negação Plausível (\emph{Hidden Volumes})}: um cofre oculto dentro de outro cofre onde, se você for coagido a entregar a senha, pode digitar uma ``senha de fachada'' que abre apenas arquivos inofensivos, sem que seja matematicamente possível provar que existe um segundo cofre secreto lá dentro. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=syncthing]{Syncthing}{https://syncthing.net}{open source, p2p sync, sem nuvem, golang, win, linux, mac, android}
+Por que mandar seus arquivos para o servidor de uma empresa se você pode sincronizá-los diretamente entre os seus próprios aparelhos? Escrito em Go, o \textbf{Syncthing} sincroniza pastas em tempo real entre seu PC, seu notebook e seu celular Android via rede local (Wi-Fi) ou pela internet com criptografia TLS ponta-a-ponta, sem passar por nenhum servidor intermediário e sem limite de tamanho! \estrelas{5}
+\end{ferramenta}
+
+\section{Notas Privadas e Limpeza de Metadados (EXIF)}
+
+\begin{ferramenta}[goat,logo=obsidian]{Obsidian / Notesnook}{https://obsidian.md}{markdown local, e2ee, notas privadas, win, linux, mac, android, ios}
+Pare de anotar ideias pessoais, diários e documentos no Google Keep ou no Notion (que lê e armazena tudo em texto puro nos servidores deles). Use o \textbf{Obsidian} (que salva todas as suas notas como arquivos \cmd{.md} locais puros na sua máquina, perfeitos para sincronizar com o Syncthing) ou o \textbf{Notesnook} (\pglink{https://notesnook.com}), uma alternativa 100\% código aberto e criptografada ponta-a-ponta (E2EE) caso prefira sincronização pronta na nuvem. \estrelas{5}
+\end{ferramenta}
+
+\subsection{Limpando Metadados Ocultos (EXIF) antes de Compartilhar}
+
+Toda vez que você tira uma foto com o celular ou exporta um PDF, o arquivo carrega \textbf{metadados ocultos (EXIF)}: coordenadas exatas de GPS da sua casa (latitude, longitude e altitude), data e hora do clique, marca e modelo exato do aparelho e nome do autor do documento.
+
+\begin{terminal}[bash -- inspecionando e limpando metadados EXIF]
+# 1. Inspecione dados ocultos (GPS, câmera) | 2. Apague sem perda:
+$ exiftool foto.jpg
+$ exiftool -all= -overwrite_original foto.jpg
+\end{terminal}
+
+\begin{dica}[Limpando metadados visuais com 1 clique]
+\begin{itemize}
+  \item \textbf{Desktop:} Use o \textbf{Metadata Cleaner} (Flatpak) ou \textbf{ExifCleaner} (arraste para limpar).
+  \item \textbf{Android:} Use o \textbf{Scrambled Exif} ou \textbf{Imagepipe} via F-Droid (remove GPS ao compartilhar).
+\end{itemize}
+\end{dica}
+
+% =====================================================================
+%  CAPÍTULO 06 -- SISTEMAS OPERACIONAIS (DESKTOP, QUBES E MOBILE)
+% =====================================================================
+\comentario{cortando a telemetria na raiz: do kernel do PC ao bolso do celular}
+\chapter{Sistemas Operacionais e Mobile}
+
+\begin{missao}[soberania no computador e no smartphone]
+\begin{itemize}
+  \item Compreender por que o \textbf{Linux} é a base ideal para privacidade no computador e conhecer o isolamento por hardware do \textbf{Qubes OS}.
+  \item Domar a telemetria do Windows com segurança usando o \textbf{WinUtil} (e fugir de ISOs modificadas).
+  \item Conhecer o \textbf{GrapheneOS}, lojas livres (\textbf{Obtainium / Droid-ify}) e o firewall \textbf{RethinkDNS} no Android.
+\end{itemize}
+\end{missao}
+
+De pouco adianta trancar o navegador se o próprio Sistema Operacional onde ele roda está tirando capturas da sua tela (\emph{Windows Recall}), registrando cada programa que você abre e enviando relatórios de telemetria para servidores corporativos.
+
+\clearpage
+\section{Desktop: Linux, Qubes OS vs. Windows}
+
+\begin{ferramenta}[goat,logo=linux]{Distribuições Linux}{https://kernel.org}{open source, zero telemetria, luks, wayland, soberania total}
+No desktop, migrar para uma distribuição \textbf{Linux} resolve o problema de telemetria de sistema operacional na raiz: o sistema é 100\% código aberto, não possui ID de publicidade, não força conta online para instalar, não tira prints da sua tela para treinar IA e oferece criptografia completa de disco de fábrica (\textbf{LUKS}). Além disso, com servidores gráficos modernos (\textbf{Wayland}) e empacotamento isolado (\textbf{Flatpak + Flatseal}), um aplicativo sequer consegue capturar o que está na janela de outro programa sem sua permissão explícita.
+
+Para escolher sua distribuição com segurança e facilidade:
+\begin{itemize}
+  \item \textbf{Linux Mint} e \textbf{Fedora}: As melhores portas de entrada para iniciantes e uso geral com alta estabilidade;
+  \item \textbf{Arch Linux} e \textbf{CachyOS}: Para usuários intermediários ou avançados que buscam desempenho extremo e pacotes de ponta;
+  \item \textbf{NixOS}: Para quem busca reprodutibilidade declarativa total e gerenciamento imutável do sistema.
+\end{itemize}
+\estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=qubes]{Qubes OS}{https://www.qubes-os.org}{open source, xen hypervisor, compartimentalizacao, whonix integrado, seguranca extrema}
+Se o Linux tradicional já é um salto enorme de segurança, o \textbf{Qubes OS} é o nível final de blindagem em um computador pessoal — endossado por Edward Snowden e pesquisadores de segurança do mundo inteiro. O Qubes parte de uma premissa realista: \emph{``E se algum aplicativo ou navegador tiver uma falha desconhecida (zero-day) e for invadido?''}.
+\begin{itemize}
+  \item \textbf{Segurança por Compartimentalização (\emph{Qubes}):} Em vez de rodar tudo no mesmo sistema, o Qubes usa o hipervisor bare-metal \textbf{Xen} para dividir sua vida digital em máquinas virtuais leves e isoladas chamadas \emph{Qubes} (ex.: um cubo \texttt{Trabalho}, um cubo \texttt{Banco}, um cubo \texttt{Pessoal} e um cubo \texttt{Anonimo} rodando \textbf{Whonix/Tor}). Todos os aplicativos aparecem na mesma área de trabalho com bordas de cores diferentes indicando o nível de confiança!
+  \item \textbf{Isolamento de Hardware e Máquinas Descartáveis (\emph{DisposableVMs}):} Até a sua placa de rede Wi-Fi (\cmd{sys-net}), o seu firewall (\cmd{sys-firewall}) e as suas portas USB (\cmd{sys-usb}) rodam em máquinas virtuais separadas! Recebeu um PDF ou arquivo suspeito? Clique em \emph{``Abrir em VM Descartável''}: o Qubes cria uma máquina virtual temporária só para abrir aquele arquivo e, ao fechar a janela, a máquina inteira é destruída em segundos.
+\end{itemize}
+\emph{Nota de hardware:} Exige um PC dedicado com processador compatível com virtualização de I/O (\texttt{Intel VT-d} / \texttt{AMD-Vi}) e pelo menos 16 GB (idealmente 32 GB) de memória RAM. \estrelas{5}
+\end{ferramenta}
+
+\subsection{Dependência do Windows: Como Reduzir os Danos com Segurança}
+
+Se você ainda precisa manter o Windows 10 ou 11 instalado (por causa de algum software profissional específico ou jogo com anti-cheat de kernel como \emph{Vanguard}), siga duas regras vitais:
+
+\begin{perigo}[NUNCA instale ISOs de ``Windows Lite / Modificado'' da internet!]
+Jamais baixe versões modificadas por terceiros (como \emph{Ghost Spectre}, \emph{Tiny11 de terceiros}, \emph{AtlasOS ISO pronta} ou \emph{ReviOS}). Instalar um sistema operacional cujo código foi alterado por desconhecidos é dar controle de nível de kernel (\texttt{RING 0}) para uma caixa-preta que pode conter backdoors invisíveis e desativar atualizações críticas de segurança. \textbf{Sempre baixe a ISO limpa oficial da Microsoft e aplique o debloat você mesmo usando scripts abertos e auditáveis!}
+\end{perigo}
+
+\begin{ferramenta}[recomendado,logo=winutil]{Chris Titus Tech WinUtil}{https://github.com/ChrisTitusTech/winutil}{open source, powershell, debloat windows, telemetria, gratis}
+O utilitário de código aberto mais confiável e auditado pela comunidade para limpar uma instalação oficial do Windows. Na aba \textbf{Tweaks $\rightarrow$ Standard}, o \textbf{WinUtil} desativa a telemetria da Microsoft, o Windows Recall, o Copilot, o rastreamento de localização, os anúncios no Menu Iniciar e o Bing na barra de pesquisa em segundos, sem quebrar as atualizações de segurança nem o Windows Defender. \estrelas{4}
+\end{ferramenta}
+
+\begin{terminal}[powershell -- executando o Chris Titus WinUtil no Windows 10/11]
+# Abra o PowerShell como Administrador e execute o script oficial:
+$ irm "https://christitus.com/win" | iex
+\end{terminal}
+
+\section{Mobile: Android Livre e Controle de Aplicativos}
+
+Um smartphone comum com Android de fábrica (Samsung, Xiaomi, Motorola) ou iOS faz milhares de conexões invisíveis por dia com servidores da Google, Apple e fabricantes, enviando identificadores únicos do hardware (IMEI, Android Advertising ID) e localização das torres de celular e redes Wi-Fi próximas.
+
+\begin{ferramenta}[goat,logo=grapheneos]{GrapheneOS}{https://grapheneos.org}{open source, android endurecido, sandboxed google play, seguranca maxima}
+O sistema operacional móvel mais seguro e privado do planeta (desenvolvido para aparelhos Google Pixel). O \textbf{GrapheneOS} remove 100\% dos códigos proprietários da Google do sistema base, implementa proteções de memória (\emph{hardened\_malloc}), permite desligar fisicamente o acesso de qualquer aplicativo aos sensores e à rede, e possui o revolucionário \textbf{Sandboxed Google Play}: se você precisar rodar aplicativos de banco ou transporte que exigem os serviços da Google, ele roda a Play Store dentro de uma caixa isolada comum, sem dar nenhum privilégio especial de sistema para a Google! Para celulares de outras marcas, o \textbf{LineageOS} (\pglogo{lineage}~\pglink{https://lineageos.org}) é a alternativa livre mais recomendada para eliminar bloatware. \estrelas{5}
+\end{ferramenta}
+
+\subsection{Mesmo no Android Comum: O Trio Obrigatório de Privacidade}
+
+Mesmo que você não tenha um aparelho com GrapheneOS, instalar estas ferramentas no seu Android atual muda completamente sua privacidade:
+
+\begin{ferramenta}[goat,logo=obtainium,logo2=droid-ify]{Obtainium \& Droid-ify (F-Droid)}{https://github.com/ImranR98/Obtainium}{open source, loja livre, github releases, sem rastreadores, android}
+Pare de baixar tudo pela Google Play Store (onde quase todo aplicativo gratuito vem recheado de SDKs de anúncios da Google e do Facebook). Use o \textbf{Droid-ify} (o cliente mais moderno para o repositório de software livre \textbf{F-Droid}, onde todos os apps são compilados do código-fonte sem rastreadores) e o \textbf{Obtainium}, que baixa e atualiza aplicativos diretamente da página oficial de \emph{Releases} dos desenvolvedores no GitHub, GitLab e Codeberg! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=rethinkdns]{RethinkDNS (Firewall + DNS + Anti-Tracker)}{https://rethinkdns.com}{open source, firewall android, bloqueio por app, doh, wireguard}
+Por que o aplicativo de calculadora, teclado ou galeria do seu celular precisa se conectar à internet? Para enviar seus dados! O \textbf{RethinkDNS} atua como um firewall completo e gratuito no Android: ele mostra em tempo real cada domínio que cada aplicativo instalado tenta contatar e permite \textbf{cortar completamente o acesso à internet de aplicativos específicos}, além de integrar DNS over HTTPS e túneis WireGuard em um só lugar. \estrelas{5}
+\end{ferramenta}
+
+\begin{tabela}{>{\bfseries}l l c c X}
+\cab{Sistema / App} & \cab{Plataforma} & \cab{Livre} & \cab{Veredito} & \cab{Função Principal de Privacidade} \\
+Linux \goat          & Desktop     & \ok   & \pgtag[pgBrass]{goat} & Sistema operacional livre, zero telemetria e criptografia LUKS \\
+Qubes OS \goat       & Desktop     & \ok   & \pgtag[pgBrass]{goat} & Isolamento máximo por hipervisor Xen e VMs descartáveis \\
+CTT WinUtil          & Windows     & \ok   & \ok                   & Desativa telemetria, Recall e bloatware em ISOs oficiais do Windows \\
+Windows Lite (ISOs)  & Windows     & \nope & \pgtag[pgAlert]{evite}& Caixas-pretas modificadas por terceiros com risco extremo de backdoor \\
+GrapheneOS \goat     & Android     & \ok   & \pgtag[pgBrass]{goat} & OS mobile blindado com Google Play isolado em sandbox sem privilégios \\
+LineageOS            & Android     & \ok   & \ok                   & ROM limpa para aparelhos Android não compatíveis com GrapheneOS \\
+Obtainium / Droid-ify \goat & Android & \ok & \pgtag[pgBrass]{goat} & Instala e atualiza apps open source direto do GitHub e F-Droid \\
+RethinkDNS \goat     & Android     & \ok   & \pgtag[pgBrass]{goat} & Firewall que bloqueia internet e rastreadores por aplicativo no celular \\
+\end{tabela}
+
+% =====================================================================
+%  CAPÍTULO 07 -- VPNS, VPS, ANTI-FIREWALL (DPI) E REDES ANÔNIMAS
+% =====================================================================
+\comentario{da proteção de rota no dia a dia ao anonimato descentralizado e bypass de DPI}
+\chapter{VPNs, VPS e Redes Anônimas}
+
+\begin{missao}[dominando as camadas de rede, anti-censura e anonimato]
+\begin{itemize}
+  \item Entender a diferença entre \textbf{VPNs de Salto Único} (\textbf{Mullvad}, \textbf{Proton}, \textbf{AirVPN}) e a arquitetura \textbf{Two-Party} da \textbf{Obscura VPN}.
+  \item Saber quando subir sua própria VPN em uma \textbf{VPS} (\textbf{AmneziaVPN} / \textbf{Tailscale}), por que ela não dá anonimato e como contratar VPS sem KYC via \textbf{KYCnot.me}.
+  \item Conhecer os protocolos avançados para furar bloqueios de firewall (\textbf{VLESS+REALITY}, \textbf{Hysteria 2}, \textbf{NaiveProxy} e \textbf{sing-box}).
+  \item Dominar as redes descentralizadas \textbf{Tor} e \textbf{I2P (\texttt{i2pd})} e sistemas amnésicos (\textbf{Tails OS / Whonix}).
+\end{itemize}
+\end{missao}
+
+Nem toda ferramenta de rede resolve o mesmo problema. Um erro clássico de OpSec é achar que qualquer ``túnel criptografado'' torna você invisível. Na prática, as soluções de rede dividem-se em três categorias muito claras:
+\begin{enumerate}
+  \item \textbf{VPNs Comerciais (Privacidade de Tráfego):} Escondem o que você acessa da sua operadora de internet e misturam seu IP ao de milhares de usuários em alta velocidade, mas exigem confiar na arquitetura da empresa;
+  \item \textbf{VPN em VPS Própria (Soberania de Rota e IP Limpo):} Dá a você um servidor exclusivo sob seu controle e sem bloqueios de sites, mas vincula 100\% daquele IP à sua sessão;
+  \item \textbf{Redes de Anonimato Descentralizadas (Tor e I2P):} Embaralham seu tráfego através de múltiplos nós independentes espalhados pelo mundo (\emph{Zero-Trust}), garantindo que ninguém na rede saiba simultaneamente quem você é e o que está acessando.
+\end{enumerate}
+
+\section{VPNs Auditadas: Clássicas vs. Arquitetura Two-Party}
+
+Em uma VPN tradicional de salto único (\emph{Single-Hop}), o mesmo servidor que recebe sua conexão (vendo seu IP real) é o que acessa os sites na saída. Por isso, só recomendamos provedores com código aberto e auditorias independentes — ou arquiteturas de \textbf{Dois Saltos Independentes (\emph{Two-Party Relay})}:
+
+\begin{ferramenta}[goat,logo=mullvad]{Mullvad VPN}{https://mullvad.net/pt}{open source, suecia, servidores em ram, monero, pago}
+O clássico absoluto e padrão-ouro mundial em anonimato. Não pede e-mail, nome nem senha (sua conta é apenas um número aleatório de 16 dígitos), opera infraestrutura 100\% em memória RAM (\emph{diskless}), inclui ofuscação nativa de WireGuard contra bloqueios de rede (\emph{LWO} e \emph{WireGuard-over-QUIC}) e aceita pagamentos anônimos em Monero. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=proton]{Proton VPN}{https://protonvpn.com}{open source, suica, secure core, port-forwarding, freemium}
+A melhor VPN geral para quem busca versatilidade. Conta com a arquitetura \emph{Secure Core} (que passa seu tráfego por servidores blindados na Suíça, Islândia ou Suécia antes de sair para a internet), suporte a \emph{Port Forwarding} dinâmico no plano pago e o único plano gratuito sem limite de dados verdadeiramente confiável do mercado. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=obscura]{Obscura VPN}{https://obscura.com}{open source, two-party vpn, wireguard-over-quic, exit hop mullvad, pago}
+A revolução da privacidade comprovada por design (\emph{Provably Private}). Em vez de pedir que você confie em uma promessa de ``não guardamos logs'', a \textbf{Obscura VPN} divide sua conexão entre duas empresas independentes:
+\begin{enumerate}
+  \item \textbf{Salto de Entrada (Obscura via QUIC):} Seu dispositivo conecta aos servidores da Obscura usando um protocolo furtivo baseado em \textbf{QUIC (HTTP/3)}, que se mistura ao tráfego web comum e contorna firewalls pesados. A Obscura vê seu IP de conexão, mas \textbf{não consegue descriptografar seus pacotes}, pois eles já saem do seu PC trancados com a chave pública do servidor de saída!
+  \item \textbf{Salto de Saída Independente (Mullvad VPN):} A Obscura apenas repassa o túnel criptografado para um nó de saída oficial da \textbf{Mullvad VPN}. A Mullvad descriptografa e entrega seu tráfego para a internet, mas \textbf{jamais vê seu IP real} (vê apenas o IP da Obscura).
+\end{enumerate}
+Assim, nenhuma das duas empresas possui informações suficientes para vincular sua identidade ao que você faz online! Não exige e-mail (usa número de conta aleatório), funciona direto no app ou gerando perfis para o cliente oficial do WireGuard, e aceita Bitcoin (Lightning) e Monero. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=airvpn]{AirVPN}{https://airvpn.org}{open source, port-forwarding estatico, wireguard, ddns, monero, pago}
+Operada desde 2010 por um coletivo italiano de ativistas de privacidade e software livre, a \textbf{AirVPN} é a queridinha dos usuários avançados de Linux, Homelab e BitTorrent. Seu grande diferencial técnico: enquanto a Mullvad removeu o redirecionamento de portas e a Proton VPN muda o número da porta a cada reconexão, a AirVPN oferece \textbf{Port Forwarding estático e permanente} configurado direto no painel web (com suporte a DDNS próprio \cmd{*.airdns.org}). Isso permite baixar um arquivo \cmd{.conf} puro do \textbf{WireGuard} e rodar no roteador (\textbf{OpenWrt / OPNsense}) ou em contêineres Docker (\emph{Gluetun}) mantendo a mesma porta sempre aberta! Aceita Monero e Bitcoin diretamente e tem planos de longo prazo muito baratos. \estrelas{5}
+\end{ferramenta}
+
+\section{VPN Própria em VPS vs. VPN Comercial: Vale a Pena?}
+
+Uma dúvida muito comum entre usuários de Linux e entusiastas de tecnologia é: \emph{``Por que pagar US\$ 5 em uma VPN comercial se posso alugar uma VPS (Virtual Private Server) barata na Hetzner, DigitalOcean, Vultr ou Oracle Cloud e subir meu próprio servidor WireGuard?''}.
+
+A resposta técnica curta é: \textbf{uma VPN própria em VPS é excelente para segurança de rede e desbloqueio, mas é PÉSSIMA para anonimato!} Entenda exatamente os prós e contras antes de escolher:
+
+\subsection{Vantagens de Criar sua Própria VPN em uma VPS}
+
+\begin{itemize}
+  \item \textbf{Endereço IP Exclusivo e ``Limpo'' (Zero CAPTCHAs):} Nas VPNs comerciais, milhares de pessoas dividem o mesmo endereço IP simultaneamente. Por isso, sites protegidos pela Cloudflare, bancos, corretoras e serviços de streaming frequentemente bloqueiam o acesso ou exigem resolver dezenas de CAPTCHAs. Na sua VPS, o IP é dedicado exclusivamente a você — você navega sem nenhum bloqueio irritante.
+  \item \textbf{Custo Baixo e Controle Total da Máquina:} Com US\$ 3 a US\$ 4 por mês (ou até gratuitamente no plano \emph{Always Free} da Oracle Cloud), você tem um servidor Linux completo onde pode rodar sua VPN (\textbf{WireGuard}) junto com seu próprio resolvedor DNS (\textbf{AdGuard Home} ou \textbf{Unbound}) e túnel reverso para acessar seu servidor doméstico atrás de CGNAT.
+  \item \textbf{Protocolos Anti-Censura sob Medida:} Usando ferramentas automatizadas de código aberto, você sobe protocolos furtivos que nenhuma operadora ou firewall corporativo consegue detectar como VPN.
+\end{itemize}
+
+\subsection{Desvantagens Críticas (A Armadilha de Privacidade da VPS)}
+
+\begin{perigo}[Por que uma VPS tradicional NÃO torna você anônimo?]
+\begin{enumerate}
+  \item \textbf{Zero ``Anonimato na Multidão'' (\emph{Crowd Anonymity}):} Quando você conecta na Mullvad, Obscura, Proton ou AirVPN, seu tráfego se mistura ao de milhares de pessoas usando aquele mesmo servidor no mesmo segundo. Já na sua VPS, \textbf{100\% do tráfego que sai daquele endereço IP pertence a uma única pessoa: você}. Qualquer site ou rastreador consegue correlacionar todas as suas ações àquele IP fixo.
+  \item \textbf{Sua Identidade Real está no Cadastro da VPS (KYC):} Quase todos os provedores de VPS tradicionais exigem cartão de crédito, CPF/Passaporte, telefone e endereço residencial para aprovar a conta. Ao usar uma VPS comum como VPN, você apenas transfere a visibilidade do seu tráfego do seu provedor de internet (Vivo/Claro) para a empresa do datacenter (Amazon, Oracle, Hetzner), que sabe exatamente o seu nome e documento.
+  \item \textbf{Como mitigar isso (VPS Sem KYC + Cripto):} Se você realmente quiser subir sua própria infraestrutura sem amarrar seu CPF ou cartão de crédito ao servidor, \textbf{escolha um provedor de VPS que não exija verificação de identidade (No-KYC) e pague exclusivamente com criptomoedas focadas em privacidade (Monero / XMR ou Bitcoin via Lightning Network)}. Você pode consultar a lista atualizada e auditada de provedores de VPS, domínios e serviços que respeitam o anonimato no diretório \pglink{https://kycnot.me}.
+\end{enumerate}
+\end{perigo}
+
+\subsection{Ferramentas para Subir sua VPN na VPS em 2 Minutos}
+
+\begin{ferramenta}[goat,logo=amnezia]{AmneziaVPN}{https://amnezia.org}{open source, self-hosted vpn, amnezia-wg, xray, anti-censura, win, linux, mac, android, ios}
+A ferramenta definitiva para transformar qualquer VPS limpa em uma VPN blindada com apenas um clique. Você só precisa informar o endereço IP e a senha SSH (ou chave privada) da sua VPS recém-criada no aplicativo do \textbf{AmneziaVPN}: ele acessa o servidor automaticamente, sobe contêineres Docker isolados e configura protocolos avançados resistentes a inspeção profunda de pacotes (DPI), como \textbf{AmneziaWG} (versão ofuscada do WireGuard), \textbf{Xray (VLESS/Reality)} e \textbf{OpenVPN over Cloak}. Zero logs no servidor e compartilhamento fácil via QR Code! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=tailscale]{Tailscale / Headscale (Mesh VPN)}{https://tailscale.com}{wireguard mesh, zero-config, exit node, nat traversal, freemium}
+Baseado no protocolo WireGuard, o \textbf{Tailscale} (e sua versão 100\% open source e self-hosted para servidor de controle, o \textbf{Headscale}) cria uma rede privada virtual (\emph{Mesh}) entre todos os seus dispositivos (PC de casa, notebook, celular e VPS) sem precisar abrir portas no roteador. Ao marcar sua VPS ou o PC da sua casa como um \textbf{Exit Node (Nó de Saída)}, você roteia todo o tráfego de internet do seu celular na rua através da sua própria infraestrutura com um clique! \estrelas{5}
+\end{ferramenta}
+
+\section{Nível Hardcore: Protocolos para Burlar Firewalls e DPI}
+
+\begin{atencao}[Aviso de Complexidade: Você provavelmente NÃO precisa disso no dia a dia!]
+Esta seção aborda ferramentas de \textbf{nível técnico bem avançado}. Para um usuário comum no Brasil que quer apenas privacidade contra o provedor de internet ou baixar torrents em paz, o protocolo \textbf{WireGuard} padrão (ou a ofuscação automática da \textbf{Obscura VPN}, \textbf{Mullvad} e \textbf{AirVPN}) já resolve 99,9\% dos casos.
+
+Os protocolos abaixo foram criados para cenários extremos de \textbf{Inspeção Profunda de Pacotes (DPI — \emph{Deep Packet Inspection})}: redes corporativas/universitárias draconianas que bloqueiam qualquer porta UDP/VPN, operadoras móveis que derrubam conexões criptografadas ou países sob censura estatal pesada (como o \emph{Great Firewall} da China, Rússia e Irã).
+\end{atencao}
+
+Quando um firewall moderno usa DPI, ele analisa a ``assinatura'' dos pacotes que saem do seu computador. Como o protocolo WireGuard ou OpenVPN tradicional possui cabeçalhos fáceis de identificar, o firewall percebe que é uma VPN e corta a conexão em segundos. Para vencer um firewall DPI, a solução não é apenas criptografar os dados — é \textbf{camuflar sua conexão para que ela pareça um acesso HTTPS comum a um site legítimo (como Google, Microsoft ou Cloudflare)}:
+
+\begin{itemize}
+  \item \textbf{VLESS + REALITY (O Rei da Camuflagem TLS):} Criado pelo projeto Xray, o \textbf{REALITY} eliminou a necessidade de você comprar um domínio e configurar certificados TLS no seu servidor. Ele sequestra visualmente o \emph{handshake} TLS 1.3 real de um grande site mundial (ex.: \texttt{www.microsoft.com} ou \texttt{www.lovelive-anime.jp}): para o seu cliente autenticado, ele abre o túnel de proxy; mas se um censor ou scanner ativo tentar inspecionar o IP da sua VPS, o servidor redireciona a conexão de forma transparente para o site real da Microsoft, exibindo o certificado original perfeito!
+  \item \textbf{NaiveProxy (Idêntico a um Navegador Chrome):} Firewalls avançados conseguem detectar que um programa em Go ou Python está fingindo ser um navegador porque a pilha de rede TLS deles é ligeiramente diferente da de um browser real (\texttt{JA3/JA4 TLS Fingerprint}). O \textbf{NaiveProxy} resolve isso na força bruta: ele usa literalmente \textbf{a própria stack de rede oficial do Chromium} para empacotar seu tráfego HTTPS (HTTP/2 e HTTP/3), tornando a conexão indistinguível de uma pessoa navegando pelo Chrome.
+  \item \textbf{ShadowTLS (Camuflagem TLS Alternativa):} Um wrapper leve que realiza primeiro um aperto de mão TLS verdadeiro com um servidor legítimo da internet antes de engatar o fluxo criptografado (como Shadowsocks ou Sing-box), enganando filtros de SNI sem exigir certificados próprios.
+  \item \textbf{Hysteria 2 (Velocidade Brutal em Redes Instáveis):} Baseado em um protocolo \textbf{QUIC (HTTP/3 sobre UDP)} modificado, o \textbf{Hysteria 2} se disfarça como tráfego HTTP/3 comum e usa um algoritmo agressivo de controle de congestionamento (\emph{Brutal}). É imbatível para conexões de Wi-Fi público saturadas, 4G/5G oscilante ou rotas internacionais com alta perda de pacotes.
+  \item \textbf{Transportes Pluggable da Rede Tor:} O próprio Tor documenta quatro métodos oficiais para furar bloqueios, cada um com sua especialidade: \textbf{obfs4} (faz os pacotes parecerem ruído aleatório puro), \textbf{Snowflake} (camufla o tráfego como uma chamada de vídeo WebRTC passageira), \textbf{meek} (usa \emph{Domain Fronting} em grandes CDNs) e o moderno \textbf{WebTunnel} (que esconde o tráfego Tor dentro de uma conexão HTTPS/WebSocket comum).
+\end{itemize}
+
+\begin{ferramenta}[goat,logo=singbox]{sing-box}{https://sing-box.sagernet.org}{open source, golang, universal proxy, vless reality, hysteria2, shadowtls, win, linux, mac, android, ios}
+O verdadeiro ``canivete suíço'' universal para contornar censura e firewalls modernos. Escrito em \textbf{Go} com foco em performance extrema e baixo consumo de memória, o \textbf{sing-box} unifica em um único programa (tanto para servidor quanto para cliente no Desktop, Android, iOS e roteadores OpenWrt) suporte nativo a praticamente todos os protocolos existentes: \textbf{VLESS + REALITY}, \textbf{NaiveProxy}, \textbf{ShadowTLS v3}, \textbf{Hysteria 2}, \textbf{TUIC}, \textbf{Shadowsocks}, \textbf{Trojan}, \textbf{WireGuard} e \textbf{Tor}. Permite criar regras de roteamento cirúrgicas (ex.: mandar sites bloqueados pelo túnel REALITY, jogos pelo Hysteria 2 e bancos direto pela internet local). \estrelas{5}
+\end{ferramenta}
+
+\subsection{Qual Protocolo Anti-Censura Escolher?}
+
+\begin{tabela}{>{\bfseries}l l X}
+\cab{Objetivo Técnico} & \cab{Escolha Recomendada} & \cab{Como Funciona na Prática} \\
+Camuflagem TLS sem domínio & \textbf{VLESS + REALITY} \goat & Empresta o certificado TLS real de grandes sites; imune a sondagem ativa. \\
+Parecer HTTPS convencional & \textbf{NaiveProxy}            & Usa a stack de rede real do navegador Chromium; derrota fingerprinting TLS. \\
+Camuflagem TLS alternativa & \textbf{ShadowTLS v3}          & Faz o handshake TLS com um servidor legítimo antes de iniciar o túnel. \\
+Resistência a bloqueio Tor & \textbf{WebTunnel / meek}      & Esconde o tráfego da rede Tor dentro de WebSockets HTTPS ou CDNs. \\
+Redes lentas ou instáveis  & \textbf{Hysteria 2} \goat      & Baseado em QUIC/HTTP3; mantém velocidade máxima mesmo com perda de pacotes. \\
+\end{tabela}
+
+\section{Redes Descentralizadas de Anonimato (Tor e I2P)}
+
+Quando o seu Modelo de Ameaça exige \textbf{anonimato real sem confiar em nenhuma empresa} (e sem pagar nada), você deve subir para o último degrau da criptografia de rede: as redes descentralizadas voluntárias \textbf{Tor} e \textbf{I2P}.
+
+\begin{ferramenta}[goat,logo=tor]{Tor \& Tor Browser (The Onion Router)}{https://www.torproject.org}{open source, roteamento cebola, 3 saltos, onion, gratis, win, linux, mac, android}
+A maior ferramenta de anonimato e combate à censura da história da internet. Em vez de enviar seus dados para um único servidor de VPN, a rede \textbf{Tor} envolve seu tráfego em três camadas sucessivas de criptografia (como as camadas de uma cebola) e o envia por três servidores voluntários independentes escolhidos aleatoriamente no mundo:
+\begin{enumerate}
+  \item \textbf{Nó de Guarda (\emph{Guard Node}):} Vê seu IP real, mas não sabe o que você está acessando;
+  \item \textbf{Nó Intermediário (\emph{Middle Relay}):} Apenas repassa o pacote criptografado entre o primeiro e o terceiro nó, sem conhecer nem a origem nem o destino;
+  \item \textbf{Nó de Saída (\emph{Exit Node}):} Descriptografa a última camada e entrega o acesso ao site final, mas não faz ideia de quem enviou o pedido!
+\end{enumerate}
+Além de anonimizar o acesso a sites comuns, o Tor dá acesso aos \textbf{Serviços Onion (\texttt{.onion})} — sites onde nem o servidor conhece seu IP e nem você conhece o IP do servidor, com criptografia ponta-a-ponta nativa sem depender de autoridades certificadoras. \estrelas{5}
+\end{ferramenta}
+
+\begin{dica}[Devo usar VPN junto com o Tor? (O mito do ``Tor over VPN'')]
+O próprio \textbf{Tor Project} recomenda que a maioria dos usuários \textbf{NÃO adicione uma VPN comercial ao usar o Tor}, pois a VPN se torna um ponto permanente de observação do seu IP de entrada. Se o seu objetivo é apenas esconder da sua operadora de internet (Vivo/Claro) ou da rede da faculdade/trabalho que você está se conectando ao Tor, não precisa de VPN: basta ir nas configurações do Tor Browser e ativar uma \textbf{Ponte Oficial (\emph{Bridge})} do tipo \textbf{obfs4}, \textbf{Snowflake} ou \textbf{WebTunnel}!
+\end{dica}
+
+\begin{ferramenta}[goat,logo=i2p]{I2P / i2pd (Invisible Internet Project)}{https://i2pd.website}{open source, garlic routing, darknet interna, p2p anonimo, c++, gratis}
+Enquanto o Tor foi projetado principalmente para que você acesse a internet normal (\emph{Clearnet}) de forma anônima através de nós de saída, a rede \textbf{I2P} é uma \textbf{rede interna fechada e totalmente descentralizada (\emph{Darknet} pura)} onde todo o tráfego nasce e permanece criptografado dentro da própria rede.
+\begin{itemize}
+  \item \textbf{Roteamento de Alho (\emph{Garlic Routing}):} Evolução do roteamento cebola onde múltiplas mensagens são agrupadas em ``dentes de alho'' criptografados e trafegam por \textbf{túneis unidirecionais separados} (o caminho de ida dos seus pacotes é completamente diferente do caminho de volta, derrotando ataques de análise de tempo de tráfego!).
+  \item \textbf{Dica de Ouro — Use o cliente \texttt{i2pd} (C++):} O cliente original do projeto (\pglink{https://geti2p.net}) é escrito em Java e pode ser pesado. Para desempenho máximo, instale o \textbf{i2pd (I2P Daemon)}: uma reimplementação oficial 100\% em C++ ultraleve que consome menos de 50 MB de RAM e permite acessar sites internos \cmd{.i2p} (\emph{Eepsites}), IRC anônimo, e-mail interno e BitTorrent anônimo! \estrelas{5}
+\end{itemize}
+\end{ferramenta}
+
+\clearpage
+\subsection{Anonimato de Nível Máximo: Sistemas Operacionais Amnésicos}
+
+E se o seu computador estiver contaminado ou alguém apreender seu notebook desligado? Para situações extremas (jornalismo investigativo, denúncias anônimas ou proteção contra perícia forense), existem sistemas operacionais inteiros desenhados para rodar sobre a rede Tor:
+
+\begin{ferramenta}[recomendado,logo=tails]{Tails OS \& Whonix}{https://tails.net}{open source, linux amnesico, ram-only, tor obrigatorio, pendrive, gratis}
+Duas obras-primas da engenharia de segurança operacional:
+\begin{itemize}
+  \item \textbf{Tails OS (\emph{The Amnesic Incognito Live System}):} Sistema Linux completo que você grava em um pendrive e dá boot em qualquer PC. O Tails nunca toca no SSD/HD do computador (opera 100\% na memória RAM), força absolutamente todas as conexões de rede a passarem pelo \textbf{Tor} (bloqueando qualquer aplicativo que tente vazar seu IP real) e, \textbf{no segundo em que você puxa o pendrive da porta USB, toda a memória RAM é limpa} e o computador volta ao estado original como se nunca tivesse sido ligado!
+  \item \textbf{Whonix (\pglink{https://www.whonix.org}):} Sistema baseado em duas máquinas virtuais isoladas (\emph{Whonix-Gateway} + \emph{Whonix-Workstation}, já integrado nativamente ao \textbf{Qubes OS}). Mesmo que um hacker explore uma falha zero-day no navegador ou você execute um malware dentro da Workstation, é fisicamente impossível o vírus descobrir seu endereço IP real, pois a máquina de trabalho sequer possui placa de rede conectada à internet — ela só enxerga o Gateway Tor!
+\end{itemize}
+\estrelas{5}
+\end{ferramenta}
+
+\begin{tldr}
+\textbf{Resumo da Ópera de Redes:}
+\begin{itemize}
+  \item Quer \textbf{privacidade rápida no dia a dia}? Use \textbf{Obscura VPN} (2 saltos) ou \textbf{Mullvad VPN}.
+  \item Precisa de \textbf{porta aberta fixa (Port Forwarding)} para roteador/Docker/Torrent? Use \textbf{AirVPN} ou \textbf{Proton VPN}.
+  \item Quer um \textbf{IP exclusivo que nunca pede CAPTCHA}, furar um firewall draconiano (\textbf{sing-box / VLESS+REALITY}) ou acessar sua rede de casa? Suba uma \textbf{VPS No-KYC (via KYCnot.me)}.
+  \item Precisa de \textbf{anonimato real, gratuito e sem confiar em nenhuma empresa}? Use o \textbf{Tor Browser} (para navegar na web e \cmd{.onion}) e o \textbf{i2pd} (para P2P e serviços internos \cmd{.i2p}).
+\end{itemize}
+\end{tldr}
+
+\clearpage
+\section{Comparativo Geral: VPN vs. VPS vs. Tor vs. I2P}
+
+\begin{tabela}{>{\bfseries}l c c c c X}
+\cab{Solução / Rede} & \cab{Anonimato} & \cab{Velocidade} & \cab{Sem CAPTCHA} & \cab{Port Fwd} & \cab{Melhor Caso de Uso} \\
+Obscura VPN \goat & Máximo & Alta  & \meio & \nope           & Privacidade web máxima (2 saltos: QUIC + Mullvad) \\
+Mullvad VPN \goat & Máximo & Alta  & \meio & \nope           & Anonimato rápido, sem e-mail e servidores em RAM \\
+Proton VPN \goat  & Alto   & Alta  & \meio & \ok\ (Din.)     & Uso geral versátil, P2P fácil e melhor plano grátis \\
+AirVPN            & Alto   & Alta  & \meio & \ok\ (Est.)     & Port Forwarding fixo para WireGuard, Docker e Torrent \\
+VPS + sing-box    & Baixo  & Máxima & \ok & \ok\ (Total)    & IP próprio sem CAPTCHA, burlar DPI e firewalls \\
+VPS + Tailscale   & Baixo  & Máxima& \ok   & \meio           & Rede mesh privada para acessar Homelab remotamente \\
+Rede Tor \goat    & Extremo& Baixa & \nope & \nope           & Anonimato real sem confiança e sites \texttt{.onion} \\
+Rede I2P (\texttt{i2pd}) \goat & Extremo & Média & --- & \ok\ (Int.) & Serviços ocultos \texttt{.i2p}, darknet e torrent anônimo \\
+\end{tabela}
+
+% =====================================================================
+%  CAPÍTULO 08 -- O MAPA DA PRIVACIDADE, AUDITORIA E CHECKLIST
+% =====================================================================
+\comentario{os diretórios vivos da comunidade mundial e ferramentas de checagem}
+\chapter{O Mapa da Privacidade}
+
+\begin{missao}[mantendo-se atualizado e auditando sua exposição]
+\begin{itemize}
+  \item Favoritar os maiores diretórios vivos de privacidade, software livre e serviços No-KYC do mundo (\textbf{PrivacyGuides}, \textbf{Awesome Privacy} e \textbf{KYCnot.me}).
+  \item Auditar se seus dados já vazaram na internet (\textbf{Have I Been Pwned}), testar seu navegador (\textbf{Cover Your Tracks}) e inspecionar apps (\textbf{Exodus}).
+  \item Seguir o \textbf{Checklist Final de Privacidade e Segurança} da Pousada.
+\end{itemize}
+\end{missao}
+
+Assim como no universo da pirataria, o cenário de segurança e privacidade muda rapidamente: ferramentas éticas podem ser vendidas e novas soluções surgem na comunidade. Consulte sempre os diretórios vivos recomendados:
+
+\section{Grandes Índices e Diretórios de Privacidade}
+
+\begin{ferramenta}[goat,logo=privacyguides]{PrivacyGuides.org}{https://www.privacyguides.org}{megathread privacidade, curadoria rigorosa, sem afiliados, open source}
+Referência mundial em privacidade digital e segurança operacional (sucessor do \emph{PrivacyTools.io}). Mantido por especialistas e ativistas sob uma regra inegociável: \textbf{zero anúncios, patrocínios ou links de afiliados}. Cada ferramenta passa por auditoria e escrutínio público no GitHub. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=kycnot]{KYCnot.me}{https://kycnot.me}{diretorio no-kyc, vps anonima, dominios, monero, bitcoin, open source}
+O mapa do tesouro da soberania e infraestrutura anônima na internet. Diretório curado que avalia serviços que \textbf{não exigem documentos (Zero KYC)} e aceitam criptomoedas privadas (\textbf{Monero / XMR} e \textbf{Bitcoin / Lightning}): VPS, servidores dedicados, domínios, VPNs e corretoras P2P descentralizadas. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=awesomeprivacy]{Awesome Privacy}{https://awesome-privacy.xyz}{open source, alternativas livres, catalogo interativo}
+Diretório visual fantástico e 100\% código aberto (mantido por Alicia Sykes / \emph{Lissy93}) que lista centenas de softwares e serviços populares que violam sua privacidade e aponta lado a lado os melhores substitutos auditados, mostrando licença, linguagem de programação e status de criptografia de cada um. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=eff-ssd]{EFF Surveillance Self-Defense (SSD)}{https://ssd.eff.org/pt-br}{guias praticos, opsec, jornalistas, ativistas, pt-br}
+Enciclopédia prática de autodefesa contra vigilância mantida pela \textbf{Electronic Frontier Foundation (EFF)}, com guias traduzidos para português ensinando modelagem de ameaças, proteção em viagens/fronteiras, segurança em protestos e criptografia passo a passo. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=tosdr]{ToS;DR (Terms of Service; Didn't Read)}{https://tosdr.org}{termos de uso, classificacao a-e, extensao, open source}
+Ninguém lê 80 páginas de ``Termos de Uso e Política de Privacidade'' antes de criar uma conta. O projeto comunitário \textbf{ToS;DR} lê e analisa cada cláusula abusiva dos grandes sites da internet e atribui uma nota direta de \textbf{Classe A} (Excelente) até \textbf{Classe E} (Péssimo), resumindo em tópicos simples se o site vende seus dados, treina IA com seus arquivos ou rastreia você fora da plataforma. \estrelas{4}
+\end{ferramenta}
+
+\clearpage
+\section{Ferramentas de Auditoria e Checagem Pessoal}
+
+Use estas três ferramentas gratuitas para descobrir o que já vazou sobre você e testar se suas defesas estão funcionando:
+
+\begin{ferramenta}[goat,logo=hibp]{Have I Been Pwned (HIBP)}{https://haveibeenpwned.com}{vazamentos de dados, data breaches, checagem de email, gratis}
+Criado por Troy Hunt, é o maior acervo ético de vazamentos do mundo. Digite seus e-mails para checar credenciais expostas em megavazamentos. Na aba \textbf{Passwords}, teste se uma senha já vazou via \emph{k-Anonymity}. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=coveryourtracks]{Cover Your Tracks (EFF)}{https://coveryourtracks.eff.org}{teste de navegador, anti-fingerprinting, eff, gratis}
+Ferramenta da EFF para testar defesas contra rastreadores invisíveis e medir o grau de unicidade da sua impressão digital (\emph{fingerprint}). \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=exodus]{Exodus Privacy}{https://exodus-privacy.eu.org}{auditoria android, rastreadores em apps, permissoes, open source}
+Plataforma que analisa o código de apps Android, revelando \textbf{quantos rastreadores ocultos (\emph{trackers}) e permissões de risco} existem antes da instalação. \estrelas{5}
+\end{ferramenta}
+
+\begin{dica}[Como auditar os aplicativos do seu celular na prática]
+Consulte qualquer app pelo site \cmd{exodus-privacy.eu.org} ou instale o aplicativo oficial do \textbf{Exodus} pelo \textbf{Droid-ify / Obtainium} para inspecionar os rastreadores e permissões dos apps já presentes no aparelho.
+\end{dica}
+
+\begin{atencao}[Teste de vazamento de DNS e WebRTC ao usar VPN]
+Mesmo com VPN ligada, cheque se não há vazamentos:
+\begin{itemize}
+  \item \textbf{Vazamento de DNS (\emph{DNS Leak}):} Teste em \pglink[dnsleaktest.com]{https://dnsleaktest.com} (sua operadora não deve aparecer).
+  \item \textbf{Vazamento de WebRTC (\emph{WebRTC Leak}):} Teste em \pglink[browserleaks.com/webrtc]{https://browserleaks.com/webrtc} (seu IP real não deve vazar).
+\end{itemize}
+\end{atencao}
+
+\clearpage
+\section{Checklist Final de Privacidade e Segurança da Pousada}
+
+Siga esta lista em etapas — marque primeiro os itens essenciais \textcolor{pgSignal}{\pgmono\bfseries[x]} (que protegem contra 95\% das ameaças do dia a dia) e avance para os opcionais \textcolor{pgAmber}{\pgmono\bfseries[?]} conforme sentir necessidade:
+
+\begin{checklist}
+  \feito Cofre de senhas instalado (\textbf{Bitwarden} ou \textbf{KeePassXC}) com uma Senha Mestra forte (\emph{Passphrase}) e todas as senhas apagadas do navegador.
+  \feito Autenticação em Dois Fatores (2FA) ativada em todas as contas importantes usando \textbf{Ente Auth} ou \textbf{Aegis} (com código de recuperação anotado fora do PC).
+  \feito Conta de e-mail principal migrada para o \textbf{Proton Mail} ou \textbf{Tuta}.
+  \feito Serviço de máscaras de e-mail (\textbf{SimpleLogin} ou \textbf{Addy.io}) configurado para criar um alias diferente para cada site ou loja.
+  \feito Navegador privado instalado (\textbf{LibreWolf}, \textbf{Zen} ou \textbf{Mullvad Browser} no PC; \textbf{IronFox} no Android) com \textbf{uBlock Origin} ativo.
+  \feito Buscador padrão alterado do Google para o \textbf{Brave Search}, \textbf{SearXNG} ou \textbf{DuckDuckGo}.
+  \feito DNS criptografado configurado (\textbf{Quad9}, \textbf{Mullvad DNS} ou \textbf{NextDNS / AdGuard Home}).
+  \feito \textbf{Signal} instalado para conversas privadas e protocolos abertos (\textbf{Fluxer}, \textbf{Matrix}, \textbf{Nostr} ou \textbf{Mastodon}) adotados para comunidades.
+  \opcional Arquivos sensíveis na nuvem protegidos com \textbf{Cryptomator}, \textbf{Ente Photos} ou sincronizados diretamente via \textbf{Syncthing}.
+  \opcional Metadados EXIF limpos de fotos e documentos antes de enviá-los na internet (\textbf{ExifTool / ExifCleaner / Scrambled Exif}).
+  \opcional Desktop migrado para \textbf{Linux} (com disco criptografado via LUKS) ou \textbf{Qubes OS}, ou telemetria do Windows cortada via \textbf{Chris Titus WinUtil}.
+  \opcional No Android, aplicativos instalados via \textbf{Obtainium / Droid-ify} e rede controlada pelo firewall \textbf{RethinkDNS} (ou \textbf{GrapheneOS}).
+  \opcional Túnel de rede configurado conforme seu objetivo: \textbf{Obscura / Mullvad / AirVPN} (privacidade comercial), \textbf{VPS No-KYC + AmneziaVPN / sing-box} (IP limpo próprio e bypass de DPI) ou \textbf{Tor Browser / i2pd} (anonimato descentralizado).
+\end{checklist}
+
+\clearpage
+\section{Glossário Rápido do Agente}
+
+\begin{description}
+  \item[E2EE (End-to-End Encryption)] Criptografia Ponta-a-Ponta. Os dados são criptografados no seu aparelho e só podem ser descriptografados no aparelho do destinatário (ou por você mesmo). Nem a empresa dona do servidor consegue ler o conteúdo.
+  \item[Zero-Knowledge] Arquitetura onde o provedor do serviço tem ``conhecimento zero'' sobre o conteúdo armazenado pelos seus usuários, pois nunca possui acesso às chaves de descriptografia.
+  \item[Metadados] São os ``dados sobre os dados''. Mesmo que ninguém leia o texto da sua mensagem, os metadados revelam \emph{quem} falou com \emph{quem}, \emph{quando}, de \emph{qual endereço IP} e por \emph{quanto tempo}.
+  \item[TOTP (Time-based One-Time Password)] Padrão aberto de Autenticação em Dois Fatores que gera códigos de 6 dígitos que mudam a cada 30 segundos (usado pelo Ente Auth e Aegis) sem precisar de SMS.
+  \item[Email Alias (Máscara)] Endereço de e-mail alternativo que encaminha mensagens para sua caixa real, permitindo ocultar seu endereço verdadeiro e bloquear spam de sites específicos com um clique.
+  \item[Two-Party VPN (Relay de Duas Partes)] Arquitetura (como a da Obscura VPN) onde o servidor de entrada pertence a uma empresa e o servidor de saída pertence a outra (ex.: Mullvad). Assim, nenhum servidor conhece ao mesmo tempo o seu IP real e os sites que você visita.
+  \item[DPI (Deep Packet Inspection)] Inspeção Profunda de Pacotes usada por firewalls corporativos e governos para detectar e bloquear conexões de VPN comuns, exigindo protocolos furtivos de camuflagem como \emph{VLESS+REALITY}, \emph{NaiveProxy} ou \emph{Hysteria 2}.
+  \item[Onion vs. Garlic Routing] No \emph{Onion Routing} (Tor), seu tráfego passa por 3 nós criptografados em camadas para acessar a web ou sites \texttt{.onion}. No \emph{Garlic Routing} (I2P), múltiplos pacotes são agrupados juntos e trafegam por túneis unidirecionais separados de ida e volta dentro de uma rede fechada.
+  \item[KYC (Know Your Customer)] Processo de verificação de identidade onde empresas exigem documentos (CPF, RG, Passaporte, selfie e cartão de crédito), vinculando sua identidade física à sua conta digital.
+\end{description}
+
+\divisor
+
+\begin{pousadinha}[Escudos erguidos e dados sob o seu controle!]
+Parabéns por chegar ao final do \textbf{PousadaGuide \#02}! Lembre-se: a melhor ferramenta de segurança e privacidade é aquela que você realmente consegue usar todos os dias sem desistir no meio do caminho. Se tiver dúvidas na hora de migrar suas senhas, configurar seus aliases, subir um servidor do Fluxer ou blindar seu Linux, cole lá no Discord da Pousada — e compartilhe este guia com quem ainda guarda todas as senhas no navegador!
+\end{pousadinha}
+
+\contracapa
+\end{document}

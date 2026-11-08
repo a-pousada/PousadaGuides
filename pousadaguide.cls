@@ -84,6 +84,79 @@
 \definecolor{pgAmber}{HTML}{D9962B}
 \definecolor{pgAlert}{HTML}{C9483E}
 
+% ---------------------------------------------------------------------
+%  Seletor de Tema por Edição: \guiatema{...}
+%  Uso no .tex:
+%    \guiatema{piracy}   | \guiatema{privacy}  | \guiatema{selfhost}  | \guiatema{bitcoin}
+%    \guiatema{privacy-hud} | \guiatema{selfhost-hud} | \guiatema{bitcoin-hud}
+% ---------------------------------------------------------------------
+\definecolor{pgBrandTeal}{HTML}{01424A} % Guarda o verde original da Pousada
+
+\newcommand\guiatema[1]{%
+  % ===================================================================
+  % MODO 1: TEMA COMPLETO (Muda o fundo escuro + circuitos por edição)
+  % ===================================================================
+  \ifstrequal{#1}{piracy}{%
+    % #01 Piracy: Teal Original da Pousada + Ciano
+    \definecolor{pgTeal}{HTML}{01424A}%
+    \definecolor{pgAbyss}{HTML}{01323A}%
+    \definecolor{pgVoid}{HTML}{00222A}%
+    \definecolor{pgGlow}{HTML}{5FE3C9}%
+    \definecolor{pgSignal}{HTML}{14857A}%
+    \definecolor{pgInk}{HTML}{14292C}%
+    \definecolor{pgMuted}{HTML}{5F7774}%
+    \definecolor{pgFog}{HTML}{7FA29E}%
+  }{}%
+  \ifstrequal{#1}{privacy}{%
+    % #02 Privacidade & Segurança: Azul-Meia-Noite + Azul-Ciano
+    \definecolor{pgTeal}{HTML}{0F2942}%
+    \definecolor{pgAbyss}{HTML}{0A1D30}%
+    \definecolor{pgVoid}{HTML}{06121E}%
+    \definecolor{pgGlow}{HTML}{60D5FA}%
+    \definecolor{pgSignal}{HTML}{1D6FA5}%
+    \definecolor{pgInk}{HTML}{122230}%
+    \definecolor{pgMuted}{HTML}{556B7D}%
+    \definecolor{pgFog}{HTML}{7B9AB2}%
+  }{}%
+  \ifstrequal{#1}{selfhost}{%
+    % #03 Self-Host & Homelab: Roxo-Abissal + Lilás-Neon
+    \definecolor{pgTeal}{HTML}{231934}%
+    \definecolor{pgAbyss}{HTML}{181024}%
+    \definecolor{pgVoid}{HTML}{0E0917}%
+    \definecolor{pgGlow}{HTML}{B794F4}%
+    \definecolor{pgSignal}{HTML}{6B46C1}%
+    \definecolor{pgInk}{HTML}{1C1626}%
+    \definecolor{pgMuted}{HTML}{685E7A}%
+    \definecolor{pgFog}{HTML}{9488AB}%
+  }{}%
+  \ifstrequal{#1}{bitcoin}{%
+    % #04 Bitcoin & Soberania: Grafite-Bronze Escuro + Laranja Bitcoin
+    \definecolor{pgTeal}{HTML}{241C15}%
+    \definecolor{pgAbyss}{HTML}{1A130E}%
+    \definecolor{pgVoid}{HTML}{100B08}%
+    \definecolor{pgGlow}{HTML}{F7931A}%
+    \definecolor{pgSignal}{HTML}{B85D19}%
+    \definecolor{pgInk}{HTML}{211C18}%
+    \definecolor{pgMuted}{HTML}{736559}%
+    \definecolor{pgFog}{HTML}{A69382}%
+  }{}%
+  % ===================================================================
+  % MODO 2: APENAS HUD (Mantém o Verde Pousada #01424A e muda o neon)
+  % ===================================================================
+  \ifstrequal{#1}{privacy-hud}{%
+    \definecolor{pgGlow}{HTML}{60D5FA}%
+    \definecolor{pgSignal}{HTML}{1D6FA5}%
+  }{}%
+  \ifstrequal{#1}{selfhost-hud}{%
+    \definecolor{pgGlow}{HTML}{B794F4}%
+    \definecolor{pgSignal}{HTML}{6B46C1}%
+  }{}%
+  \ifstrequal{#1}{bitcoin-hud}{%
+    \definecolor{pgGlow}{HTML}{F7931A}%
+    \definecolor{pgSignal}{HTML}{B85D19}%
+  }{}%
+}
+
 \ifpg@print
   \colorlet{pgPaper}{white}
   \colorlet{pgPaperLight}{white}
@@ -580,7 +653,7 @@
       \fi
     \fi
     \pg@badge},
-  before upper={{\pgtags{#4}}\hfill\pglink{#3}\par\vspace{.6mm}},
+  before upper={{\pgtags{#4}}\par\vspace{1.2mm}\noindent\pglink{#3}\par\vspace{1.4mm}},
 }
 % Terminal (código de shell):  \begin{terminal}[título da janela] ... \end{terminal}
 \lstdefinestyle{pgterm}{
@@ -727,10 +800,10 @@
           font=\pgmono\bfseries\fontsize{11}{12}\selectfont]
       (kick) at ($(current page.north west)+(20mm,-70mm)$)
       {>\_\hspace{2mm}PousadaGuide};
-    \node[anchor=north west, inner sep=0, text=pgCream, text width=112mm,
+    \node[anchor=north west, inner sep=0, text=pgCream, text width=130mm,
           align=left, font=\pgdisplay\fontsize{50}{52}\selectfont]
       (ttl) at ([yshift=-5mm]kick.south west)
-      {\pg@nohyph\pg@titulo\hspace{3mm}\pgcursor\par};
+      {\pg@nohyph\pg@titulo\nobreak\hspace{3mm}\pgcursor\par};
     \node[anchor=north west, inner sep=0, text=pgCream!85, text width=95mm,
           align=left, font=\pgdisplaylight\fontsize{14}{18}\selectfont]
       (sub) at ([yshift=-6mm]ttl.south west) {\pg@nohyph\pg@subtitulo\par};
