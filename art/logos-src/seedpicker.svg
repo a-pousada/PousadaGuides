@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect x="8" y="8" width="112" height="112" rx="24" fill="#1E293B"/>
+  <!-- White Dice -->
+  <rect x="24" y="24" width="60" height="60" rx="12" fill="#F3EBD5"/>
+  <circle cx="39" cy="39" r="5" fill="#1E293B"/>
+  <circle cx="69" cy="39" r="5" fill="#1E293B"/>
+  <circle cx="54" cy="54" r="5.5" fill="#C9483E"/>
+  <circle cx="39" cy="69" r="5" fill="#1E293B"/>
+  <circle cx="69" cy="69" r="5" fill="#1E293B"/>
+  <!-- #24 Checksum Pill -->
+  <rect x="52" y="68" width="52" height="36" rx="9" fill="#F7931A"/>
+  <text x="78" y="92" fill="#141B24" font-family="monospace" font-size="18" font-weight="900" text-anchor="middle">#24</text>
+</svg>

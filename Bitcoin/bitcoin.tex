@@ -1,0 +1,1027 @@
+% =====================================================================
+%  PousadaGuide #03 -- Bitcoin Guide
+%  Moeda forte, auto-custódia, P2P sem KYC, Nodes, Lightning e Cold Wallets.
+%  Inspirado em Bitcoin Optech, Bitcoiner.guide & WalletScrutiny para a Pousada.
+%  Compile com:  latexmk -xelatex bitcoin.tex   (ou: tectonic bitcoin.tex)
+% =====================================================================
+\documentclass{pousadaguide}
+% \documentclass[print]{pousadaguide}   % versão para impressão (fundo branco)
+
+% ---- Identidade visual deste guia -----------------------------------
+\guiamascote{bitcoin-capa}
+\guiaavatar{bitcoin-avatar}
+\guiagoat{goat}
+\guiamascotepos{.62\paperheight}{-48mm}{4mm}
+
+% ---- Metadados do guia ----------------------------------------------
+\guianumero{03}
+\guiatitulo{Bitcoin Guide}
+\guiasubtitulo{Soberania financeira, P2P sem KYC, nodes, mineração caseira, Lightning Network e setups definitivos de Cold Wallet.}
+\guiaslug{bitcoin-guide}
+\guiacategoria{soberania \& criptografia}
+\guiaversao{v1.0}
+\guiaautor{Bakalhau}
+\guiadata{novembro de 2026}
+\guialicenca{GNU AGPLv3}
+\guialinks{%
+  \textcolor{pgGlow}{\faDiscord}\ \ discord.gg/pousada\\[1mm]
+  \textcolor{pgGlow}{\faGithub}\ \ github.com/a-pousada\\[1mm]
+  \textcolor{pgGlow}{\faRss}\ \ pousada.substack.com}
+
+\begin{document}
+
+\capa
+\tableofcontents
+
+% =====================================================================
+%  CAPÍTULO 01 -- FUNDAMENTOS: POR QUE BITCOIN, NÃO "CRIPTO"
+% =====================================================================
+\comentario{entenda a diferença entre dinheiro soberano e cassino de tokens}
+\chapter{Antes de Acumular}
+
+\begin{missao}[fundamentos da moeda forte e soberania financeira]
+\begin{itemize}
+  \item Compreender por que o \textbf{Bitcoin (BTC)} é uma descoberta matemática única e por que 99,9\% das outras criptomoedas (\emph{shitcoins}) são esquemas centralizados.
+  \item Entender o papel da \textbf{Prova de Trabalho (\emph{Proof-of-Work})}, do limite absoluto de \textbf{21 milhões de moedas} e da \textbf{Guerra do Tamanho dos Blocos}.
+  \item Dominar as \textbf{5 Regras de Ouro da Auto-Custódia} para jamais perder seus fundos para corretoras, hackers ou golpes.
+\end{itemize}
+\end{missao}
+
+Durante séculos, cidadãos comuns tiveram apenas duas opções para guardar o fruto do seu trabalho: confiar em bancos e governos que imprimem dinheiro do nada — destruindo silenciosamente o poder de compra da moeda através da inflação — ou guardar ativos físicos difíceis de transportar, dividir e enviar à distância, como o ouro.
+
+Em 31 de outubro de 2008, sob o pseudônimo de \textbf{Satoshi Nakamoto}, foi publicado o \emph{whitepaper} \emph{``Bitcoin: Um Sistema de Dinheiro Eletrônico Ponto-a-Ponto''}. Pela primeira vez na história humana, um ativo digital conseguiu ter \textbf{escassez matemática absoluta} (jamais existirão mais de 21 milhões de bitcoins), sem depender de nenhum banco central, empresa, servidor mestre ou exército para funcionar.
+
+\begin{pousadinha}[A Capitã Pousadinha avisa]
+Bem-vindo ao \textbf{PousadaGuide \#03}! Este não é um guia de ``trade'', apostas alavancadas ou promessas de ficar rico rápido com a moeda de cachorro da semana. Aqui na Pousada tratamos o Bitcoin pelo que ele realmente é: \textbf{uma tecnologia cypherpunk de liberdade, privacidade e auto-custódia}. Você vai aprender a comprar sem entregar seus documentos, rodar seu próprio validador e construir sua própria carteira fria gastando quase nada!
+\end{pousadinha}
+
+\section{Bitcoin vs. “Shitcoins”: Por que o resto é barulho?}
+
+Quando um iniciante entra nesse universo, o maior perigo é cair na narrativa das corretoras de que ``o Bitcoin é velho e lento, compre esta nova criptomoeda que faz 100.000 transações por segundo''. Para não ser feito de liquidez de saída por fundos de capital de risco (\emph{Venture Capitalists}), entenda os quatro pilares que separam o Bitcoin de todas as outras moedas (\emph{altcoins / shitcoins}):
+
+\begin{enumerate}
+  \item \textbf{Imaculada Conceição e Ausência de Dono:} Satoshi Nakamoto anunciou o projeto meses antes, minerou o Bloco Gênesis em 3 de janeiro de 2009 sem reservar moedas pré-mineradas (\emph{Zero Pre-Mine}), nunca fez pré-venda para investidores (\emph{Zero ICO}) e sumiu em 2011. O Bitcoin não tem CEO, fundação ou CNPJ. Já quase todas as altcoins têm um criador bilionário e até 70\% do suprimento impresso de graça no dia zero para os fundadores despejarem no mercado.
+  \item \textbf{Prova de Trabalho (\emph{Proof-of-Work}) vs. Prova de Participação (\emph{Proof-of-Stake}):} O Bitcoin ancora o mundo digital nas leis da física via \textbf{Proof-of-Work (PoW)}: mineradores gastam energia elétrica real calculando trilhões de hashes SHA-256. Já as moedas em \textbf{Proof-of-Stake (PoS)} (Ethereum, Solana, Cardano) replicam o sistema bancário fiduciário: quem já tem mais moedas ganha o direito de validar a rede, emitir novas moedas sem custo físico e controlar as regras perpetuamente.
+  \item \textbf{A Guerra do Tamanho dos Blocos (\emph{Blocksize Wars}, 2015--2017):} Grandes empresas tentaram forçar blocos gigantescos na camada base. A comunidade de usuários resistiu e venceu: se os blocos fossem enormes, a blockchain cresceria dezenas de terabytes por ano e \textbf{apenas datacenters milionários conseguiriam rodar um validador}. Mantendo blocos enxutos na Camada 1 e escalando em camadas superiores (\textbf{Lightning Network}), qualquer cidadão roda um \textbf{Full Node} em casa num PC antigo ou Raspberry Pi, auditando cada centavo sem confiar em ninguém!
+  \item \textbf{Política Monetária Imutável (\emph{Halving}):} A cada \textbf{210.000 blocos} (~4 anos), a emissão de novos bitcoins cai exatamente pela metade (\emph{Halving}): começou em 50 BTC por bloco em 2009, caiu para 25, 12,5, 6,25 e atingiu \textbf{3,125 BTC} em 2024, até cessar perto de 2140. Em altcoins, o comitê central muda a emissão quando bem entende.
+\end{enumerate}
+
+\subsection{Comparativo Estrutural: Moeda Estatal vs. Shitcoins vs. Bitcoin}
+
+\begin{tabela}{>{\bfseries}X l l l}
+\cab{Propriedade} & \cab{Moeda Estatal} & \cab{Shitcoins (PoS)} & \cab{Bitcoin (BTC)} \\
+Limite de Emissão    & Infinito (Impressão) & Mutável / Inflacionário & \textbf{21 Milhões (Fixo)} \\
+Pré-Mineração        & 100\% (Bancos/Estado)& 20\% a 80\% (\emph{Pre-mine}) & \textbf{0\% (Lançamento Justo)} \\
+Consenso             & Decreto Estatal      & PoS (Mais Ricos Mandam) & \textbf{PoW (Energia Física)} \\
+Quem Valida?         & Banco Central        & Datacenters / Fundação  & \textbf{Qualquer Usuário (Node)} \\
+Resistência à Censura& \nope\ (Bloqueio/Pix)& \nope\ (Contratos Pausáveis) & \ok\ (\textbf{Incensurável}) \\
+Risco no Longo Prazo & Alto (Inflação)      & Extremo (99\% vão a zero) & \textbf{Mínimo (Efeito Lindy)} \\
+\end{tabela}
+
+\clearpage
+\section{Legenda Visual e Sistema de Classificação}
+
+\begin{legenda}[sistema de classificação pousada]
+  \noindent
+  \begin{minipage}[c]{0.16\linewidth}
+    \centering
+    \includegraphics[width=20mm]{goat}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[c]{0.80\linewidth}
+    {\pgmono\bfseries\fontsize{10.5}{13}\selectfont\color{pgTeal}%
+      SELO POUSADINHA “GOAT” (\emph{Greatest Of All Time})}\\[1.5mm]
+    Sempre que você vir o ícone da Pousadinha dando joinha (\goat) ao lado de um nome ou o selo dourado \pgtag[pgBrass]{GOAT // RECOMENDADO} no topo de uma ficha, significa que aquela carteira, hardware ou protocolo é \textbf{a referência técnica absoluta da categoria}: 100\% código aberto, sem custódia de terceiros e testado em batalha pela comunidade.
+  \end{minipage}
+
+  \divisor
+
+  \begin{tabela}{>{\bfseries}l X}
+  \cab{Símbolo / Etiqueta} & \cab{Significado no Guia} \\
+  \goat\ \ \pgtag[pgBrass]{goat} & \textbf{Escolha da Pousada (GOAT):} A recomendação número 1 da categoria. Se estiver em dúvida entre várias opções, escolha esta. \\
+  \pgtag{open source} & \textbf{Código Aberto e Auditável:} Código-fonte público e verificável (\emph{Reproducible Builds}). Jamais confie seu dinheiro a um aplicativo de código fechado. \\
+  \pgtag{non-custodial} & \textbf{Auto-Custódia Real:} Somente você possui as chaves privadas (12 ou 24 palavras). Nenhuma empresa pode congelar ou movimentar seus fundos. \\
+  \pgtag{air-gapped} & \textbf{Isolamento Físico de Rede:} Dispositivo que nunca se conecta à internet, Wi-Fi, Bluetooth ou cabo USB de dados — assina transações apenas via QR Code ou Cartão SD. \\
+  \pgtag{no-kyc} & \textbf{Sem Verificação de Identidade:} Serviço ou protocolo P2P que não exige envio de RG, CPF, selfie ou comprovante de residência. \\
+  \pgtag[pgAlert]{evite} & \textbf{Lista Negra / Perigo Real:} Carteiras de código fechado, hardwares com vazamentos históricos, backdoors de extração de seed ou histórico de exploits. \\
+  \estrelas{5} & \textbf{Avaliação Técnica:} Nota de 1 a 5 estrelas avaliando segurança das chaves, privacidade, transparência de código e facilidade de uso. \\
+  \end{tabela}
+\end{legenda}
+
+\section{As 5 Regras de Ouro da Soberania em Bitcoin}
+
+\begin{enumerate}
+  \item \textbf{“Not your keys, not your coins” (Não são suas chaves, não são suas moedas):} Saldo em corretora (Binance, Mercado Bitcoin, Bipa, Coinbase) não é Bitcoin — é uma promessa de dívida (\emph{IOU}). Se a corretora quebrar (como FTX e Mt. Gox) ou bloquear sua conta, você perde tudo. Comprar e não sacar para sua carteira própria é como comprar ouro e deixá-lo no cofre do vendedor.
+  \item \textbf{Jamais digite, fotografe ou salve sua Seed Phrase em um aparelho conectado à internet:} As 12 ou 24 palavras (\emph{BIP39 Seed Phrase}) são o próprio dinheiro. Nunca tire print, nunca salve em notas ou nuvem e nunca digite essas palavras no teclado do PC ou celular comum. Anote em papel ou grave em \textbf{aço inox} 100\% offline.
+  \item \textbf{Código Fechado em carteira de Bitcoin é risco de perda total:} Se uma carteira de hardware ou app não tem código aberto auditável, você confia cegamente que o fabricante não colocou um \emph{backdoor} nem um gerador de números aleatórios viciado.
+  \item \textbf{Bitcoin On-Chain é pseudônimo, não anônimo por padrão:} Transações da camada base ficam gravadas para sempre num livro-razão público. Se você compra com CPF (KYC) e saca, a corretora sabe que aquele endereço é seu. Aprenda a comprar via \textbf{P2P sem KYC}, gerenciar \textbf{UTXOs} e usar \textbf{Lightning}, \textbf{Liquid} ou \textbf{Monero (XMR)}.
+  \item \textbf{“Don't trust, verify” (Não confie, verifique):} Confira sempre o endereço de destino na tela física da Cold Wallet antes de assinar (malwares \emph{clipper} trocam endereços no Ctrl+V!), verifique assinaturas GPG e conecte sua carteira ao seu próprio Node.
+\end{enumerate}
+
+\begin{tldr}
+\textbf{Resumo de Sobrevivência:} Esqueça \emph{day trade} e \emph{shitcoins}. Acumule Bitcoin via \textbf{DCA} em plataformas \textbf{P2P sem KYC} (\textbf{Bisq}, \textbf{RoboSats}, \textbf{Spike to Spike}). Acumule pequenos valores na \textbf{Lightning} (\textbf{Phoenix}) ou \textbf{Liquid} (\textbf{Blockstream Green}) e transfira lotes maiores para sua \textbf{Cold Wallet} (\textbf{Jade}, \textbf{Jade DIY no ESP32}, \textbf{Tails OS + Electrum} ou \textbf{Celular Offline + BlueWallet}) gerenciada pela \textbf{Sparrow Wallet}.
+\end{tldr}
+
+% =====================================================================
+%  CAPÍTULO 02 -- DCA, P2P VS. CORRETORAS E A UTILIDADE DO MONERO
+% =====================================================================
+\comentario{como acumular satoshis sem entregar sua identidade nem cair em cassinos}
+\chapter{DCA, P2P e o Papel do Monero}
+
+\begin{missao}[estratégia de acumulação, compra privada e quebra de rastreio]
+\begin{itemize}
+  \item Dominar a estratégia de \textbf{DCA (\emph{Dollar-Cost Averaging})} e entender por que o \emph{day trade} destrói o patrimônio dos iniciantes.
+  \item Comparar corretoras tradicionais (\textbf{KYC}) com plataformas \textbf{P2P descentralizadas} (\textbf{Bisq}, \textbf{RoboSats}, \textbf{Peach}) e P2P comunitário brasileiro.
+  \item Compreender a utilidade real do \textbf{Monero (XMR)} como moeda de gasto anônimo e ponte cirúrgica para limpar o rastro de moedas compradas com KYC.
+\end{itemize}
+\end{missao}
+
+A primeira pergunta de quem decide acumular Bitcoin é: \emph{``Qual é a hora certa de comprar? Espero cair ou compro agora?''}. A resposta matemática comprovada ao longo de mais de 15 anos de história do protocolo cabe em três letras: \textbf{DCA}.
+
+\section{Fazer DCA (\emph{Dollar-Cost Averaging}): A Paz de Espírito}
+
+Tentar adivinhar o topo e o fundo do mercado (\emph{timing the market}), operar gráficos de 5 minutos ou usar alavancagem de futuros é a maneira mais rápida de entregar seus bitcoins para baleias e robôs de alta frequência. Estatisticamente, mais de 90\% dos \emph{day traders} perdem dinheiro ou têm desempenho inferior a quem simplesmente comprou e guardou (\emph{HODL}).
+
+O método \textbf{DCA (\emph{Preço Médio em Dólar / Real})} consiste em transformar o Bitcoin na sua poupança pessoal de longo prazo (\emph{Stacking Sats}):
+\begin{enumerate}
+  \item \textbf{Defina um valor fixo que não fará falta no mês:} Por exemplo, separar R\$ 100, R\$ 250 ou R\$ 500 toda semana ou todo dia de pagamento do salário;
+  \item \textbf{Compre religiosamente no mesmo intervalo, ignorando o noticiário:} Quando o preço do Bitcoin cai, seus mesmos R\$ 200 compram \textbf{mais satoshis} (você aproveita a promoção automaticamente). Quando o preço sobe, seus satoshis já acumulados valorizam;
+  \item \textbf{Acumule em Camada 2 / Sidechain e consolide para a Cold Wallet:} Se você comprar R\$ 100 por semana e sacar direto para a rede principal do Bitcoin (\emph{On-Chain}) toda vez, ao final de um ano você terá 52 pequenos pedaços de Bitcoin (\emph{UTXOs}) que custarão caro em taxas de minerador para juntar no futuro. O jeito inteligente de fazer DCA com valores menores é receber via \textbf{Lightning Network} ou \textbf{Liquid Network (L-BTC)} e, a cada vez que acumular cerca de \textbf{500.000 a 1.000.000 satoshis} (0,005 a 0,01 BTC), fazer \textbf{um único saque consolidado} em um horário de taxas baixas para a sua Cold Wallet!
+\end{enumerate}
+
+\begin{nota}[O que é um Satoshi (sat)?]
+Você não precisa comprar 1 Bitcoin inteiro! Assim como R\$ 1,00 é dividido em 100 centavos, \textbf{1 Bitcoin (BTC) é divisível em 100.000.000 (cem milhões) de unidades chamadas Satoshis (sats)}:
+\[
+1\text{ BTC} = 100.000.000\text{ sats} \qquad\Longrightarrow\qquad 1\text{ sat} = 0{,}00000001\text{ BTC}
+\]
+Acostume-se a contar seu patrimônio em \textbf{satoshis}, não em reais ou dólares!
+\end{nota}
+
+\section{P2P vs. Corretoras (CEX): O Perigo Oculto do KYC}
+
+Quando você abre conta em uma corretora centralizada tradicional (\emph{Centralized Exchange — CEX}, como Binance, Coinbase, Mercado Bitcoin ou Bipa), você é obrigado a passar pelo processo de \textbf{KYC (\emph{Know Your Customer})}: enviar foto do RG/CNH, CPF, comprovante de endereço residencial e gravar uma vídeo-selfie biométrica do seu rosto.
+
+\paragraph{Por que comprar Bitcoin com KYC é um risco grave de segurança?}
+\begin{itemize}
+  \item \textbf{Vazamento de bancos de dados e risco físico (“Ataque da Chave Inglesa de \$5”):} Corretoras e serviços terceirizados de verificação sofrem invasões constantes (ou têm dados vendidos por funcionários mal-intencionados). Quando um banco de dados com seu \textbf{nome completo, CPF, endereço residencial exato e histórico de saques de Bitcoin} cai na mão de quadrilhas, nenhuma criptografia do mundo protege você de um assalto presencial em casa;
+  \item \textbf{Vigilância perpétua de UTXOs:} Corretoras contratam empresas de espionagem de blockchain (como \emph{Chainalysis} e \emph{Elliptic}). Quando você saca seus bitcoins da corretora para a sua carteira pessoal, aquele endereço fica permanentemente carimbado como pertencente ao seu CPF, permitindo rastrear seus gastos futuros;
+  \item \textbf{Reportes automáticos, travas e confisco:} Corretoras reportam cada centavo movimentado e podem congelar seu saldo unilateralmente por ``análise de compliance'' durante semanas.
+\end{itemize}
+
+A alternativa soberana — exatamente como Satoshi desenhou o Bitcoin — é comprar e vender \textbf{P2P (\emph{Peer-to-Peer} / Ponto-a-Ponto)}: você transfere reais (PIX, TED, depósito em dinheiro ou vale-presente) diretamente para outro vendedor humano, enquanto um protocolo criptográfico de garantia (\emph{escrow} sem custódia) libera os satoshis diretamente para a sua carteira, sem entregar documentos para nenhuma corretora!
+
+\subsection{Plataformas P2P Descentralizadas e Sem KYC}
+
+\begin{ferramenta}[goat,logo=bisq]{Bisq (Bisq 1 \& Bisq Easy)}{https://bisq.network}{open source, p2p dex, tor nativo, no-kyc, win, linux, mac}
+A corretora descentralizada (DEX) ponto-a-ponto mais antiga, respeitada e resiliente do Bitcoin. Diferente de sites comuns, a \textbf{Bisq} é um software de código aberto que você instala no seu computador e que roda \textbf{100\% sobre a rede Tor} — não existe servidor central para ser derrubado, nem cadastro, nem e-mail, nem KYC! Hoje o ecossistema conta com dois modos na mesma plataforma:
+\begin{itemize}
+  \item \textbf{Bisq 1 (Multisig 2-de-2 com Caução):} Ideal para valores maiores. Comprador e vendedor trancam um depósito de segurança em Bitcoin num contrato Multisig; você envia o pagamento (ex.: PIX) para o vendedor e, assim que confirmado, os bitcoins vão direto para sua carteira;
+  \item \textbf{Bisq Easy (Baseado em Reputação para Iniciantes):} Resolve o problema clássico de ``como comprar meu primeiro Bitcoin na Bisq se eu ainda não tenho Bitcoin para o depósito de segurança?''. Permite compras rápidas de até US\$ 600 com vendedores de alta reputação e suporte futuro a Lightning e Liquid!
+\end{itemize}
+\estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=robosats]{RoboSats}{https://learn.robosats.com}{open source, p2p lightning, tor/i2p, avatares descartaveis, no-kyc}
+A plataforma P2P favorita dos cypherpunks para comprar e vender satoshis rapidamente via \textbf{Lightning Network} (e swaps para On-Chain). O \textbf{RoboSats} deve ser acessado pelo \textbf{Tor Browser} (ou app Android conectado via Orbot): a cada nova oferta que você cria ou aceita, o sistema gera automaticamente um \textbf{“Robô” (identidade criptográfica temporária e descartável)} que nunca se repete! As partes trancam uma pequena taxa de garantia (\emph{Fidelity Bond}) via fatura Lightning (\emph{Hold Invoice}), conversam em chat criptografado PGP ponta-a-ponta para combinar o PIX/transferência e recebem os sats em segundos. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=peach]{Peach Bitcoin / HodlHodl / Vexl}{https://peachbitcoin.com}{p2p mobile, web, multisig escrow, no-kyc, android, ios}
+Três excelentes alternativas P2P sem verificação de documentos:
+\begin{itemize}
+  \item \textbf{Peach Bitcoin (Android / iOS):} Aplicativo mobile super intuitivo criado na Suíça que permite comprar e vender Bitcoin P2P sem KYC diretamente para sua carteira própria, com sistema de reputação e depósito de garantia Multisig;
+  \item \textbf{HodlHodl (\texttt{hodlhodl.com}):} Plataforma web P2P veterana onde cada negociação gera um endereço Multisig 2-de-3 exclusivo na blockchain (a corretora nunca guarda seus fundos sozinha);
+  \item \textbf{Vexl (\texttt{vexl.it}):} Aplicativo aberto focado em conectar você de forma privada à sua rede social real de amigos e amigos de amigos para negociar Bitcoin presencialmente ou P2P com quem você já tem grau de confiança.
+\end{itemize}
+\estrelas{4}
+\end{ferramenta}
+
+\begin{dica}[P2P Comunitário no Brasil (Spike to Spike, Dig P2P e Catálogos)]
+No Brasil, além da Bisq e do RoboSats, existe uma cultura fortíssima de \textbf{vendedores e plataformas P2P independentes} (como o bot automatizado \textbf{Spike to Spike} no Telegram/Web, \textbf{Dig P2P} e negociadores listados em diretórios como \pglink[KYCnot.me]{https://kycnot.me}) que aceitam PIX, boleto ou depósito em espécie na boca do caixa e entregam instantaneamente via \textbf{Lightning Network} ou \textbf{Liquid Network (L-BTC)}. Sempre verifique a reputação histórica do P2P na comunidade antes de enviar qualquer valor e comece com lotes pequenos!
+\end{dica}
+
+\begin{ferramenta}[logo=bipa]{Bipa (Porta de Entrada para Iniciantes no Brasil)}{https://bipa.app}{conta br, compra a partir de r\$ 1, lightning nativa, saques gratis, possui kyc}
+Apesar de \textbf{não ser P2P} (é uma plataforma brasileira regulamentada que exige KYC/documentos, portanto \textbf{não deve ser usada se o seu foco for anonimato nem para deixar grandes valores guardados}), a \textbf{Bipa} merece menção honrosa para quem está dando os primeiros passos e quer aprender na prática:
+\begin{itemize}
+  \item \textbf{Compra via PIX a partir de R\$ 1,00 e Taxas Baixas:} Permite testar o ecossistema com dinheiro de troco e configurar compras recorrentes automáticas (DCA) sem taxas abusivas;
+  \item \textbf{Integração Nativa com a Lightning Network:} Diferente de corretoras tradicionais que cobram caro para sacar, a Bipa fala Lightning nativamente e oferece saques gratuitos (ou de frações de centavo), sendo excelente para o iniciante comprar R\$ 5 ou R\$ 10, sacar no mesmo segundo para uma carteira no celular e perder o medo da tecnologia antes de avançar para o P2P sem KYC!
+\end{itemize}
+\estrelas{4}
+\end{ferramenta}
+
+\section{A Utilidade do Monero (XMR) para o Bitcoiner}
+
+Existe uma rixa infantil em redes sociais entre ``maximalistas de Bitcoin'' que fingem que a blockchain do Bitcoin é anônima e ``fãs de altcoins'' que atacam o Bitcoin. Na vida real — e na segurança operacional (OpSec) — \textbf{Bitcoin (BTC) e Monero (XMR) têm papéis completamente diferentes}:
+
+\begin{itemize}
+  \item \textbf{Bitcoin (BTC) — A Única Reserva de Valor Soberana (Ouro Digital):} O Bitcoin escolheu ter uma camada base 100\% transparente e matematicamente auditável. Qualquer pessoa com um computador simples consegue somar todas as moedas existentes e provar que nenhum bug inflacionou o suprimento além dos 21 milhões. Porém, essa transparência significa que \textbf{todo endereço, valor e histórico de transação On-Chain fica visível para qualquer observador};
+  \item \textbf{Monero (XMR) — Ferramenta Prática de Anonimato e Pagamento Oculto:} Lançado em 2014 com base no protocolo \emph{CryptoNote} e minerado via \emph{Proof-of-Work} em CPUs (\textbf{RandomX}), o Monero aplica privacidade automática na camada base usando três tecnologias combinadas:
+  \begin{enumerate}
+    \item \textbf{Stealth Addresses (Endereços Furtivos):} Cada pagamento gera um endereço único descartável na blockchain; ninguém consegue digitar sua carteira num explorador de blocos para ver seu saldo;
+    \item \textbf{RingCT (Transações Confidenciais em Anel):} O valor transferido é criptografado (aparece oculto para o público);
+    \item \textbf{Ring Signatures (Assinaturas em Anel):} Sua transação é misturada automaticamente a dezenas de outras saídas reais da rede, ocultando quem gastou a moeda.
+  \end{enumerate}
+\end{itemize}
+
+\begin{atencao}[Regra de Ouro: Nunca Guarde Dinheiro em Monero como Reserva de Valor!]
+Entenda de uma vez por todas o papel do Monero:
+\begin{itemize}
+  \item \textbf{Monero NÃO é reserva de valor:} Diferente do Bitcoin (que tem limite rígido de 21 milhões e a maior rede termodinâmica da história humana), o Monero possui emissão perpétua (\emph{tail emission}), liquidez muito menor, sofre deslistagens pesadas de governos e passa por \emph{hard forks} frequentes. \textbf{Jamais guarde sua poupança de longo prazo em Monero!}
+  \item \textbf{Por que usar então? Pela facilidade e conveniência de anonimato:} Você consegue obter um efeito semelhante de privacidade para pagamentos e quebra de rastro usando a \textbf{Liquid Network (L-BTC)} ou a \textbf{Lightning Network} dentro do próprio Bitcoin — porém, fazer isso sem cometer erros na Liquid/Lightning \textbf{exige mais atenção, higiene de UTXOs e trabalho técnico} (gerenciar liquidez de canais, cuidar do valor exato nos swaps, etc.). Já o Monero funciona como um ``atalho fácil e à prova de erros'' para pagamentos anônimos rápidos ou para limpar o rastro de uma moeda e \textbf{voltar imediatamente para Bitcoin}!
+\end{itemize}
+\end{atencao}
+
+\subsection{Como o Bitcoiner Usa o Monero na Prática (Entra, Usa e Sai)}
+
+Encare o Monero apenas como um túnel temporário em duas situações:
+
+\begin{enumerate}
+  \item \textbf{Pagamentos Anônimos Rápidos:} Vai pagar uma VPN (Mullvad, Obscura, AirVPN), alugar uma VPS ou comprar um serviço no \textbf{KYCnot.me} sem precisar se preocupar com vazamento de canais ou histórico de carteira? Converta apenas o valor da compra para XMR e pague.
+  \item \textbf{A “Ponte de Quebra de Rastreio” (\emph{BTC $\to$ XMR $\to$ BTC}):} Suponha que você tenha bitcoins comprados com KYC (ex.: na Bipa ou Binance) e queira movê-los para sua Cold Wallet cortando o vínculo com seu CPF da forma mais simples possível:
+  \begin{itemize}
+    \item Você troca seus \textbf{BTC (com rastro KYC)} por \textbf{Monero (XMR)} recebendo na sua \textbf{Feather Wallet / Cake Wallet} via \emph{Atomic Swap} ou agregador sem cadastro (\emph{Trocador.app} via Tor);
+    \item Assim que o XMR chega na sua carteira local, \textbf{o fio de rastreamento da blockchain é matematicamente cortado};
+    \item Em seguida (em horários e frações diferentes para evitar correlação de volume), você converte o \textbf{XMR de volta para BTC (ou L-BTC na Liquid)} enviando direto para o endereço limpo da sua Cold Wallet — sem deixar um centavo sequer parado em Monero!
+  \end{itemize}
+\end{enumerate}
+
+\begin{ferramenta}[goat,logo=monero,logo2=feather]{Monero (XMR) \& Feather Wallet}{https://featherwallet.org}{open source, privacidade nativa, ringct, tor nativo, win, linux, mac, tails}
+A dupla padrão-ouro de privacidade financeira no desktop. A \textbf{Feather Wallet} é para o Monero o que a Electrum e a Sparrow são para o Bitcoin: uma carteira desktop leve, rápida, 100\% código aberto, que roteia todo o tráfego nativamente pela rede \textbf{Tor}, possui controle avançado de moedas (\emph{Coins}), suporte a carteiras de hardware e integração excelente com o \textbf{Tails OS}. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=cakewallet]{Cake Wallet / Monerujo}{https://cakewallet.com}{open source, mobile e desktop, monero, bitcoin, silent payments, swaps}
+As melhores opções móveis para operar Monero no dia a dia. A \textbf{Cake Wallet} (Android, iOS, Linux, macOS, Windows) suporta Monero, Bitcoin (incluindo o novo padrão privado \emph{Silent Payments — BIP352} e \emph{PayJoin}) e Litecoin, com agregador integrado de trocas rápidas sem conta (como Trocador). No Android, o \textbf{Monerujo} (\texttt{monerujo.io}) é outra joia 100\% aberta e exclusiva para XMR. \estrelas{5}
+\end{ferramenta}
+
+\subsection{Comparativo de Métodos de Aquisição e Privacidade}
+
+\begin{tabela}{>{\bfseries}l c c X}
+\cab{Método de Compra} & \cab{Sem KYC} & \cab{Privacidade} & \cab{Quando Utilizar} \\
+Corretora CEX (Binance, etc.) & \nope & \nope\ (Zero)    & \textbf{Evite:} Expõe CPF, endereço físico e histórico perpétuo \\
+P2P Comunitário (PIX $\to$ LN)& \ok   & Alta             & Excelente para DCA rápido semanal via Lightning ou Liquid \\
+Bisq 1 / Bisq Easy \goat      & \ok   & Máxima (Tor)     & Compra e venda P2P soberana no PC sem depender de sites \\
+RoboSats \goat                & \ok   & Máxima (Tor/LN)  & Compras ágeis de satoshis via Lightning com robô descartável \\
+Ponte BTC $\to$ XMR $\to$ BTC \goat & \ok & \textbf{Absoluta}& Para quebrar 100\% o elo de moedas que já passaram por KYC \\
+\end{tabela}
+
+% =====================================================================
+%  CAPÍTULO 03 -- SOBERANIA: SEU PRÓPRIO NODE E MINERAÇÃO CASEIRA
+% =====================================================================
+\comentario{não confie na palavra de ninguém: valide seus próprios blocos e minere em casa}
+\chapter{Nodes e Mineração de Loteria}
+
+\begin{missao}[soberania de validação na rede e mineração descentralizada]
+\begin{itemize}
+  \item Entender por que rodar seu próprio \textbf{Full Node} (\textbf{Bitcoin Core / Knots}) é o único jeito de verificar seus bitcoins sem vazar seu saldo para servidores de terceiros.
+  \item Transformar um PC antigo ou Raspberry Pi em um servidor soberano com \textbf{StartOS} ou \textbf{UmbrelOS} e consultar taxas no \textbf{Mempool.space}.
+  \item Descobrir a \textbf{Mineração de Loteria (\emph{Lottery Mining})} em casa com o minerador open-source \textbf{Bitaxe} de 15W e pools descentralizados como a \textbf{OCEAN}.
+\end{itemize}
+\end{missao}
+
+Quando você abre uma carteira de Bitcoin comum no celular ou computador e vê seu saldo na tela, de onde veio essa informação? A carteira em si guarda apenas suas chaves criptográficas; ela não tem os 650+ GB da blockchain salvos dentro dela. Por padrão, ela se conecta ao servidor público da empresa que criou a carteira e pergunta: \emph{``Ei servidor, quanto dinheiro existe nestes 50 endereços aqui?''}.
+
+\section{A Soberania de Rodar seu Próprio Node}
+
+Percebeu o problema? Mesmo que ninguém possa roubar suas moedas sem sua chave privada, quando você usa o Node (servidor) de terceiros:
+\begin{enumerate}
+  \item \textbf{Vazamento total de privacidade financeira:} O dono daquele servidor descobre instantaneamente que todos aqueles endereços pertencem à mesma pessoa, sabe exatamente qual é o seu patrimônio total em Bitcoin e vincula isso ao seu endereço IP residencial;
+  \item \textbf{Confiança cega nas regras:} Você está confiando que aquele servidor está dizendo a verdade sobre o estado da blockchain e que não vai censurar a transmissão da sua transação.
+\end{enumerate}
+
+Quando você roda seu próprio \textbf{Full Node} em casa e aponta sua carteira (\textbf{Sparrow}, \textbf{Electrum} ou \textbf{BlueWallet}) para ele, seu computador baixa cada bloco da rede mundial e **verifica matematicamente todas as assinaturas e regras desde 2009**. Nenhuma empresa no mundo fica sabendo quais endereços são seus ou qual é o seu saldo!
+
+\begin{ferramenta}[goat,logo=bitcoincore]{Bitcoin Core \& Bitcoin Knots}{https://bitcoincore.org}{open source, full node, validacao soberana, pruned mode, win, linux, mac}
+Os dois motores de validação da rede Bitcoin. O \textbf{Bitcoin Core} é a implementação de referência mantida pelos desenvolvedores do protocolo, responsável por mais de 90\% dos nós da rede. Já o \textbf{Bitcoin Knots} (\texttt{bitcoinknots.org}, mantido pelo desenvolvedor veterano Luke Dashjr) é uma derivação compatível do Core que adiciona dezenas de filtros avançados de controle de mempool (permitindo rejeitar spam de dados arbitrários não-financeiros na sua mempool local) e opções extras de interface. Ambos podem rodar em \textbf{Modo Completo (Archival)} (se você tiver um SSD de 1 TB a 2 TB) ou em \textbf{Modo Podado (\emph{Pruned Node})}, que valida 100\% da história desde 2009 mas descarta blocos antigos já verificados, ocupando \textbf{apenas 5 GB a 15 GB de espaço no seu disco rígido}! \estrelas{5}
+\end{ferramenta}
+
+\begin{codigo}[language=bash]{~/.bitcoin/bitcoin.conf (Configuração Soberana com Podagem e Tor)}
+# Roda em segundo plano e ativa servidor RPC para sua carteira (Sparrow)
+server=1
+daemon=1
+txindex=0
+
+# Modo Pruned: mantem apenas os ultimos 10 GB de blocos (economiza SSD!)
+# (Se tiver um SSD dedicado de 1TB+, troque por prune=0 e txindex=1)
+prune=10000
+
+# Privacidade de rede: conecta aos pares via rede Tor (porta 9050)
+proxy=127.0.0.1:9050
+listen=1
+bind=127.0.0.1
+
+# Limita uso de memoria RAM para nao pesar no PC do dia a dia (450 MB)
+dbcache=450
+maxmempool=300
+\end{codigo}
+
+\begin{ferramenta}[goat,logo=start9,logo2=umbrel]{StartOS (Start9) \& UmbrelOS}{https://start9.com}{open source, servidor pessoal, bitcoin node, electrs, lightning, tor}
+Quer ter um servidor dedicado ligado 24 horas por dia em casa sem precisar configurar nada na unha pelo terminal? O \textbf{StartOS} (da Start9, 100\% código aberto e focado em soberania pura) e o \textbf{UmbrelOS} (\texttt{umbrel.com}, famoso pela interface linda estilo macOS) transformam qualquer mini-PC usado (como um Lenovo ThinkCentre, Dell Optiplex ou Intel NUC com SSD de 1 TB/2 TB) ou Raspberry Pi 5 em uma central soberana completa! Com três cliques na interface web local você instala:
+\begin{itemize}
+  \item \textbf{Bitcoin Core ou Bitcoin Knots} (sincronizando 100\% da blockchain via Tor);
+  \item \textbf{Electrs ou Fulcrum} (servidor Electrum próprio para conectar sua \textbf{Sparrow Wallet} e \textbf{BlueWallet} com privacidade absoluta);
+  \item \textbf{Mempool.space Local} (seu próprio explorador de blocos privado dentro de casa);
+  \item \textbf{Node Lightning (LND / Core Lightning)} gerenciado pelo app \textbf{Zeus} no celular!
+\end{itemize}
+\estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=mempool]{Mempool.space}{https://mempool.space}{open source, explorador de blocos, calculadora de taxas, tor, self-host}
+A ferramenta visual indispensável de todo Bitcoiner. Antes de enviar qualquer transação On-Chain ou consolidar seus UTXOs, abra o \textbf{Mempool.space} para ver em tempo real a fila de transações esperando confirmação (\emph{Mempool}) e qual é a taxa exata em \textbf{satoshis por virtual byte (\texttt{sat/vB})} necessária para entrar no próximo bloco! \textbf{Regra de OpSec:} Nunca cole o endereço da sua carteira no site público do Mempool.space usando sua internet normal (isso vincula seu IP ao endereço consultado!). Acesse pelo endereço oficial \texttt{.onion} no \textbf{Tor Browser} ou rode a sua própria instância do Mempool dentro do seu \textbf{StartOS / Umbrel}. \estrelas{5}
+\end{ferramenta}
+
+\section{Mineração de Bitcoin e Mineração de Loteria (\emph{Lottery Mining})}
+
+Na rede Bitcoin, os mineradores têm duas funções vitais: ordenar as transações pendentes em blocos válidos e gastar energia elétrica real calculando hashes SHA-256 até encontrar um número (\emph{Nonce}) cujo resultado comece com uma quantidade gigantesca de zeros. A cada \textbf{2.016 blocos} (~2 semanas), o próprio protocolo mede quanto tempo os blocos levaram para sair e ajusta automaticamente a dificuldade para manter a média cravada em \textbf{1 bloco a cada 10 minutos}.
+
+\subsection{Por que a Mineração Tradicional virou um Jogo Industrial?}
+Uma máquina ASIC industrial moderna (como uma \emph{Antminer S21}) calcula cerca de \textbf{200 Terahashes por segundo (200 TH/s)}, mas custa caro, consome \textbf{3.500 Watts} (como três chuveiros ou ares-condicionados ligados 24h) e faz um barulho ensurdecedor de 75 decibéis (turbina de avião). Por isso, o minerador tradicional conecta sua máquina a uma \textbf{Pool de Mineração} (onde milhares de mineradores somam forças e dividem as migalhas proporcionalmente todos os dias).
+
+\subsection{A Mineração de Loteria Caseira (\emph{Solo / Lottery Mining}): Aprendizado vs. Sorte}
+
+E se, em vez de gastar milhares de reais em luz para ganhar centavos por dia numa pool gigante, você colocasse um \textbf{micro-minerador silencioso de código aberto} na estante do seu quarto gastando de \textbf{1 a 15 Watts} (menos que uma lâmpada LED) minerando no modo \textbf{Solo (Loteria)}?
+
+\paragraph{Como funciona (e por que você deve encará-la como estudo, não como investimento)}
+Na mineração de loteria (\emph{Solo Mining}), cada hash que o seu aparelho calcula é um bilhete de loteria independente tentando adivinhar o bloco atual do Bitcoin (144 blocos por dia):
+\begin{itemize}
+  \item \textbf{Choque de Realidade Matemática (É muito improvável ganhar!):} Vamos ser 100\% francos: o hashrate mundial do Bitcoin passa de \textbf{700 a 800 Exahashes por segundo} (centenas de milhões de Terahashes!). Isso significa que a probabilidade estatística de um pequeno minerador de mesa encontrar um bloco sozinho é \textbf{extremamente baixa} — mais parecida com acertar na Mega-Sena do que com qualquer forma de ``renda passiva''. \textbf{Jamais compre um minerador de loteria esperando retorno financeiro!}
+  \item \textbf{Então por que todo cypherpunk tem um na mesa?} \textbf{Pelo aprendizado prático!} Configurar um \textbf{NerdMiner} num ESP32 ou um \textbf{Bitaxe} é a melhor aula prática do mundo para entender na pele como funcionam o algoritmo \emph{SHA-256}, o protocolo \emph{Stratum}, o ajuste de dificuldade, os templates de bloco (\emph{Solo Pool / DATUM}) e a relação entre energia e segurança da rede — além de servir como um relógio/monitor lindo do Bitcoin na sua mesa!
+  \item \textbf{O “Milagre” já aconteceu de verdade no Bitaxe:} Caso o improvável aconteça e o seu aparelho dê a sorte absurda de acertar o hash do bloco antes do resto do planeta, você não divide nada com ninguém: a rede deposita o bloco inteiro (\textbf{3,125 BTC + taxas}, mais de \textbf{R\$ 1,5 milhão}) direto na sua Cold Wallet! E por mais improvável que seja, \textbf{vários mineradores caseiros usando Bitaxe já conseguiram a proeza real de minerar blocos inteiros sozinhos nos últimos anos!}
+\end{itemize}
+
+\begin{ferramenta}[goat,logo=bitaxe]{Bitaxe (Ultra / Supra / Gamma / Hex)}{https://bitaxe.org}{open source hardware, lottery mining real, 15w silencioso, axeos, esp32 + chip asic}
+O projeto comunitário criado pela \textbf{OSMU (\emph{Open Source Miners United})} que quebrou o monopólio das fabricantes fechadas de ASICs. O \textbf{Bitaxe} é o primeiro minerador ASIC de Bitcoin 100\% código aberto do mundo:
+\begin{itemize}
+  \item Ele combina um microcontrolador \textbf{ESP32} (com Wi-Fi e painel web \textbf{AxeOS}) com \textbf{um único chip ASIC verdadeiro de última geração} retirado dos mineradores industriais Antminer (ex.: chip \emph{BM1370} no \textbf{Bitaxe Gamma}, entregando impressionantes \textbf{1,2 Terahashes por segundo — 1,2 TH/s} — consumindo apenas \textbf{18 Watts} numa fonte USB-C!);
+  \item Por ter um chip ASIC dedicado de verdade, ele é \textbf{milhões de vezes mais rápido que um ESP32 puro}, sendo o responsável pelos casos reais de usuários caseiros que acertaram blocos sozinhos em pools solo como \cmd{public-pool.io} ou rodando a própria pool dentro do Node StartOS/Umbrel!
+\end{itemize}
+\estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=nerdminer]{NerdMiner v2 (ESP32 Puro)}{https://github.com/BitMaker-hub/NerdMiner_v2}{open source, esp32, ~350 kh/s, educativo, relogio/monitor bitcoin, custo ~r\$ 50}
+Quer aprender como a mineração funciona gastando apenas \textbf{R\$ 40 a R\$ 70} em uma plaquinha \textbf{ESP32 com tela colorida} (como a \textbf{LilyGO T-Display S3} ou a famosa plaquinha amarela \textbf{ESP32-2432S028 / CYD})?
+\begin{itemize}
+  \item Criado por \emph{BitMaker}, o \textbf{NerdMiner v2} grava pelo próprio navegador (\texttt{flasher.bitronics.store}) um firmware completo de mineração solo + painel de monitoramento do Bitcoin direto no chip ESP32, consumindo míseros \textbf{1 Watt} na porta USB do seu PC;
+  \item \textbf{Atenção à potência (100\% Educativo):} Como o NerdMiner usa apenas o processadorzinho do ESP32 (sem chip ASIC dedicado), ele calcula cerca de \textbf{78 KH/s a 350 KH/s} (KiloHashes) — cerca de 3 milhões de vezes mais lento que um Bitaxe! Na prática, a chance de achar um bloco num NerdMiner é virtualmente zero, mas ele é \textbf{o projeto mais divertido e barato que existe para aprender a configurar uma carteira/pool solo e ter um display nerd de mesa} mostrando em tempo real o preço do Bitcoin, o bloco atual, as taxas da Mempool e o relógio!
+\end{itemize}
+\estrelas{4}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=ocean]{OCEAN Pool \& Protocolo DATUM}{https://ocean.xyz}{descentralizacao de blocos, sem kyc, datum, lightning payouts, bitcoin knots}
+Nas grandes pools centralizadas tradicionais (Foundry, AntPool), a pool decide sozinha quais transações entram no bloco, abrindo brecha para censura governamental. A \textbf{OCEAN} (liderada pelo desenvolvedor Luke Dashjr) mudou o jogo com o protocolo aberto \textbf{DATUM}: ela permite que o próprio minerador (rodando seu próprio node em casa) construa o template do bloco com total soberania, sem cadastro/KYC e com pagamentos diretos na \textbf{Lightning Network} ou no próprio bloco gerado! \estrelas{5}
+\end{ferramenta}
+
+% =====================================================================
+%  CAPÍTULO 04 -- LIGHTNING NETWORK E SIDECHAINS
+% =====================================================================
+\comentario{velocidade instantânea e acumulação inteligente sem cair em falsas promessas}
+\chapter{Lightning Network e Sidechains}
+
+\begin{missao}[dominando as camadas superiores sem confundir segurança com conveniência]
+\begin{itemize}
+  \item Entender como a \textbf{Lightning Network (Camada 2)} permite pagamentos instantâneos e privados usando canais Multisig reais de Bitcoin.
+  \item Compreender a verdade sobre as \textbf{Sidechains e Federações} (\textbf{Liquid Network}, \textbf{Cashu}, \textbf{Fedimint}): \textbf{o ataque de 4.000 BTC que a rede Liquid sofreu, por que você NUNCA deve confiar nelas como cofre de longo prazo e qual sua utilidade tática}.
+  \item Entender o funcionamento das pontes atômicas sem custódia (e por que o \textbf{Boltz.exchange} saiu do ar).
+\end{itemize}
+\end{missao}
+
+Por que não fazemos todas as compras do dia a dia diretamente na blockchain principal do Bitcoin (\textbf{Camada 1 / On-Chain})? Porque na Camada 1 cada transação precisa ser transmitida, verificada e guardada para a eternidade por dezenas de milhares de Full Nodes no planeta inteiro, levando em média 10 minutos por confirmação e disputando espaço limitado em cada bloco.
+
+Tentar pagar um café de R\$ 10 na Camada 1 do Bitcoin é como contratar um carro-forte blindado para entregar uma moeda de R\$ 1 na padaria. Para pagamentos instantâneos e acumulação de pequenos valores, o Bitcoin utiliza \textbf{Camadas Superiores}.
+
+\section{Lightning Network: A Camada 2 Real do Bitcoin}
+
+A \textbf{Lightning Network} não é outra moeda nem uma sidechain: \textbf{são transações reais de Bitcoin trafegando fora da blockchain principal (\emph{Off-Chain}) através de canais de pagamento inteligentes}.
+
+\paragraph{Como funciona um Canal Lightning sem precisar confiar na outra ponta?}
+\begin{enumerate}
+  \item Dois participantes abrem um canal fazendo \textbf{1 única transação On-Chain} para uma carteira compartilhada \textbf{Multisig 2-de-2};
+  \item Enquanto o canal está aberto, eles podem trocar milhares de pagamentos instantâneos (em milissegundos e pagando frações de centavo de taxa) apenas atualizando balanços assinados entre si;
+  \item Você não precisa abrir um canal com cada loja do mundo: a rede roteia seu pagamento saltando através de nós conectados usando \textbf{Contratos com Trava de Tempo e Hash (\emph{HTLCs})} e roteamento em cebola (\emph{Onion Routing} estilo Tor). O nó intermediário não consegue roubar o dinheiro no caminho nem sabe quem é o pagador original e o destinatário final;
+  \item Se uma das partes sumir ou tentar trapacear transmitindo um saldo antigo, as regras criptográficas da Camada 1 do Bitcoin entram em ação (\emph{Justice Transaction}) e garantem que os fundos legítimos sejam recuperados On-Chain!
+\end{enumerate}
+
+\subsection{Carteiras Lightning Recomendadas}
+
+\begin{ferramenta}[goat,logo=phoenix]{Phoenix Wallet (ACINQ)}{https://phoenix.acinq.co}{open source, lightning auto-custodia, splicing, android, ios}
+A melhor carteira Lightning de auto-custódia para quem não quer dor de cabeça técnica. Criada pela equipe da \textbf{ACINQ} (uma das principais desenvolvedoras do protocolo Lightning), a \textbf{Phoenix} roda um nó Lightning real dentro do seu celular, onde \textbf{você possui a semente de 12 palavras}. Seu grande trunfo é a tecnologia de \textbf{Canal Único Dinâmico (\emph{Splicing})}: você não precisa gerenciar vários canais manualmente; a carteira redimensiona seu canal único de forma transparente sempre que necessário! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=zeus]{Zeus Wallet}{https://zeusln.app}{open source, lightning avancada, conecta ao seu node, lnd/cln, android, ios}
+O padrão-ouro para usuários soberanos. O \textbf{Zeus} nasceu como a melhor interface móvel para controlar remotamente o seu próprio nó Lightning rodando em casa no \textbf{StartOS / Umbrel} (via Tor ou Tailscale/WireGuard), permitindo abrir canais, rebalancear liquidez e pagar faturas usando a liquidez do seu servidor doméstico. Além disso, o Zeus agora também possui um nó LND embutido (\emph{Embedded Node}) com suporte a endereços Lightning próprios (\texttt{usuario@zeuspay.com}) sem custódia! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[logo=wos]{Wallet of Satoshi (WoS) / Blink / Coinos}{https://www.walletofsatoshi.com}{custodial, zero configuracao, ideal para iniciantes, pequenos valores, android, ios}
+Embora uma carteira \textbf{custodial} (onde a empresa guarda as chaves privadas para você) \textbf{jamais deva ser usada para guardar quantias grandes ou sua reserva de valor}, carteiras como a \textbf{Wallet of Satoshi (WoS)}, \textbf{Blink} (\texttt{blink.sv}) e \textbf{Coinos} (\texttt{coinos.io}) são \textbf{altamente recomendadas para quem está começando a aprender}!
+\begin{itemize}
+  \item \textbf{A melhor escola para iniciantes:} Em uma carteira Lightning não-custodial pura, o primeiro recebimento exige uma taxa mínima para abrir o canal na blockchain. Já na \textbf{Wallet of Satoshi}, tudo funciona no primeiro segundo de graça: você pode comprar R\$ 5 na Bipa, sacar para a WoS, enviar R\$ 1 em satoshis para o celular de um amigo num almoço e ver o pagamento chegar em menos de 1 segundo!
+  \item \textbf{Regra do Dinheiro de Bolso:} Use sem medo para brincar, apresentar o Bitcoin para amigos e carregar ``troco de padaria'' (ex.: R\$ 20 a R\$ 150). Quando o valor crescer e você já estiver seguro, suba de nível para a \textbf{Phoenix}, \textbf{Zeus} e sua \textbf{Cold Wallet}!
+\end{itemize}
+\estrelas{4}
+\end{ferramenta}
+
+\section{Sidechains do Bitcoin: Não Confie, Mas Entenda a Utilidade!}
+
+Além da Lightning Network, existem as chamadas \textbf{Sidechains (Cadeias Laterais)} e \textbf{Federações de Ecash}, sendo as mais famosas a \textbf{Liquid Network (L-BTC)}, o \textbf{Cashu} e o \textbf{Fedimint}.
+
+\begin{atencao}[A Verdade Sem Filtro sobre Sidechains: O Ataque de 4.000 BTC à Rede Liquid!]
+Vamos deixar uma regra cristalina: \textbf{Sidechain NÃO tem a mesma segurança do Bitcoin On-Chain!}
+\begin{itemize}
+  \item \textbf{O Modelo Federado vs. Lightning:} Na \textbf{Lightning Network}, se a outra ponta desaparecer, você fecha o canal sozinho na Camada 1 usando sua chave privada. Já em uma \textbf{Sidechain Federada (como a Liquid Network)}, quando você converte BTC para \textbf{L-BTC} (\emph{Peg-in}), seus bitcoins verdadeiros ficam trancados em uma única carteira Multisig controlada por uma federação de empresas (cerca de 15 de 65 corretoras e instituições globais assinando blocos, além de chaves de recuperação de emergência da Blockstream ativáveis após 4.032 blocos de inatividade);
+  \item \textbf{O Ataque Real à Rede Liquid (Setembro de 2026 — 4.000 BTC Drenados):} Em 6 de setembro de 2026, a Liquid sofreu o maior exploit da sua história. Um bug crítico de colisão de chave de cache (\emph{cache-key collision}) no código do \textbf{Elements} durante a validação das provas de intervalo (\emph{range-proofs} das \emph{Confidential Transactions}) permitiu que uma transação forjada burlasse a checagem matemática e \textbf{cunhasse cerca de 4.000 L-BTC sem lastro a partir do nada} (\emph{inflation bug} oculto pela criptografia confidencial!). Em seguida, o invasor usou o mecanismo de saque (\emph{peg-out} via SideSwap) para drenar \textbf{~4.000 BTC reais (cerca de US\$ 320 milhões na época — quase 95\% de todas as reservas da Federação Liquid!)}, derrubando o cofre da ponte de ~4.200 BTC para míseros ~197 BTC antes da Blockstream pausar a rede às pressas!
+  \item \textbf{O Desfecho e a Lição Cypherpunk:} Os invasores enviaram mensagens via \texttt{OP\_RETURN} alegando serem \emph{``white-hats''}, devolveram \textbf{3.400 BTC (85\%)}, mas retiveram \textbf{~600 BTC} exigindo 15\% de ``recompensa'' (\emph{bug bounty}) da Blockstream. Esse episódio provou na prática o que os cypherpunks sempre alertaram: na Camada 1 do Bitcoin todo o suprimento é auditável às claras por qualquer nó doméstico; na Liquid, a combinação de criptografia complexa (\emph{Confidential Transactions}) com custódia concentrada numa ponte federada permitiu que um único bug de software quase esvaziasse o lastro inteiro da rede!
+\end{itemize}
+\textbf{Conclusão da Pousada:} Você \textbf{JAMAIS} deve usar a Liquid Network, Cashu ou qualquer Sidechain como cofre para guardar sua reserva de valor! Use-as \textbf{estritamente como ponte rápida de passagem ou acumulação temporária de valores pequenos}, consolidando regularmente para sua Cold Wallet On-Chain!
+\end{atencao}
+
+\subsection{Então qual é a utilidade tática da Liquid Network e do Cashu?}
+
+Se você jamais deve guardar sua poupança nelas, por que ainda usamos a \textbf{Liquid Network (L-BTC)} e o \textbf{Cashu} no giro tático do dia a dia? Por três motivos práticos que a Camada 1 do Bitcoin não resolve sozinha para valores pequenos:
+
+\begin{enumerate}
+  \item \textbf{Resolver o Problema dos “UTXOs Poeira” no seu DCA:}
+  Imagine que você faz DCA comprando R\$ 100 por semana via P2P. Se você receber R\$ 100 na rede principal do Bitcoin (\emph{On-Chain}), você criará dezenas de mini-UTXOs de ~20.000 sats. Quando as taxas do Bitcoin subirem no futuro, você pagará 30\% a 50\% do valor daquelas moedas só para conseguir movê-las! Já se você receber seus R\$ 100 semanais na \textbf{Lightning Network} ou em \textbf{L-BTC na Liquid} (na \textbf{Blockstream Green}) e, assim que acumular um lote saudável (ex.: R\$ 2.000 a R\$ 4.000), converter tudo de uma vez para \textbf{1 único UTXO gordo na sua Cold Wallet On-Chain}, você economiza taxas de minerador e não deixa capital relevante exposto na sidechain!
+  \item \textbf{Transações Confidenciais Nativas (\emph{Confidential Transactions}):}
+  Na blockchain pública do Bitcoin, qualquer curioso vê o valor exato transferido. Na \textbf{Liquid Network}, todas as transações têm criptografia homomórfica nativa (\emph{Confidential Transactions}): qualquer pessoa olhando o explorador de blocos da Liquid vê apenas \textbf{“Valor: Confidencial” e “Ativo: Confidencial”}! Ninguém de fora sabe se você transferiu R\$ 10 em USDT/DePIX ou R\$ 50.000 em L-BTC.
+  \item \textbf{Privacidade Cega para Troco Rápido (\emph{Cashu / Fedimint}):}
+  Protocolos como \textbf{Cashu} usam \emph{Assinaturas Cegas de David Chaum} sobre a Lightning Network: o servidor emissor (\emph{Mint}) assina suas fichas digitais sem conseguir enxergar o número de série delas. Quando você envia um token Cashu para um amigo pelo Signal ou SimpleX, é um texto copiável que transfere valor instantaneamente, de graça e com anonimato matemático total perante o próprio servidor!
+\end{enumerate}
+
+\begin{ferramenta}[recomendado,logo=liquid]{Liquid Network (L-BTC) — Usar Apenas como Passagem}{https://liquid.net}{sidechain federada, confidential transactions, 1 min por bloco, nao guardar reserva}
+A principal sidechain do ecossistema Bitcoin (Blockstream). Opera com blocos de 1 minuto, valores e ativos ocultos por padrão (\emph{Confidential Transactions}) e taxas minúsculas (0,1 sat/vB). Suportada nativamente na \textbf{Blockstream Green}, \textbf{SideSwap}, \textbf{Aqua Wallet} e na hardware wallet \textbf{Blockstream Jade}. Útil para pagamentos confidenciais e acumulação rápida de DCA, mas \textbf{nunca mantenha saldos altos parados nela} (lembre-se do ataque de setembro de 2026!). \estrelas{3}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=cashu]{Cashu \& Fedimint (Chaumian Ecash)}{https://cashu.space}{open source, ecash cego, lightning, privacidade extrema, microtransacoes}
+O resgate do \emph{DigiCash} de David Chaum integrado ao Bitcoin via Lightning. Em carteiras Cashu como \textbf{Minibits} (\texttt{minibits.cash}) ou no protocolo \textbf{Fedimint} (\texttt{fedimint.org} / app \textbf{Fedi}), você deposita satoshis em um guardião (\emph{Mint}) e recebe fichas digitais anônimas (\emph{Ecash}). O guardião \textbf{é matematicamente cego sobre quem possui ou transfere cada ficha}! Use para valores pequenos de giro diário. \estrelas{4}
+\end{ferramenta}
+
+\begin{ferramenta}[logo=boltz]{Boltz.exchange (ATENÇÃO: Operações Suspensas / Fora do Ar)}{https://boltz.exchange}{open source, atomic swaps, submarine swaps, fora do ar desde ago/2026}
+Historicamente a principal ponte não-custodial de contratos atômicos (\emph{Submarine / Taproot Atomic Swaps}) entre \textbf{Bitcoin On-Chain $\leftrightarrow$ Lightning $\leftrightarrow$ Liquid (L-BTC)}.
+\begin{itemize}
+  \item \textbf{Por que o Boltz está fora do ar?} Em \textbf{3 de agosto de 2026}, o Boltz suspendeu todas as suas operações de swap por tempo indeterminado após sofrer uma onda massiva e ininterrupta de ataques cibernéticos automatizados e sondagem de infraestrutura assistidos por IA (\emph{AI-assisted probing}), em uma velocidade maior do que a pequena equipe original conseguia auditar e corrigir. Os fundadores originais deixaram o projeto e um novo grupo de desenvolvedores veteranos assumiu a infraestrutura para tentar reconstruí-la com segurança;
+  \item \textbf{A prova de fogo do design Não-Custodial:} Mesmo sob ataque severo e desligamento abrupto, \textbf{nenhum usuário perdeu fundos no Boltz} — porque os swaps usavam contratos atômicos com \emph{timelock} (onde o dinheiro nunca ficava sob custódia da empresa e os reembolsos unilaterais funcionaram!). Por outro lado, o apagão do Boltz quebrou temporariamente as trocas automáticas de várias carteiras que dependiam dele nos bastidores (como \emph{Aqua Wallet} e \emph{Bull Bitcoin}). Enquanto o Boltz permanece fora do ar, utilize alternativas como \textbf{SideSwap}, \textbf{Peach}, canais próprios no \textbf{Zeus/Phoenix} ou seu P2P de confiança para converter entre camadas!
+\end{itemize}
+\estrelas{3}
+\end{ferramenta}
+
+\begin{perigo}[Falsas “Camadas 2” e Bitcoin Embrulhado em Shitcoins (WBTC, Bridges, Babylon)]
+Nunca confunda a Lightning Network ou ferramentas técnicas do Bitcoin com tokens sintéticos em redes de altcoins como \textbf{WBTC (\emph{Wrapped Bitcoin} na Ethereum/Solana/Tron)} ou contratos de ``Staking de Bitcoin'' prometendo juros!
+\begin{itemize}
+  \item Quando você troca BTC verdadeiro por \textbf{WBTC}, você entrega seu Bitcoin para um custodiante centralizado (como a BitGo/BiT Global) em troca de um token ERC-20 que pode ser congelado com um clique em contrato inteligente;
+  \item Pontes entre blockchains (\emph{Cross-Chain Bridges}) são o alvo número 1 de hackers no mundo cripto, somando mais de \textbf{US\$ 2,5 bilhões roubados} em exploits de contratos inteligentes. Bitcoin de verdade não paga ``yield/juros'' mágicos — se há rendimento, o risco é você perder o principal!
+\end{itemize}
+\end{perigo}
+
+\subsection{Comparativo das Camadas do Ecossistema Bitcoin}
+
+\begin{tabela}{>{\bfseries}l c c X}
+\cab{Camada / Rede} & \cab{Custódia} & \cab{Privacidade} & \cab{Função Ideal na Sua Estratégia} \\
+Bitcoin On-Chain (L1) \goat & Zero (100\% Sua) & Pseudônima        & \textbf{Cofre Definitivo (Cold Wallet):} Poupança de longo prazo e UTXOs grandes \\
+Lightning Network (L2) \goat& Zero (Phoenix)   & Alta (Onion)      & \textbf{Pagamentos Instantâneos:} Compras rápidas, P2P (RoboSats) e dia a dia \\
+Liquid Network (L-BTC)      & Federada         & Alta (Confidencial)& \textbf{Ponte de DCA:} Acumular pequenos aportes P2P antes de consolidar na L1 \\
+Cashu / Fedimint (Ecash)    & Custodial (Mint) & \textbf{Absoluta} & \textbf{Dinheiro de Bolso:} Gorjetas, microtransações anônimas e envio via chat \\
+WBTC / Bridges Altcoin      & Centralizada     & Péssima           & \pgtag[pgAlert]{evite}\ \textbf{Armadilha:} Risco severo de hack de contrato e congelamento \\
+\end{tabela}
+
+% =====================================================================
+%  CAPÍTULO 05 -- CARTEIRAS PARA PC E CELULAR + MULTISIG
+% =====================================================================
+\comentario{as ferramentas de código aberto para gerenciar, vigiar e assinar transações}
+\chapter{Carteiras para PC, Celular e Multisig}
+
+\begin{missao}[escolhendo os softwares certos e eliminando pontos únicos de falha]
+\begin{itemize}
+  \item Entender a diferença entre \textbf{Hot Wallet}, \textbf{Cold Wallet} e \textbf{Watch-Only Wallet (Carteira Vigia)}.
+  \item Dominar as melhores carteiras de código aberto para computador (\textbf{Sparrow Wallet} e \textbf{Electrum}) e celular (\textbf{BlueWallet}, \textbf{Blockstream Green} e \textbf{Nunchuk}).
+  \item Aprender quando e como montar um cofre \textbf{Multisig (2-de-3)} à prova de roubo e perda física.
+\end{itemize}
+\end{missao}
+
+Um erro conceitual muito comum é achar que ``meus bitcoins ficam salvos dentro do aplicativo da carteira''. Seus bitcoins nunca saem da blockchain: o que a carteira guarda são as \textbf{chaves criptográficas} para movimentá-los e a interface para construir transações. Por isso, dividimos o uso dos aplicativos em três modos de operação:
+
+\begin{enumerate}
+  \item \textbf{Hot Wallet (Carteira Quente):} As 12 ou 24 palavras da semente foram geradas e ficam salvas dentro do próprio computador ou celular conectado à internet. É prática para valores pequenos do dia a dia, mas se o aparelho for infectado por um malware, os fundos correm risco;
+  \item \textbf{Cold Wallet (Carteira Fria / Assinadora Offline):} As palavras da semente ficam isoladas em um dispositivo desconectado da internet (um pendrive com Tails OS, um celular antigo em modo avião, um ESP32 com Jade/Krux ou uma Hardware Wallet dedicada);
+  \item \textbf{Watch-Only Wallet (Carteira Vigia — O Segredo dos Profissionais!):} Você instala a \textbf{Sparrow Wallet} no PC ou a \textbf{BlueWallet / Green} no celular e importa \textbf{APENAS a Chave Pública Estendida (\texttt{xpub} ou \texttt{zpub})} da sua Cold Wallet! Assim, seu computador ou celular mostra seu saldo em tempo real, gera endereços novos para você receber depósitos e monta o rascunho das transações (\emph{PSBT}), \textbf{mas tem ZERO poder de gastar um único satoshi sem a assinatura física da sua Cold Wallet}!
+\end{enumerate}
+
+\clearpage
+\section{Carteiras para Computador (Desktop: Linux, Windows e macOS)}
+
+\begin{ferramenta}[goat,logo=sparrow]{Sparrow Wallet}{https://sparrowwallet.com}{open source, desktop, coin control, psbt, qr air-gapped, multisig, win, linux, mac}
+A carteira de computador mais completa, transparente e respeitada da história do Bitcoin. Desenvolvida por Craig Raw, a \textbf{Sparrow Wallet} foi desenhada para que você não trate sua carteira como uma ``caixa-preta'': ela exibe um diagrama visual interativo de cada transação mostrando exatamente quais moedas (\emph{UTXOs}) estão entrando, para onde estão indo e quanto está sendo pago de taxa.
+\begin{itemize}
+  \item \textbf{Compatibilidade Universal com Cold Wallets:} Conversa com absolutamente todas as carteiras frias do mercado e projetos caseiros — tanto via cabo USB quanto de forma 100\% \textbf{Air-Gapped} usando a webcam do seu PC para ler QR Codes animados (Jade, Krux, SeedSigner, BlueWallet Offline, Coldcard) ou arquivos PSBT via Cartão SD / Pendrive (Tails OS + Electrum);
+  \item \textbf{Soberania de Rede:} Conecta com um clique ao seu próprio \textbf{Bitcoin Core / Knots} ou servidor \textbf{Electrs / Fulcrum}, e possui cliente \textbf{Tor embutido} para quem ainda não tem node próprio.
+\end{itemize}
+\estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=electrum]{Electrum Bitcoin Wallet}{https://electrum.org}{open source, desktop e android, nativa no tails os, leve, lightning, psbt}
+Lançada em 2011 por Thomas Voegtlin, a \textbf{Electrum} é uma lenda viva do Bitcoin: escrita em Python, extremamente rápida, leve e focada em funcionalidade pura. Seu grande destaque para a comunidade é vir \textbf{pré-instalada de fábrica no sistema amnésico Tails OS}, formando a dupla perfeita para quem quer transformar um pendrive comum em uma Cold Wallet de altíssima segurança sem gastar nada! Possui controle total de moedas (\emph{Coins / Addresses}), suporte a \emph{Replace-By-Fee (RBF)}, canais Lightning integrados e criação de carteiras Multisig. \estrelas{5}
+\end{ferramenta}
+
+\begin{atencao}[Regra de OpSec ao usar a Electrum: Cuidado com instaladores falsos!]
+Por ser famosa desde 2011, golpistas criam sites falsos parecidos com o da Electrum. Baixe exclusivamente de \cmd{electrum.org}, \textbf{sempre verifique a assinatura GPG do desenvolvedor ThomasV} (ensinamos o comando exato no Capítulo 08) e jamais clique em mensagens estranhas pedindo para baixar atualizações de fora do site oficial!
+\end{atencao}
+
+\clearpage
+\section{Carteiras para Celular (Mobile: Android e iOS)}
+
+\begin{ferramenta}[goat,logo=bluewallet]{BlueWallet}{https://bluewallet.io}{open source, android, ios, watch-only, air-gapped qr, plausible deniability}
+A melhor carteira Bitcoin On-Chain para celular. A \textbf{BlueWallet} brilha tanto como carteira quente de uso rápido quanto em dois papéis avançados de segurança:
+\begin{enumerate}
+  \item \textbf{A Melhor Carteira Watch-Only de Bolso:} Você escaneia o QR Code da chave pública (\texttt{zpub}) da sua Cold Wallet e acompanha seus endereços e saldo pelo celular sem colocar a chave privada em risco;
+  \item \textbf{Modo Assinador Offline + Coação (\emph{Plausible Deniability}):} Instalada em um celular antigo sem internet, ela assina transações via QR Code animado (\emph{Air-Gapped}). Além disso, permite configurar \textbf{senhas de desbloqueio diferentes que abrem cofres diferentes}: se você for coagido em um assalto na rua, digita a ``senha do ladrão'' e o aplicativo abre uma carteira real contendo apenas R\$ 50, escondendo completamente a existência das suas carteiras verdadeiras!
+\end{enumerate}
+\estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=green]{Blockstream Green}{https://blockstream.com/green}{open source, bitcoin on-chain, liquid l-btc, jade, 2fa multisig, android, ios, desktop}
+Desenvolvida pela equipe de criptógrafos da Blockstream (liderada por Adam Back, citado no próprio whitepaper de Satoshi Nakamoto), a \textbf{Blockstream Green} é uma carteira extraordinária para celular e PC. É a escolha número 1 para quem quer gerenciar \textbf{Bitcoin On-Chain} e \textbf{Liquid Network (L-BTC)} no mesmo aplicativo com auto-custódia, além de ser a companheira oficial da hardware wallet \textbf{Blockstream Jade} (inclusive a versão caseira feita com placa \textbf{ESP32}!). Também oferece um modo opcional de carteira protegida por Multisig 2-de-2 com servidor de autenticação 2FA e destravamento automático por tempo (\emph{Timelock}) caso o servidor deixe de existir. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=nunchuk]{Nunchuk Wallet}{https://nunchuk.io}{open source, multisig avancado, heranca familiar, taproot, android, ios, desktop}
+Aplicativo moderno projetado desde o zero para descomplicar carteiras \textbf{Multisig} e planejamento de herança no celular e no desktop. A \textbf{Nunchuk} conversa nativamente com quase todas as hardware wallets (via QR Code, NFC e USB), suporta \emph{Taproot Multisig (MuSig2)} e \emph{Miniscript} (permitindo criar regras inteligentes de tempo, como: ``eu gasto com 2 chaves hoje, mas se minha carteira ficar inativa por 1 ano, minha família consegue recuperar com outra combinação de chaves''). \estrelas{5}
+\end{ferramenta}
+
+\subsection{Comparativo de Carteiras de Software (PC e Celular)}
+
+\begin{tabela}{>{\bfseries}X l c c c c}
+\cab{Carteira} & \cab{Plataformas} & \cab{Coin Control} & \cab{Air-Gapped} & \cab{Node Próprio} & \cab{Veredito} \\
+Sparrow Wallet \goat    & Linux, Win, Mac     & \ok\ (Visual) & \ok\ (QR / SD)  & \ok\ (+ Tor) & \pgtag[pgBrass]{goat} \\
+Electrum \goat          & PC, Android, Tails  & \ok           & \ok\ (SD / QR)  & \ok          & \pgtag[pgBrass]{goat} \\
+BlueWallet \goat        & Android, iOS        & \ok           & \ok\ (Câmera)   & \ok\ (Electrs)& \pgtag[pgBrass]{goat} \\
+Blockstream Green \goat & Android, iOS, PC    & \ok           & \ok\ (Jade QR)  & \ok\ (+ Tor) & \pgtag[pgBrass]{goat} \\
+Nunchuk                 & Android, iOS, PC    & \ok           & \ok\ (QR / NFC) & \ok          & \ok \\
+Phoenix / Zeus \goat    & Android, iOS        & Lightning     & ---             & \ok\ (Zeus)  & \pgtag[pgBrass]{goat} \\
+\end{tabela}
+
+\clearpage
+\section{Multisig (Múltiplas Assinaturas): Segurança Nível Bunker}
+
+Em uma carteira tradicional (\emph{Single-Sig}), existe apenas \textbf{1 chave privada} (suas 12 ou 24 palavras, opcionalmente protegidas por uma Passphrase). Isso funciona muito bem para começar, mas cria um dilema quando seu patrimônio cresce: se um incêndio destruir seu único backup ou você esquecer a Passphrase, você perde tudo; se um invasor encontrar suas palavras desprotegidas, ele leva tudo sozinho.
+
+A solução nativa do protocolo Bitcoin para eliminar qualquer **Ponto Único de Falha (\emph{Single Point of Failure})** é a arquitetura \textbf{Multisig ($M$-de-$N$)}, sendo a configuração mais famosa o cofre \textbf{2-de-3}:
+
+\subsection{Como funciona um Cofre Multisig 2-de-3 na Prática?}
+
+Usando a \textbf{Sparrow Wallet} (ou \textbf{Nunchuk} / \textbf{Electrum}), você cria uma carteira especial composta por \textbf{3 chaves independentes} geradas em dispositivos diferentes, onde \textbf{quaisquer 2 chaves são necessárias para autorizar um gasto}:
+
+\begin{itemize}
+  \item \textbf{Chave 1 (Em Casa):} Uma \textbf{Blockstream Jade} (oficial ou ESP32 DIY) guardada na sua residência;
+  \item \textbf{Chave 2 (Portátil / Trabalho / Cofre):} Um pendrive com \textbf{Tails OS + Electrum} (ou um \textbf{SeedSigner / Krux}) guardado no escritório ou em outro endereço;
+  \item \textbf{Chave 3 (Backup Geográfico / Família):} Uma chapa de aço inox com a 3ª seed guardada na casa dos seus pais ou em um cofre bancário em outra cidade.
+\end{itemize}
+
+\paragraph{O que acontece nos piores cenários possíveis?}
+\begin{enumerate}
+  \item \textbf{Roubo ou Coação:} Um invasor leva sua Chave 1. Com apenas 1 das 3 chaves, \textbf{ele tem 0\% de capacidade de mover seus bitcoins}! E você junta as Chaves 2 e 3 para transferir tudo para um novo cofre;
+  \item \textbf{Incêndio ou Perda:} Sua casa pega fogo e destrói a Chave 1. Você recupera 100\% dos fundos juntando as Chaves 2 e 3!
+\end{enumerate}
+
+\begin{perigo}[A Regra de Ouro do Multisig: Faça Backup dos xpubs / Output Descriptor!]
+Em uma carteira normal (\emph{Single-Sig}), basta ter as 12 palavras para recuperar tudo. \textbf{No Multisig 2-de-3, para reconstruir a carteira com 2 sementes privadas, você TAMBÉM precisa saber quais eram as 3 Chaves Públicas Estendidas (\texttt{xpubs}) originais do contrato!}
+\begin{itemize}
+  \item Na Sparrow Wallet, clique em \textbf{Export Wallet $\to$ Output Descriptor (PDF / Texto)} e guarde uma cópia desse arquivo junto com cada uma das 3 chaves! Perder todos os \texttt{xpubs} E 1 das 3 seeds ao mesmo tempo trancaria seus fundos para sempre.
+\end{itemize}
+\end{perigo}
+
+\begin{dica}[Quando migrar para Multisig vs. Ficar em Single-Sig com Passphrase?]
+Se você está começando ou guarda menos de 0,1 BTC, \textbf{não complique sua vida com Multisig ainda}: uma Cold Wallet \emph{Single-Sig} bem feita (Jade ou Tails OS) combinada com uma \textbf{Passphrase BIP39 (13ª/25ª palavra)} já entrega segurança absurda. Evolua para o \textbf{Multisig 2-de-3} quando o valor acumulado se tornar geracional e você já dominar PSBTs na Sparrow de olhos fechados.
+\end{dica}
+
+% =====================================================================
+%  CAPÍTULO 06 -- PRIVACIDADE ON-CHAIN: UTXOS, MIXERS E COINJOIN
+% =====================================================================
+\comentario{como funciona o rastreamento na blockchain e como reconquistar sua privacidade}
+\chapter{UTXOs, Mixers e Privacidade On-Chain}
+
+\begin{missao}[higiene transacional, controle de moedas e quebra de heurísticas]
+\begin{itemize}
+  \item Entender o modelo de \textbf{UTXOs (\emph{Unspent Transaction Outputs})} e por que cada fração de Bitcoin funciona como uma nota física ou barra de ouro rastreável.
+  \item Dominar o \textbf{Coin Control (Controle de Moedas)} para nunca misturar UTXOs com KYC e UTXOs sem KYC, nem cair em \emph{Dust Attacks}.
+  \item Distinguir \textbf{Mixers Centralizados (Armadilhas)} de protocolos descentralizados de \textbf{CoinJoin} (\textbf{JoinMarket}), \textbf{PayJoin} e \textbf{Swaps Atômicos}.
+\end{itemize}
+\end{missao}
+
+Diferente de um banco tradicional ou da rede Ethereum (que usam um ``modelo de contas'' onde existe apenas um número de saldo que sobe e desce), o Bitcoin usa o modelo \textbf{UTXO (\emph{Unspent Transaction Output} — Saída de Transação Não Gasta)}. Entender como um UTXO funciona muda completamente a forma como você usa sua carteira!
+
+\section{O que é um UTXO? A Analogia das Notas na Carteira}
+
+Imagine que a sua carteira de Bitcoin é uma carteira de couro física onde cada pagamento que você já recebeu na vida é uma \textbf{nota de dinheiro separada de valor exato}:
+\begin{itemize}
+  \item Na segunda-feira você comprou 0,02 BTC no P2P sem KYC $\to$ Você tem \textbf{Nota A (0,02 BTC)};
+  \item Na sexta-feira você sacou 0,05 BTC de uma corretora com KYC $\to$ Você tem \textbf{Nota B (0,05 BTC)};
+  \item Na tela do aplicativo aparece \textbf{``Saldo Total: 0,07 BTC''}, mas por baixo do capô essas duas notas estão \textbf{separadas}!
+\end{itemize}
+
+\paragraph{O que acontece se você fizer um pagamento de 0,06 BTC sem tomar cuidado?}
+Como nenhuma das duas notas sozinha tem 0,06 BTC, a sua carteira vai pegar automaticamente a \textbf{Nota A (sem KYC)} E a \textbf{Nota B (com KYC)}, fundir as duas na mesma transação como entradas (\emph{Inputs}), enviar 0,06 BTC para o destinatário e devolver 0,01 BTC de troco (\emph{Change Output}) para você.
+\begin{itemize}
+  \item \textbf{Desastre de Privacidade (\emph{Fusão de Entradas}):} Ao assinar uma única transação juntando a Nota A e a Nota B, você acabou de provar publicamente na blockchain que \textbf{o dono da Nota B (seu CPF na corretora!) também é o dono da Nota A (que antes era anônima)}!
+  \item \textbf{Exposição do Troco:} Quando você paga um desconhecido usando uma nota grande (ex.: você tinha um UTXO de 1 BTC e pagou 0,001 BTC por um produto), a pessoa que recebeu o pagamento pode olhar a transação na blockchain e ver que os outros 0,999 BTC voltaram de troco para você — descobrindo que você é rico!
+\end{itemize}
+
+\section{As 4 Regras de Higiene de UTXOs (\emph{Coin Control})}
+
+Para nunca destruir sua privacidade nem pagar taxas absurdas à toa, aplique estas 4 práticas usando a aba \textbf{UTXOs} da \textbf{Sparrow Wallet}, \textbf{Electrum} ou \textbf{BlueWallet}:
+
+\begin{enumerate}
+  \item \textbf{Rotule (\emph{Label}) absolutamente todo recebimento:} Nunca gere um endereço sem escrever na etiqueta de onde vem aquele dinheiro (ex.: \cmd{P2P RoboSats #1 - Sem KYC} ou \cmd{Saque Corretora X - COM KYC}).
+  \item \textbf{Segregação Estrita (Ou Contas Separadas):} Jamais selecione um UTXO ``Com KYC'' junto com um UTXO ``Sem KYC'' na hora de enviar uma transação! Melhor ainda: use contas separadas (\emph{BIP84 Account \#0} para moedas limpas e \emph{Account \#1} para moedas KYC) ou limpe o rastro antes de enviar para sua Cold Wallet.
+  \item \textbf{Congele a Poeira (\emph{Freeze Dust Attacks}):} Empresas de vigilância e golpistas às vezes enviam valores minúsculos (ex.: 546 a 1.000 satoshis) para milhares de endereços na esperança de que a carteira do usuário gaste aquela ``poeira'' junto com outros UTXOs, revelando todas as carteiras da vítima (\emph{Dusting Attack}). Se aparecer um depósito minúsculo que você não reconhece, clique com o botão direito nele na Sparrow/Electrum e escolha \textbf{Freeze UTXO (Congelar)} para que sua carteira nunca o toque!
+  \item \textbf{Evite criar UTXOs menores que 100.000 a 500.000 sats na Camada 1:} Cada entrada (\emph{Input}) que você adiciona numa transação aumenta o peso em bytes (cerca de 68 vBytes por entrada SegWit nativa). Se você tiver 20 UTXOs pequenos de 20.000 sats e a taxa da rede subir para 100 sat/vB no futuro, você gastará mais de 136.000 sats só de taxa para juntar tudo! Acumule pequenos valores na \textbf{Lightning} ou \textbf{Liquid} e só envie para a Camada 1 lotes consolidados.
+\end{enumerate}
+
+\clearpage
+\section{Mixers, CoinJoin, PayJoin e Alternativas de Anonimização}
+
+E se você já tem bitcoins carimbados com KYC (ou quer impedir que um comprador/vendedor rastreie sua carteira principal)? É aqui que entram os conceitos de \textbf{Mixers}, \textbf{CoinJoin}, \textbf{PayJoin} e \textbf{Swaps}.
+
+\subsection{1. Mixers Custodiais Centralizados vs. CoinJoin Descentralizado}
+
+Nunca confunda um ``site de Mixer'' na web/darknet com um protocolo técnico de \textbf{CoinJoin}:
+
+\begin{perigo}[Jamais use “Sites de Mixer Centralizados”!]
+Em um \textbf{Mixer Custodial Centralizado} (sites onde você envia seus bitcoins para um endereço do site e ele promete devolver moedas ``limpas'' horas depois cobrando 2\% a 5\% de comissão), \textbf{você perde a posse das suas chaves}!
+\begin{itemize}
+  \item Muitos desses sites são golpes puros que roubam depósitos grandes;
+  \item Outros são \textbf{Honeypots (Armadilhas)} operados ou infiltrados por agências de inteligência que guardam todos os registros de entrada e saída para prender ou desanonimizar usuários anos depois (como ocorreu com diversos serviços derrubados pela Europol/FBI).
+\end{itemize}
+\end{perigo}
+
+Já o \textbf{CoinJoin} (inventado em 2013 pelo desenvolvedor do Bitcoin Core Gregory Maxwell) é uma arquitetura \textbf{100\% Não-Custodial (\emph{Zero-Trust})}:
+\begin{itemize}
+  \item Dezenas de usuários desconhecidos se reúnem (via Tor) para construir \textbf{uma única grande transação colaborativa do Bitcoin};
+  \item Cada participante coloca seus UTXOs na entrada e pede endereços novos de saída com \textbf{valores idênticos padronizados} (por exemplo: 50 entradas diferentes entram na transação e saem 50 notas idênticas de exatos \texttt{0,01 BTC});
+  \item O software da sua carteira verifica que o seu endereço de saída está presente na transação antes de assinar a sua entrada. \textbf{Ninguém nunca tem poder para roubar seus satoshis no meio do processo}: ou a transação inteira acontece pagando a todos, ou ela é cancelada e seu dinheiro nunca sai da sua carteira!
+\end{itemize}
+
+\subsection{2. O Cenário Pós-2024 e as Melhores Ferramentas Vivas Hoje}
+
+Em 2024, governos atacaram coordenadores centralizados de CoinJoin (prendendo os fundadores da \emph{Samourai Wallet / Whirlpool} e forçando o encerramento do coordenador padrão da empresa \emph{zkSNACKs / Wasabi Wallet}). O episódio provou uma lição valiosa: \textbf{privacidade real não pode depender do servidor central de uma única empresa}. Hoje, as melhores ferramentas sem ponto único de falha são:
+
+\begin{ferramenta}[goat,logo=joinmarket]{JoinMarket (e interface Jam)}{https://joinmarket-webui.github.io/jamdocs}{open source, coinjoin p2p descentralizado, sem coordenador central, maker/taker, tor}
+O protocolo de CoinJoin mais descentralizado e impossível de censurar do Bitcoin. Diferente do antigo Whirlpool ou Wasabi padrão, o \textbf{JoinMarket} não tem nenhum servidor coordenador central: ele funciona como um mercado livre ponto-a-ponto (via Tor / IRC / Nostr) dividido entre:
+\begin{itemize}
+  \item \textbf{Makers (Provedores de Liquidez):} Usuários que deixam seus bitcoins disponíveis para participar de CoinJoins de outras pessoas, ganhando uma pequena comissão em satoshis e aumentando a privacidade das suas próprias moedas de graça ao longo do tempo;
+  \item \textbf{Takers (Tomadores):} Usuários que querem misturar seus UTXOs na mesma hora pagando uma pequena taxa aos Makers.
+\end{itemize}
+Com a interface gráfica moderna \textbf{Jam} (disponível com 1 clique no \textbf{StartOS} e \textbf{UmbrelOS}), usar o JoinMarket ficou simples e visual! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[recomendado,logo=ashigaru]{Ashigaru (Sucessor Open-Source da Samourai)}{https://ashigaru.rs}{open source, sucessor samourai, whirlpool, payjoin stowaway, cahoots, tor nativo, android}
+Após a derrubada da antiga \emph{Samourai Wallet} em 2024, desenvolvedores cypherpunks anônimos criaram o projeto \textbf{Ashigaru}: o sucessor direto e 100\% código aberto da Samourai, projetado desde o dia zero para eliminar pontos centrais de falha.
+\begin{itemize}
+  \item \textbf{Soberania Obrigatória (Seu Próprio Dojo):} Diferente da antiga Samourai (que conectava por padrão ao servidor da empresa), a carteira móvel do Ashigaru exige conexão direta via \textbf{Tor} ao seu próprio servidor \textbf{Dojo / Full Node}, garantindo que nenhum terceiro veja seus endereços;
+  \item \textbf{Ferramentas Colaborativas (Cahoots, Stowaway e STONEWALL):} Mantém vivas as melhores armas de privacidade transacional do Bitcoin, incluindo transações \textbf{STONEWALL} (que simulam um mini-CoinJoin de duas pessoas usando seus próprios UTXOs para confundir a Chainalysis), \textbf{Stowaway (PayJoin P2P via Tor/Soroban)} e terminal descentralizado \textbf{Whirlpool}.
+\end{itemize}
+\estrelas{5}
+\end{ferramenta}
+
+\begin{nota}[Outras Ferramentas de Privacidade: Ginger Wallet / WabiSabi e PayJoin (BIP78 / BIP77)]
+\begin{itemize}
+  \item \textbf{Protocolo WabiSabi (Ginger Wallet / Wasabi com Coordenador Comunitário):} Como o código da Wasabi é aberto, a comunidade manteve o protocolo vivo na \textbf{Ginger Wallet} (\texttt{gingerwallet.io}) e permitindo configurar coordenadores WabiSabi independentes via Tor no próprio cliente Wasabi/BTCPay;
+  \item \textbf{PayJoin / P2EP (BIP78 e BIP77 Assíncrono):} Suportado em carteiras como \textbf{Ashigaru}, \textbf{Cake Wallet}, \textbf{Bull Bitcoin}, \textbf{BlueWallet} e lojas \textbf{BTCPay Server}. Em um PayJoin, tanto quem está pagando quanto quem está recebendo contribuem com UTXOs na mesma transação! Para qualquer empresa de vigilância olhando a blockchain, a transação parece um pagamento comum, mas \textbf{quebra completamente a matemática de rastreamento}, pois o valor visível na saída não corresponde ao valor real pago!
+\end{itemize}
+\end{nota}
+
+\subsection{3. Crítica Realista: CoinJoin vs. Ponte Atômica (Monero / Liquid)}
+
+Um detalhe técnico que poucos guias contam: como uma transação de \textbf{CoinJoin} clássico tem dezenas de entradas e dezenas de saídas de valores idênticos na blockchain pública do Bitcoin, \textbf{qualquer corretora com KYC consegue ver que aquele UTXO veio de um CoinJoin}! Algumas corretoras reguladas chegam a bloquear ou exigir explicações se você depositar diretamente a saída de um CoinJoin na conta delas.
+
+Por isso, veja qual técnica escolher de acordo com o seu objetivo:
+
+\begin{tabela}{>{\bfseries}l c c X}
+\cab{Técnica de Privacidade} & \cab{Custódia} & \cab{Marca na L1?} & \cab{Melhor Caso de Uso} \\
+JoinMarket / CoinJoin \goat & Zero & Sim (CoinJoin) & Anonimizar reserva fria de longo prazo que você \textbf{não} pretende enviar para corretora CEX \\
+Ponte BTC $\to$ XMR $\to$ BTC \goat & Zero & \textbf{Não!} (Limpo) & Limpar rastro de KYC recebendo um UTXO novo comum sem ``carimbo de mixer'' na blockchain \\
+Swap via Liquid / Lightning    & Zero & \textbf{Não!} (Limpo) & Quebrar heurística direta passando por L-BTC (valores confidenciais) ou Lightning \\
+PayJoin (BIP78 / BIP77)       & Zero & \textbf{Não!} (Oculto)& Pagamentos diretos entre carteiras compatíveis quebrando a análise da Chainalysis \\
+Sites de Mixer na Web/Onion   & Terceiro & Variável       & \pgtag[pgAlert]{evite}\ \textbf{Nunca use:} Altíssimo risco de roubo total ou honeypot policial \\
+\end{tabela}
+
+% =====================================================================
+%  CAPÍTULO 07 -- SETUPS DE COLD WALLET: DO PENDRIVE AO HARDWARE
+% =====================================================================
+\comentario{como construir seu cofre inexpugnável gastando de R\$ 0 a uma fração do mercado}
+\chapter{Setups de Cold Wallet e Segurança Física}
+
+\begin{missao}[comparando e montando os melhores cofres frios de bitcoin do mundo]
+\begin{itemize}
+  \item Compreender como funciona uma assinatura offline via \textbf{PSBT (\emph{Partially Signed Bitcoin Transaction})} e \textbf{QR Code Air-Gapped}.
+  \item Dominar os \textbf{4 Melhores Setups de Cold Wallet} na prática: \textbf{Pendrive + Tails OS + Electrum}, \textbf{Celular Antigo + BlueWallet/Krux}, \textbf{Placa ESP32 + Blockstream Jade DIY/Krux} e \textbf{Blockstream Jade Oficial / SeedSigner / Coldcard}.
+  \item Conhecer a \textbf{Lista Negra de Carteiras para NÃO USAR} (\textbf{Ledger}, \textbf{Atomic}, \textbf{Trust Wallet}, \textbf{Tangem}) e blindar sua seed em \textbf{Aço Inox} com \textbf{Passphrase BIP39}.
+\end{itemize}
+\end{missao}
+
+Você não precisa gastar R\$ 1.500 em um aparelho importado para ter uma segurança digna de banco suíço. Pelo contrário: muitas carteiras comerciais famosas de código fechado (como a Ledger) são \textbf{menos seguras e mais perigosas para sua privacidade} do que uma Cold Wallet aberta montada por você mesmo em casa!
+
+\section{Como uma Cold Wallet Funciona sem Tocar na Internet?}
+
+A mágica por trás de toda Cold Wallet moderna chama-se \textbf{PSBT (\emph{Partially Signed Bitcoin Transaction} — BIP174)}. Veja como você gasta seus bitcoins sem que a sua chave privada jamais chegue perto da internet:
+
+\begin{passo}{Montar o Rascunho na Carteira Vigia (Online)}
+No seu computador ou celular do dia a dia (conectado à internet), você abre sua carteira \emph{Watch-Only} (\textbf{Sparrow}, \textbf{BlueWallet} ou \textbf{Blockstream Green}), digita o endereço de destino e a taxa desejada. Como ela só tem a chave pública (\texttt{zpub}), ela gera uma \textbf{Transação Não Assinada (PSBT)} na tela na forma de um \textbf{QR Code animado} (ou arquivo \texttt{.psbt}).
+\end{passo}
+
+\begin{passo}{Transferir e Assinar no Dispositivo Frio (100\% Offline)}
+Você pega sua Cold Wallet (que não tem internet), aponta a câmera dela para o QR Code na tela do PC (ou espeta o segundo pendrive/cartão SD com o arquivo \texttt{.psbt}). Na tela da Cold Wallet, você confere o endereço de destino e o valor e aperta \textbf{Assinar (Sign)}. A Cold Wallet aplica a assinatura matemática com sua chave privada offline e exibe um \textbf{novo QR Code (Transação Assinada)}!
+\end{passo}
+
+\begin{passo}{Transmitir para a Blockchain (Broadcast)}
+Você aponta a webcam do PC (ou a câmera do celular do dia a dia) para a tela da sua Cold Wallet, lê o QR Code assinado e clica em \textbf{Broadcast Transaction}. Pronto: a transação vai para a rede Bitcoin e a sua chave privada continuou 100\% isolada do mundo exterior!
+\end{passo}
+
+\clearpage
+\section{Os 4 Melhores Setups de Cold Wallet Analisados}
+
+Abaixo estão os quatro setups aprovados pela Pousada, ordenados desde o custo zero/mínimo até o hardware dedicado pronto:
+
+\subsection{Setup \#01: Pendrive + Tails OS + Electrum (“O Clássico Amnésico”)}
+
+\begin{ferramenta}[goat,logo=tails,logo2=electrum]{Pendrive + Tails OS + Electrum}{https://tails.net}{open source, custo quase zero, sistema amnesico em ram, electrum nativa, psbt}
+\textbf{Custo médio:} R\$ 30 a R\$ 50 (apenas 1 pendrive de 16 GB+).\quad \textbf{Segurança:} Altíssima.\\[1mm]
+A melhor maneira de ter uma Cold Wallet de elite hoje mesmo sem comprar hardware especializado. O \textbf{Tails OS} é um sistema operacional Linux focado em anonimato que roda 100\% na memória RAM a partir de um pendrive e já traz a carteira \textbf{Electrum} instalada de fábrica!
+\begin{enumerate}
+  \item \textbf{Como montar:} Grave o Tails OS em um pendrive. Dê boot no seu computador por esse pendrive \textbf{com o cabo de rede desconectado e SEM conectar no Wi-Fi} (na tela de boas-vindas do Tails, mantenha a rede desativada — o sistema ficará 100\% isolado do mundo!);
+  \item \textbf{Geração da Seed:} Abra a \textbf{Electrum} dentro do Tails offline, crie uma carteira padrão (\emph{Standard Wallet $\to$ Create a new seed}) e anote as 12 palavras no papel/metal (opcionalmente adicionando uma Passphrase em \emph{Options $\to$ Extend this seed with custom words});
+  \item \textbf{Exportar a Carteira Vigia:} Vá em \emph{Wallet $\to$ Information} e copie/fotografe o QR Code da sua \textbf{Master Public Key (\texttt{zpub})}. Importe esse \texttt{zpub} na \textbf{Sparrow Wallet} do seu sistema normal ou na \textbf{BlueWallet} do seu celular;
+  \item \textbf{Modo Amnésico (Stateless) vs. Persistente:} Para segurança máxima, você nem precisa ativar o armazenamento persistente no pendrive! Basta desligar o PC (o Tails apaga toda a memória RAM ao desligar). Sempre que você precisar assinar um gasto no futuro (uma ou duas vezes por ano), você dá boot no Tails offline, digita suas 12 palavras na Electrum em 30 segundos, assina a transação PSBT via QR Code na tela ou via segundo pendrive e desliga o PC novamente!
+\end{enumerate}
+\estrelas{5}
+\end{ferramenta}
+
+\subsection{Setup \#02: Celular Antigo Offline + BlueWallet (“A Fortaleza Reciclada”)}
+
+\begin{ferramenta}[goat,logo=bluewallet]{Celular Antigo Formatado + BlueWallet}{https://bluewallet.io}{open source, custo zero, air-gapped 100\% via qr code, reciclagem de hardware}
+\textbf{Custo médio:} R\$ 0 (usando um Android antigo da gaveta).\quad \textbf{Segurança:} Muito Alta (\emph{Air-Gapped}).\\[1mm]
+Tem um smartphone Android antigo com a câmera funcionando parado na gaveta? Ele já tem tela de alta resolução, bateria, processador e câmera para ler QR Codes — tudo o que uma Hardware Wallet de R\$ 1.500 tem!
+\begin{enumerate}
+  \item \textbf{Preparação Cirúrgica (Purga):} Retire qualquer chip SIM, apague todas as redes Wi-Fi salvas e faça uma \textbf{Formatação de Fábrica (\emph{Factory Reset})} completa. Durante a configuração inicial do Android, pule todas as etapas de internet e não faça login em nenhuma Conta Google. Ative o \textbf{Modo Avião permanente} (usuários avançados podem inclusive abrir a tampa traseira do aparelho antigo e desconectar fisicamente o cabinho coaxial da antena Wi-Fi/ celular!);
+  \item \textbf{Instalação Limpa:} No seu PC normal, baixe o arquivo \cmd{.apk} oficial da \textbf{BlueWallet} direto do GitHub oficial (\texttt{github.com/BlueWallet/BlueWallet/releases}), passe para o celular antigo usando um cartão MicroSD e instale;
+  \item \textbf{Operação Air-Gapped por Câmera:} Crie a carteira Bitcoin dentro da BlueWallet do celular offline (ou importe sua seed gerada no dado). Vá nas configurações da carteira, toque em \textbf{Show Wallet XPUB} e escaneie esse QR Code usando a BlueWallet do seu celular do dia a dia (ou a webcam da Sparrow Wallet no PC). Pronto: toda vez que quiser enviar bitcoins, você monta a transação no celular online e assina apontando a câmera de um celular para a tela do outro!
+\end{enumerate}
+\estrelas{5}
+\end{ferramenta}
+
+\clearpage
+\subsection{Setup \#03: Placa ESP32 + Jade DIY ou Krux (“A Hardware Wallet Hacker”)}
+
+\begin{ferramenta}[goat,logo=jade,logo2=krux]{ESP32 + Blockstream Jade DIY / Krux}{https://github.com/Blockstream/Jade}{open source hardware/firmware, esp32, custo baixo, sem rastro de compra cripto}
+\textbf{Custo médio:} R\$ 40 a R\$ 150 (placa comprada no Mercado Livre / AliExpress).\quad \textbf{Segurança:} Altíssima.\\[1mm]
+Este é o setup queridinho dos makers e cypherpunks brasileiros. Como o firmware oficial da \textbf{Blockstream Jade} e do projeto aberto \textbf{Krux} (\texttt{selfcustody.github.io/krux}) são 100\% código aberto e baseados no microcontrolador \textbf{ESP32}, você mesmo pode montar sua Hardware Wallet em 10 minutos!
+\begin{itemize}
+  \item \textbf{Vantagem Genial de OpSec:} Quando você compra uma hardware wallet pronta na internet, seu nome, CPF e endereço ficam registrados como ``comprador de cofre de criptomoedas''. Quando você compra uma plaquinha de desenvolvimento \textbf{ESP32} (como uma \textbf{M5StickC Plus 2}, \textbf{LilyGO T-Display S3}, \textbf{M5Stack CoreS3} ou \textbf{Maix Amigo / Dock}), para a loja e para a transportadora você comprou apenas uma peça genérica de robótica/automação residencial!
+  \item \textbf{Duas escolhas de Firmware no ESP32:}
+  \begin{enumerate}
+    \item \textbf{Blockstream Jade DIY (Ex.: M5StickC Plus / LilyGO T-Display / M5CoreS3):} Você grava o firmware oficial da Jade pelo navegador (\cmd{jadefw.blockstream.com} ou compilando do GitHub) e gerencia tudo pelo app \textbf{Blockstream Green} ou \textbf{Sparrow Wallet} (inclusive suportando Liquid L-BTC!). \emph{Dica crucial de segurança no ESP32:} Como um ESP32 genérico não vem com a chave de fábrica da Blockstream gravada no eFuse, configure sua Jade DIY para operar no modo \textbf{Stateless / Temporary Signer (SeedQR)} ou sempre utilize uma \textbf{Passphrase BIP39}, para que a seed nunca fique salva desprotegida no chip flash da placa!
+    \item \textbf{Krux Firmware (Ex.: Maix Amigo, M5StickV ou WonderMV com câmera):} O \textbf{Krux} transforma placas com câmera e tela touch em um assinador \textbf{100\% Air-Gapped e Stateless} (ele não salva nada na memória: você liga a placa, aponta a câmera dela para um pequeno QR Code da sua seed desenhado em papel ou metal — o \textbf{SeedQR} — assina a transação via câmera na Sparrow/BlueWallet e desliga a placa, apagando a RAM na hora!).
+  \end{enumerate}
+\end{itemize}
+\estrelas{5}
+\end{ferramenta}
+
+\clearpage
+\subsection{Setup \#04: Hardware Wallets Dedicadas Oficiais}
+
+Se você prefere comprar um dispositivo dedicado pronto de fábrica (recomendamos mandar entregar em uma caixa postal / endereço comercial e usar alias de e-mail para proteger seu endereço residencial!):
+
+\begin{ferramenta}[goat,logo=jade,logo2=green]{Blockstream Jade Oficial}{https://blockstream.com/jade}{open source total, camera air-gapped, seedqr, virtual secure element, bitcoin e liquid}
+A melhor Hardware Wallet pronta em custo-benefício do planeta (~US\$ 65). Ao contrário de concorrentes que usam chips proprietários de código fechado sob contrato de segredo industrial (NDA), a \textbf{Blockstream Jade Oficial} é \textbf{100\% Open Source de ponta a ponta}. Possui câmera física integrada na traseira para ler QR Codes e operar de forma totalmente \textbf{Air-Gapped} (sem precisar conectar cabo USB nem Bluetooth se você não quiser!), suporta leitura instantânea de \textbf{SeedQR} em modo \emph{Stateless} e conta com a arquitetura \textbf{Virtual Secure Element (“Blind Oracle”)}, que divide a chave de descriptografia do PIN sem que o servidor veja seu PIN nem sua seed, impedindo extração física do aparelho! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=seedsigner,logo2=krux]{SeedSigner \& Krux}{https://seedsigner.com}{open source, 100\% stateless, air-gapped puro, raspberry pi zero, entropia por camera}
+Para os puristas da segurança sem memória persistente. O \textbf{SeedSigner} (montado com um Raspberry Pi Zero \textbf{sem chip Wi-Fi/Bluetooth}, tela de 1.3 polegadas e câmera) e os dispositivos dedicados rodando \textbf{Krux} operam sob o princípio \textbf{Stateless}: eles não possuem memória interna para guardar sua chave privada! A cada uso, você carrega a seed via câmera (\emph{SeedQR}), digita sua Passphrase, assina o PSBT via QR Code na \textbf{Sparrow / BlueWallet / Nunchuk} e puxa da tomada. Se um ladrão roubar seu SeedSigner desligado, ele levou apenas uma calculadora vazia! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[logo=coldcard,logo2=bitbox]{Coldcard (Mk4 / Q) \& BitBox02 (Bitcoin-Only)}{https://coldcard.com}{bitcoin-only, dual secure element, air-gapped microsd/qr, exigir dados fisicos}
+Duas referências conhecidas da indústria focadas exclusivamente em Bitcoin (com um alerta histórico crucial sobre a Coldcard abaixo):
+\begin{itemize}
+  \item \textbf{Coldcard Mk4 e Coldcard Q (Coinkite — Canadá):} Aparelhos com teclado físico numérico, dois chips Secure Element de fabricantes diferentes, assinatura Air-Gapped via cartão MicroSD (Mk4) ou câmera QR + teclado QWERTY completo (Coldcard Q), PIN de coação (\emph{Brick Me PIN}) e calculadora de dados. \textbf{Atenção:} Mudou a licença para \emph{source-available} restrita e sofreu uma falha gravíssima de geração de entropia documentada no alerta abaixo — \textbf{jamais crie uma seed na Coldcard sem jogar dados físicos + usar Passphrase};
+  \item \textbf{BitBox02 Bitcoin-Only Edition (Shift Crypto — Suíça):} Hardware minimalista, código aberto auditado e arquitetura \emph{Dual-Chip} que combina código aberto no microcontrolador com proteção física no Secure Element. (Compre sempre a edição \textbf{Bitcoin-Only}, nunca a Multi!).
+\end{itemize}
+\estrelas{4}
+\end{ferramenta}
+
+\begin{perigo}[O Caso Coldcard (Julho/Agosto de 2026): Como 1.800+ BTC Foram Drenados Sem Acesso Físico!]
+Durante anos, muitos bitcoiners trataram a \textbf{Coldcard} como ``infalível''. Porém, a partir de \textbf{30 de julho de 2026}, veio à tona um dos episódios mais devastadores da história da auto-custódia: \textbf{mais de 1.800 BTC (~US\$ 116 a 130 milhões)} foram roubados remotamente de mais de 5.200 endereços de usuários da Coldcard — \textbf{sem que os atacantes tivessem acesso físico aos aparelhos e sem golpe de phishing!} Entenda exatamente o que aconteceu:
+\begin{enumerate}
+  \item \textbf{A Causa Raiz (Bug no Gerador de Números Aleatórios de 2021):} O problema não foi no protocolo Bitcoin nem uma invasão remota nos chips \emph{Secure Element}, mas um \textbf{erro de configuração de compilação no firmware da Coinkite introduzido em março de 2021} (versão 4.0.1 em diante, atingindo em cheio a \textbf{Coldcard Mk3} e builds específicos). Ao criar uma carteira nova, o código falhou em coletar entropia do gerador físico de números aleatórios de hardware (\textbf{TRNG}) e caiu silenciosamente num \emph{fallback} determinístico de software (\textbf{PRNG do MicroPython / lógica Yasmarang}), inicializado apenas com dados previsíveis do aparelho (temporizadores internos de boot e ID do chip)!
+  \item \textbf{Colapso da Entropia (de 128 bits para ~40 bits) e Força Bruta Offline:} Em vez de gerar seeds com $2^{128}$ combinações inquebráveis, as Coldcards afetadas sortearam palavras dentro de um universo minúsculo de apenas \textbf{~40 bits de entropia}! Com isso, atacantes simplesmente rodaram placas de vídeo em casa (\textbf{força bruta 100\% offline}), recriaram todas as seeds possíveis daquele PRNG defeituoso, derivaram os endereços e limparam automaticamente qualquer saldo na blockchain!
+  \item \textbf{As 3 Lições Vitais (Por que atualizar o firmware NÃO basta):}
+  \begin{itemize}
+    \item \textbf{Atualizar o firmware não conserta uma seed que nasceu fraca:} A falha está na matemática das 12/24 palavras já geradas (importá-las em outra carteira não resolve!). Qualquer seed gerada automaticamente em uma Coldcard afetada precisou ser abandonada e os fundos transferidos para uma seed nova;
+    \item \textbf{Quem jogou Dados Físicos ou usou Passphrase escapou 100\% ileso:} Mesmo nos aparelhos com firmware vulnerável, os usuários que adicionaram \textbf{rolagens de dados físicos (\emph{Dice Rolls})} ou usaram uma \textbf{Passphrase BIP39 forte} não puderam ter suas chaves adivinhadas;
+    \item \textbf{Regra de Ouro da Pousada:} \textbf{Nunca confie no gerador interno de números de NENHUMA Hardware Wallet!} Gere sempre sua própria entropia jogando dados físicos (veja a seção \textbf{BIP39 / Seedpicker / Ian Coleman} a seguir)!
+  \end{itemize}
+\end{enumerate}
+\end{perigo}
+
+\begin{ferramenta}[logo=trezor]{Trezor (Model One / Safe 3 / Safe 5) — Com Ressalvas}{https://trezor.io}{open source, usar firmware bitcoin-only, passphrase obrigatoria nos modelos antigos}
+A \textbf{Trezor} (SatoshiLabs) merece respeito histórico por ter criado a primeira hardware wallet de código aberto em 2014, \textbf{mas exige cuidados importantes}:
+\begin{itemize}
+  \item \textbf{Falha física nos modelos antigos (Model One e Model T):} Como a Trezor One e a Trezor T não possuíam chip Secure Element dedicado, laboratórios de segurança (como o \emph{Kraken Security Labs}) demonstraram que um invasor com acesso físico ao aparelho roubado consegue extrair a seed em 15 minutos usando um ataque barato de oscilação de energia (\emph{Voltage Glitching}), \textbf{a menos que você utilize uma Passphrase BIP39 forte} (já que a Passphrase nunca é salva no aparelho!). Os modelos novos (\textbf{Trezor Safe 3 e Safe 5}) corrigiram isso adicionando o chip aberto \emph{Optiga Trust M};
+  \item \textbf{Se você já tem uma Trezor:} Instale imediatamente a versão \textbf{Bitcoin-Only do Firmware}, ative uma \textbf{Passphrase BIP39} (que protege você 100\% mesmo contra extração física na Trezor One!) e use-a conectada à \textbf{Sparrow Wallet} em vez do software padrão \emph{Trezor Suite} (que vem cheio de parceiros comerciais com KYC).
+\end{itemize}
+\estrelas{3}
+\end{ferramenta}
+
+\clearpage
+\section{Comparativo Geral dos Setups de Cold Wallet}
+
+\begin{tabela}{>{\bfseries}X c c c c c}
+\cab{Setup de Cold Wallet} & \cab{Preço Médio} & \cab{Nível} & \cab{Air-Gapped} & \cab{Open Source} & \cab{Veredito} \\
+Pendrive + Tails + Electrum \goat & R\$ 30--50   & Médio & \ok\ (QR/USB) & \ok   & \pgtag[pgBrass]{goat} \\
+Celular Antigo + BlueWallet \goat & \textbf{R\$ 0}& Fácil & \ok\ (Câmera) & \ok   & \pgtag[pgBrass]{goat} \\
+ESP32 + Jade DIY / Krux \goat     & R\$ 50--150  & Médio & \ok\ (Câmera) & \ok   & \pgtag[pgBrass]{goat} \\
+Blockstream Jade Oficial \goat    & R\$ 450--650 & Fácil & \ok\ (Câmera) & \ok   & \pgtag[pgBrass]{goat} \\
+SeedSigner / Krux Dedicado \goat  & R\$ 250--500 & Médio & \ok\ (Câmera) & \ok   & \pgtag[pgBrass]{goat} \\
+Coldcard (Só c/ Dados + Passphrase)& R\$ 1.200+  & Alto  & \ok\ (SD/QR)  & Restrito& \meio \\
+BitBox02 (Bitcoin-Only)           & R\$ 1.100+   & Fácil & \nope\ (USB)  & \ok   & \ok \\
+Trezor (+ Passphrase BIP39)       & R\$ 400--900 & Fácil & \nope\ (USB)  & \ok   & \meio \\
+Ledger / Tangem / SafePal         & R\$ 500--2k  & Fácil & \nope         & \nope & \pgtag[pgAlert]{evite} \\
+\end{tabela}
+
+\section{Carteiras e Hardwares para NÃO USAR (Lista Negra)}
+
+\begin{perigo}[Fuja destas carteiras: Código fechado, backdoors e vazamentos graves!]
+\begin{itemize}
+  \item \pglogo{ledger}\ \ \textbf{Ledger (Nano S / Nano X / Stax / Flex)} \pgtag[pgAlert]{evite}: A campeã absoluta de falhas de confiança na indústria:
+  \begin{enumerate}
+    \item \textbf{Código Fechado e “Ledger Recover”:} Durante anos a Ledger prometeu que ``a chave privada jamais pode sair do chip Secure Element''. Em 2023, lançaram o serviço pago \emph{Ledger Recover}, provando que uma simples atualização de firmware proprietário da empresa consegue fatiar a sua seed e enviá-la pela internet para empresas custodiantes com KYC!
+    \item \textbf{Megavazamento de Endereços Residenciais (2020):} Hackers vazaram o banco de dados de clientes da Ledger contendo \textbf{mais de 270.000 nomes reais, números de telefone e endereços físicos residenciais} de quem comprou a carteira — expondo milhares de famílias ao redor do mundo a ameaças de invasão domiciliar;
+    \item \textbf{Hack na cadeia de suprimentos (2023):} O código do \emph{Ledger Connect Kit} foi invadido para drenar carteiras conectadas a aplicativos web.
+  \end{enumerate}
+  \item \pglogo{trustwallet}\ \ \textbf{Atomic Wallet, Trust Wallet, Exodus Desktop/Mobile, MetaMask e Phantom} \pgtag[pgAlert]{evite}:
+  \begin{enumerate}
+    \item \textbf{Atomic Wallet:} Código fechado; em junho de 2023 sofreu um hack catastrófico onde mais de \textbf{US\$ 100 milhões} de usuários foram roubados remotamente da noite para o dia;
+    \item \textbf{Trust Wallet:} Propriedade da Binance, histórico de falhas críticas no gerador de números aleatórios (\texttt{CVE-2023-31290}, onde carteiras criadas na extensão geravam seeds previsíveis que foram drenadas por atacantes!) e código parcialmente fechado cheio de integrações com dezenas de shitcoins.
+  \end{enumerate}
+  \item \textbf{Tangem, SafePal e CoolWallet} \pgtag[pgAlert]{evite}:
+  \begin{enumerate}
+    \item \textbf{Tangem (Cartão NFC sem tela):} Como um cartão plástico não tem tela própria para mostrar o endereço de destino, você assina transações no escuro (\emph{Blind Signing}) confiando 100\% no celular conectado à internet: se um malware no celular trocar o endereço na tela antes de você encostar o cartão, você assina o roubo dos seus próprios bitcoins sem saber! Além disso, em 2024 um bug vergonhoso no app da Tangem chegou a gravar as chaves privadas (seeds) de usuários em texto puro no log de suporte enviado por e-mail para a empresa!
+    \item \textbf{SafePal:} Firmware 100\% fechado (impossível auditar se há backdoors na geração da seed).
+  \end{enumerate}
+\end{itemize}
+\end{perigo}
+
+\section{Padrão BIP39, Metal (1248 / Stackbit) e Passphrase}
+
+De nada adianta ter a melhor Cold Wallet do mundo se a sua seed usar um formato proprietário que ninguém mais lê ou se você anotar suas palavras num pedaço de papel sulfite que queima num incêndio!
+
+\subsection{1. Por que o BIP39 é o Melhor Padrão Universal (+ Como Criar sua Seed)}
+Criado em 2013, o \textbf{BIP39} é o padrão-ouro universal do Bitcoin: ele transforma um número binário de alta entropia (128 bits para 12 palavras ou 256 bits para 24 palavras) somado a um código de verificação (\emph{checksum SHA-256}) em uma sequência legível extraída de uma lista oficial imutável de \textbf{2.048 palavras em inglês} (numeradas de \texttt{0001 = abandon} até \texttt{2048 = zoo}, onde apenas as \textbf{4 primeiras letras} já identificam cada palavra sem ambiguidade!).
+\begin{itemize}
+  \item \textbf{Independência Total de Fabricante:} Ao usar o padrão \textbf{BIP39} (junto aos caminhos padrão \emph{BIP84 Native SegWit} \texttt{m/84'/0'/0'}), você nunca fica refém de nenhuma empresa: se sua carteira quebrar daqui a 30 anos, qualquer software aberto (Sparrow, BlueWallet, Jade, Krux, SeedSigner, Coldcard ou Electrum marcando a opção \emph{BIP39 seed}) restaura seu patrimônio na hora!
+  \item \textbf{Não confie em geradores de números fechados — Crie sua própria Entropia:} Em vez de confiar cegamente no chip da carteira para sortear suas palavras, você pode gerar sua própria seed jogando dados físicos ou sorteando papéis com estas duas ferramentas lendárias de código aberto:
+\end{itemize}
+
+\begin{ferramenta}[goat,logo=bip39]{Ian Coleman BIP39 Tool}{https://github.com/iancoleman/bip39}{open source, conversor bip39/bip84, entropia de dados/moedas, usar no tails offline}
+O canivete suíço criptográfico mais auditado do Bitcoin. Consiste em um único arquivo HTML autônomo (\texttt{bip39-standalone.html}) que permite inserir entropia física (jogadas de dados de 6 lados, cara ou coroa de moedas ou baralho), converte automaticamente para as 12 ou 24 palavras BIP39 e exibe todas as chaves públicas (\texttt{zpub}) e endereços derivados.
+\begin{itemize}
+  \item \textbf{Regra de Ouro de OpSec:} \textbf{JAMAIS digite ou gere uma seed real conectado à internet!} Baixe o arquivo \texttt{bip39-standalone.html} no GitHub oficial, leve em um pendrive para o \textbf{Tails OS 100\% Offline} (sem Wi-Fi e sem cabo de rede), gere/estude sua seed e desligue o computador para apagar a memória RAM!
+\end{itemize}
+\estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=seedpicker]{Seedpicker (Dados + 24ª Palavra)}{https://seedpicker.net}{open source, entropia analogica pura, calculadora da ultima palavra checksum}
+A metodologia favorita de quem quer eliminar 100\% a confiança em computadores na escolha das palavras. No método \textbf{Seedpicker}, você sorteia as \textbf{primeiras 11 ou 23 palavras} de forma 100\% física na mesa da sua casa (sorteando papéis recortados dentro de um saco escuro ou jogando dados com a tabela impressa). Como a \textbf{última palavra (12ª ou 24ª)} precisa conter o \emph{checksum} matemático (SHA-256) das anteriores, você usa a calculadora aberta do Seedpicker rodando offline no Tails OS (ou usa a função nativa da Blockstream Jade / Krux / SeedSigner) apenas para descobrir qual é a última palavra válida que fecha a sua seed! \estrelas{5}
+\end{ferramenta}
+
+\subsection{2. Blindagem Física em Aço Inox: Modelo 1248, Stackbit e Arruelas}
+O papel queima a 233\,°C; o \textbf{Aço Inoxidável 304 ou 316} suporta mais de \textbf{1.400\,°C}, não enferruja na água e dura séculos. Existem duas abordagens consagradas para gravar sua seed no metal:
+
+\begin{ferramenta}[goat,logo=stackbit]{Modelo 1248 \& Stackbit Metalwallet}{https://stackbit.me}{aco inox, matriz binaria 1-2-4-8, puncao automatico sem martelo, alta durabilidade}
+Gravar letras no aço batendo com martelo exige força, faz barulho e requer 26 punções alfabéticos. O \textbf{Modelo 1248} resolve isso com pura elegância matemática usando o \textbf{número de 4 dígitos de cada palavra na lista BIP39} (de \texttt{0001} a \texttt{2048}):
+\begin{itemize}
+  \item \textbf{Como funciona a Matriz 1248:} Cada um dos 4 dígitos da palavra possui uma pequena coluna com 4 quadradinhos valendo \textbf{1, 2, 4 e 8}. Com um simples \textbf{punção automático de pressão} (uma ``caneta'' com mola que marca o aço apenas empurrando com a mão, sem precisar de martelo!), você marca os quadradinhos cuja soma dá o dígito desejado:
+  \begin{itemize}
+    \item Dígito \textbf{1}, \textbf{2}, \textbf{4} ou \textbf{8}: marque apenas o quadradinho correspondente;
+    \item Dígito \textbf{3}: marque $1+2$;\quad Dígito \textbf{5}: marque $1+4$;\quad Dígito \textbf{6}: marque $2+4$;
+    \item Dígito \textbf{7}: marque $1+2+4$;\quad Dígito \textbf{9}: marque $1+8$;\quad Dígito \textbf{0}: deixe a coluna em branco!
+  \end{itemize}
+  \item \textbf{Stackbit (\texttt{stackbit.me}):} A referência brasileira que consagrou as placas de aço inox no \textbf{Modelo 1248}, oferecendo chapas robustas gravadas a laser com tampa protetora para ocultar os furos e kit completo já com o punção automático incluso.
+\end{itemize}
+\estrelas{5}
+\end{ferramenta}
+
+\begin{dica}[Alternativa DIY de R\$ 35: O Método Caseiro das Arruelas (“Blockmit / Safu Ninja”)]
+Na casa de ferragens, compre \textbf{1 parafuso de inox M8}, \textbf{1 porca M8}, \textbf{24 arruelas de inox M8} e um kit de punção. Usando um gabarito impresso em 3D (\emph{Blockmit Jig}), grave as \textbf{4 primeiras letras} de cada palavra BIP39 (ou divida a arruela em 4 quadrantes usando a lógica \textbf{1248}!), empilhe em ordem no parafuso e trave com a porca!
+\end{dica}
+
+\subsection{3. O Escudo Definitivo: A Passphrase BIP39 (13ª / 25ª Palavra)}
+Toda carteira compatível com o padrão BIP39 permite adicionar uma \textbf{Passphrase (Senha de Extensão)} às suas 12 ou 24 palavras:
+\begin{itemize}
+  \item A Passphrase \textbf{não} é um simples bloqueio de tela: qualquer Passphrase que você digita combina-se matematicamente com as 12 palavras para derivar uma \textbf{carteira criptográfica completamente nova e independente}!
+  \item \textbf{Estratégia da Carteira Isca (\emph{Duress Wallet}):} Grave apenas as 12 palavras na sua placa \textbf{Stackbit / 1248} (ou arruelas de inox) e deixe um valor pequeno (ex.: R\$ 300) na carteira padrão (\emph{Sem Passphrase}). Depois, ative sua \textbf{Passphrase Forte} (guardada separadamente no cofre \textbf{KeePassXC / Bitwarden}, \textbf{nunca junto com as 12 palavras!}) e guarde lá 99\% do seu patrimônio: quem achar a placa verá os R\$ 300 da isca sem saber da carteira oculta!
+\end{itemize}
+
+% =====================================================================
+%  CAPÍTULO 08 -- O MAPA DO BITCOINER, VERIFICAÇÃO E CHECKLIST
+% =====================================================================
+\comentario{portais de estudo técnico, verificação criptográfica de instaladores e checklist final}
+\chapter{O Mapa do Bitcoiner}
+
+\begin{missao}[fontes técnicas sem patrocinadores de shitcoins e verificação de software]
+\begin{itemize}
+  \item Conhecer a comunidade brasileira dos \textbf{Bitcoinheiros} e favoritar as melhores enciclopédias técnicas e auditorias livres (\textbf{WalletScrutiny}, \textbf{Learn Me A Bitcoin}, \textbf{Bitcoin Optech}, \textbf{Bitcoiner.guide} e \textbf{KYCnot.me}).
+  \item Aprender a verificar a assinatura \textbf{GPG e SHA256} no terminal antes de instalar a Sparrow ou Electrum.
+  \item Seguir o \textbf{Checklist Final de Soberania em Bitcoin} e consultar o \textbf{Glossário Técnico da Pousada}.
+\end{itemize}
+\end{missao}
+
+Mais de 95\% dos canais de YouTube sobre ``cripto'' são financiados por corretoras de futuros e lançamentos de shitcoins. Para estudar a engenharia real do protocolo sem cair em propaganda patrocinada, consulte estas referências abertas:
+
+\section{Portais de Auditoria, Estudo e Comunidade}
+
+\begin{ferramenta}[goat,logo=bitcoinheiros]{Bitcoinheiros (Canal \& Comunidade)}{https://www.youtube.com/@Bitcoinheiros}{comunidade brasileira, tutoriais passo a passo, auto-custodia, p2p, lightning, nostr}
+O maior e mais respeitado acervo educacional de Bitcoin em língua portuguesa. Desde 2018, os \textbf{Bitcoinheiros} produzem centenas de tutoriais práticos na tela mostrando passo a passo como usar a \textbf{Sparrow Wallet}, \textbf{Electrum no Tails OS}, \textbf{RoboSats}, \textbf{Bisq}, \textbf{Krux}, \textbf{Blockstream Jade}, \textbf{Multisig}, \textbf{PayJoin}, \textbf{Liquid} e \textbf{Nodes}, sem nunca vender cursos mágicos ou promover shitcoins! Além do canal no YouTube, a comunidade dos Bitcoinheiros (no Telegram, Nostr e comentários) reúne veteranos e desenvolvedores extremamente prestativos, sempre dispostos a tirar dúvidas e ajudar quem está começando na jornada da auto-custódia. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=walletscrutiny]{WalletScrutiny}{https://walletscrutiny.com}{auditoria de carteiras, reproducible builds, seguranca, open source}
+Liderado pelo pesquisador de segurança Leo Wandersleb, o \textbf{WalletScrutiny} responde à pergunta mais importante antes de instalar qualquer carteira no celular ou comprar uma Hardware Wallet: \emph{``Como sabemos que o aplicativo publicado na Google Play / App Store foi realmente compilado a partir do código-fonte público que está no GitHub, sem nenhuma linha maliciosa adicionada na hora de empacotar?''}. A equipe baixa os binários e testa na unha se as compilações são reproduzíveis bit a bit (\textbf{Reproducible Builds}), expondo carteiras fechadas ou enganosas! \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=bitcoinoptech]{Learn Me A Bitcoin \& Bitcoin Optech}{https://learnmeabitcoin.com}{educacao tecnica visual, protocolo bitcoin, criptografia, gratis}
+As duas maiores joias educativas para quem quer entender o Bitcoin por baixo do capô:
+\begin{itemize}
+  \item \textbf{Learn Me A Bitcoin (por Greg Walker):} O melhor site visual da internet para aprender passo a passo como funcionam chaves privadas, curvas elípticas (\texttt{secp256k1}), derivação HD (BIP32/BIP39/BIP84), estrutura de blocos, scripts e mineração, com calculadoras interativas gratuitas no navegador;
+  \item \textbf{Bitcoin Optech (\texttt{bitcoinops.org}):} O boletim técnico semanal dos engenheiros do protocolo Bitcoin, documentando cada evolução de segurança (Taproot, Miniscript, Silent Payments, PayJoin, Lightning).
+\end{itemize}
+\estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=bitcoinerguide]{Bitcoiner.guide (por Bitcoin QnA)}{https://bitcoiner.guide}{manuais praticos, privacidade, multisig, nodes, open source}
+Coleção impecável de guias diretos, visuais e 100\% livres (sem anúncios de altcoins) escritos por \emph{Bitcoin QnA}, cobrindo boas práticas de privacidade, guia completo de UTXOs, configuração de Nodes, Lightning Network e setups seguros de auto-custódia. \estrelas{5}
+\end{ferramenta}
+
+\begin{ferramenta}[goat,logo=kycnot]{KYCnot.me (Diretório No-KYC)}{https://kycnot.me}{corretoras p2p, swaps atomicos, servicos que aceitam btc e xmr, open source}
+Já destaque no nosso Guia de Privacidade (\#02), o \textbf{KYCnot.me} é a bússola diária do Bitcoiner para encontrar corretoras P2P auditadas (Bisq, RoboSats, Peach), agregadores de swap sem cadastro (Trocador, OrangeFren) e lojas de infraestrutura digital que aceitam pagamento direto em \textbf{Bitcoin (On-Chain / Lightning)} e \textbf{Monero (XMR)}. \estrelas{5}
+\end{ferramenta}
+
+\section{Como Verificar Assinaturas GPG de Carteiras no Terminal}
+
+Quando você baixa uma carteira crítica como a \textbf{Sparrow Wallet} ou a \textbf{Electrum}, se um hacker invadir o servidor de download do site (ou fizer um ataque de DNS) e trocar o instalador por um vírus, só existe uma defesa capaz de detectar a fraude na hora: \textbf{verificar a assinatura criptográfica GPG do desenvolvedor}!
+
+Veja como é simples verificar a \textbf{Sparrow Wallet} no terminal em menos de 1 minuto:
+
+\begin{terminal}[bash -- ~/Downloads (Verificando a assinatura GPG da Sparrow Wallet)]
+# 1. Importa a chave publica PGP oficial do criador da Sparrow (Craig Raw)
+$ curl -s https://keybase.io/craigraw/pgp_keys.asc | gpg --import
+
+# 2. Baixe no site da Sparrow o instalador + o manifesto (.txt) + a assinatura (.txt.asc)
+# Agora verifique se a assinatura criptografica do manifesto pertence a Craig Raw:
+$ gpg --verify sparrow-2.0.0-manifest.txt.asc sparrow-2.0.0-manifest.txt
+gpg: Good signature from "Craig Raw <craig@sparrowwallet.com>"
+
+# 3. Confira se o hash SHA256 do instalador bate exatamente com o manifesto assinado:
+$ sha256sum --check sparrow-2.0.0-manifest.txt --ignore-missing
+sparrow-2.0.0-x86_64.tar.gz: OK
+\end{terminal}
+
+Se aparecer \cmd{Good signature} e \cmd{OK}, você tem certeza matemática absoluta de que o arquivo no seu computador é idêntico ao que saiu da máquina do criador da carteira!
+
+\clearpage
+\section{Checklist Final de Soberania em Bitcoin da Pousada}
+
+Avance no seu próprio ritmo — comece dominando a base \textcolor{pgSignal}{\pgmono\bfseries[x]} antes de dar passos avançados \textcolor{pgAmber}{\pgmono\bfseries[?]}:
+
+\begin{checklist}
+  \feito Abandonar apostas em \emph{shitcoins}, futuros alavancados e promessas de ``rendimento garantido'', focando em acumular satoshis via \textbf{DCA}.
+  \feito Retirar todo o saldo parado em corretoras (\emph{Not your keys, not your coins}) para uma carteira de código aberto sob seu controle.
+  \feito Adotar plataformas \textbf{P2P sem KYC} (\textbf{RoboSats}, \textbf{Bisq}, \textbf{Peach} ou P2P comunitário confiável) para suas compras recorrentes (ou iniciar o aprendizado com pequenos valores na \textbf{Bipa} + \textbf{WoS} e evoluir para o P2P).
+  \feito Acumular pequenos aportes semanais de DCA via \textbf{Lightning Network} (\textbf{Phoenix} / \textbf{Zeus}) ou \textbf{Liquid Network} (\textbf{Blockstream Green} — apenas como passagem!) e consolidar para a Camada 1 quando somar lotes maiores ($>500.000$ sats).
+  \feito Montar sua primeira \textbf{Cold Wallet 100\% Offline} escolhendo um dos setups aprovados (\textbf{Pendrive + Tails OS + Electrum}, \textbf{Celular Antigo + BlueWallet}, \textbf{ESP32 + Jade DIY/Krux} ou \textbf{Blockstream Jade Oficial / SeedSigner}) e \textbf{gerando sua própria entropia com dados físicos} (\textbf{Seedpicker} / \textbf{Ian Coleman offline}).
+  \feito Gravar suas 12 ou 24 palavras \textbf{BIP39} em \textbf{Aço Inox} (\textbf{Stackbit / Modelo 1248} ou arruelas M8) e configurar uma \textbf{Passphrase BIP39} guardada em local separado (mantendo um troco na carteira padrão de 12 palavras para negação plausível).
+  \feito Instalar a \textbf{Sparrow Wallet} no PC (verificando a assinatura GPG!) ou a \textbf{BlueWallet} no celular importando apenas a chave pública (\texttt{zpub}) em modo \textbf{Watch-Only}.
+  \feito Rotular (\emph{Label}) todos os seus UTXOs na carteira, nunca fundir UTXOs com KYC e sem KYC na mesma transação e congelar (\emph{Freeze}) qualquer poeira suspeita.
+  \opcional Usar a ponte com \textbf{Monero (XMR)} na \textbf{Feather Wallet} ou protocolos descentralizados de \textbf{CoinJoin (\textbf{JoinMarket})} para quebrar o rastro de moedas antigas que passaram por corretoras KYC.
+  \opcional Rodar seu próprio \textbf{Full Node} (\textbf{Bitcoin Core / Knots} em modo Pruned no PC ou servidor doméstico 24h com \textbf{StartOS / UmbrelOS}) e conectar sua Sparrow/BlueWallet a ele.
+  \opcional Montar um micro-minerador open-source de loteria (\textbf{NerdMiner} num ESP32 ou \textbf{Bitaxe} de 15W) como projeto prático de aprendizado sobre Proof-of-Work (concorrendo, por pura sorte estatística, a 144 blocos por dia de \textbf{3,125 BTC}).
+  \opcional Quando o patrimônio atingir um valor geracional, evoluir seu cofre principal para uma arquitetura \textbf{Multisig 2-de-3} distribuída geograficamente (com backup impresso do \emph{Output Descriptor}).
+\end{checklist}
+
+\clearpage
+\section{Glossário Rápido do Bitcoiner}
+
+\begin{description}
+  \item[Satoshi (sat)] A menor fração divisível de um Bitcoin na camada base: $1\text{ BTC} = 100.000.000\text{ satoshis}$.
+  \item[Seed Phrase (BIP39)] Sequência de 12 ou 24 palavras em inglês gerada a partir de um número aleatório de alta entropia que representa a chave mestra de toda a sua carteira.
+  \item[Passphrase (13ª / 25ª Palavra)] Senha livre escolhida pelo usuário que se combina matematicamente à Seed Phrase BIP39 para gerar um cofre oculto completamente novo, protegendo contra roubo físico do backup das 12 palavras.
+  \item[xpub / zpub (Extended Public Key)] Chave Pública Estendida da carteira. Permite que uma carteira \emph{Watch-Only} veja todos os seus endereços e saldos e gere novos endereços de recebimento, mas \textbf{não permite gastar nenhuma moeda}.
+  \item[UTXO (Unspent Transaction Output)] ``Pedaço'' individual de Bitcoin não gasto na sua carteira. Cada recebimento On-Chain cria um novo UTXO distinto que carrega seu histórico e paga peso em bytes ao ser gasto.
+  \item[PSBT (Partially Signed Bitcoin Transaction)] Formato padrão de arquivo/QR Code que permite criar o rascunho de uma transação num computador conectado à internet e levá-lo para ser assinado dentro de uma Cold Wallet offline.
+  \item[Air-Gapped] Dispositivo de assinatura que opera com isolamento físico total de rede (sem Wi-Fi, sem Bluetooth e sem cabo de dados USB), comunicando-se apenas por câmera (QR Code) ou cartão MicroSD.
+  \item[Stateless Wallet] Carteira fria ``amnésica'' (como SeedSigner, Krux ou Tails OS sem persistência) que não salva a seed na memória interna: esquece tudo assim que a energia é desligada.
+  \item[SeedQR] Representação compacta das suas 12 ou 24 palavras em um pequeno código QR desenhado manualmente em papel quadriculado ou gravado em metal para leitura rápida pela câmera da Jade, Krux ou SeedSigner.
+  \item[RBF (Replace-By-Fee) e CPFP] Ferramentas para destravar uma transação que ficou presa na mempool com taxa baixa: o \emph{RBF} permite que quem enviou aumente a taxa; o \emph{CPFP (Child Pays For Parent)} permite que quem recebeu pague uma taxa extra para puxar a transação anterior.
+\end{description}
+
+\divisor
+
+\begin{pousadinha}[Chaves em mãos, Node sincronizado e Soberania conquistada!]
+Parabéns por concluir o \textbf{PousadaGuide \#03}! Agora você faz parte da minoria que realmente entende a diferença entre especular em cassinos de corretoras e exercer soberania financeira real com criptografia de código aberto. Se for montar sua própria Jade num ESP32, subir seu node ou bater suas arruelas de inox no martelo, mande foto lá no Discord da Pousada — \emph{Stay Humble, Stack Sats \& Verify}!
+\end{pousadinha}
+
+\contracapa
+\end{document}

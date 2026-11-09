@@ -62,6 +62,7 @@ jobs:
             |---|---|---|
             | **#01 — Piracy Guide** | `PousadaGuide-01-Piracy.pdf` | `PousadaGuide-01-Piracy-impressao.pdf` |
             | **#02 — Privacy Guide** | `PousadaGuide-02-Privacy.pdf` | `PousadaGuide-02-Privacy-impressao.pdf` |
+            | **#03 — Bitcoin Guide** | `PousadaGuide-03-Bitcoin.pdf` | `PousadaGuide-03-Bitcoin-impressao.pdf` |
             | #00 — Guia de Exemplo (sistema visual) | `PousadaGuide-00-Exemplo.pdf` | — |
 
             > A versão de **tela** tem fundo creme; a de **impressão** tem fundo branco.

@@ -29,8 +29,9 @@ Cada guia é um PDF bonito, organizado e revisado pela comunidade — gerado a p
 
 | | Guia | Conteúdo | Download |
 |:-:|---|---|:-:|
-| <a href="#01--piracy-guide"><img src="docs/previews/piracy-capa.png" width="110" alt="Capa Piracy Guide"></a> | [**#01 — Piracy Guide**](#01--piracy-guide)<br><sub>segurança & opsec · v1.1 · 43 páginas</sub> | Como navegar sem armadilhas, baixar com segurança e dominar as melhores ferramentas e Megathreads. Inspirado na Megathread do `r/Piracy` e no FMHY. | [**Tela**](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy.pdf)<br>[Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy-impressao.pdf) |
+| <a href="#01--piracy-guide"><img src="docs/previews/piracy-capa.png" width="110" alt="Capa Piracy Guide"></a> | [**#01 — Piracy Guide**](#01--piracy-guide)<br><sub>segurança & opsec · v1.1 · 44 páginas</sub> | Como navegar sem armadilhas, baixar com segurança e dominar as melhores ferramentas e Megathreads. Inspirado na Megathread do `r/Piracy` e no FMHY. | [**Tela**](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy.pdf)<br>[Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy-impressao.pdf) |
 | <a href="#02--privacy-guide"><img src="docs/previews/privacy-capa.png" width="110" alt="Capa Privacy Guide"></a> | [**#02 — Privacy Guide**](#02--privacy-guide)<br><sub>privacidade & anonimato · v1.0 · 44 páginas</sub> | Do zero ao anonimato prático: higiene digital, criptografia, sistemas livres e soberania dos seus dados. Inspirado em PrivacyGuides e EFF. | [**Tela**](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf)<br>[Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy-impressao.pdf) |
+| <a href="#03--bitcoin-guide"><img src="docs/previews/bitcoin-capa.png" width="110" alt="Capa Bitcoin Guide"></a> | [**#03 — Bitcoin Guide**](#03--bitcoin-guide)<br><sub>soberania & criptografia · v1.0 · 56 páginas</sub> | Soberania financeira, P2P sem KYC, nodes, mineração de loteria, Lightning Network, privacidade de UTXOs e setups definitivos de Cold Wallet. | [**Tela**](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin.pdf)<br>[Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin-impressao.pdf) |
 | — | **#00 — Guia de Exemplo** | Tour por todos os componentes do sistema visual (para quem vai escrever guias). | [PDF](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-00-Exemplo.pdf) |
 
 > [!TIP]
@@ -100,6 +101,37 @@ Cada guia é um PDF bonito, organizado e revisado pela comunidade — gerado a p
 | **07 · VPNs, VPS & Redes Anônimas** | Obscura VPN (Two-Party), Mullvad, Proton VPN, AirVPN (Port Forwarding), VPS soberana, protocolos anti-DPI (sing-box com VLESS+REALITY e Hysteria 2), Tor, I2P e Tails OS |
 | **08 · O Mapa da Privacidade, Auditoria & Checklist** | PrivacyGuides, KYCnot.me, Awesome Privacy, EFF SSD, TOS;DR, HIBP, Exodus, checklist em 3 fases e glossário essencial |
 
+### ₿ #03 — Bitcoin Guide
+
+<a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin.pdf">
+  <img src="docs/banner-bitcoin.png" alt="PousadaGuide #03 — Bitcoin Guide (Clique para baixar o PDF)" width="100%">
+</a>
+
+<p align="center">
+  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin.pdf"><b>📥 Baixar Guia em PDF (Tela)</b></a> ·
+  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin-impressao.pdf"><b>🖨️ Versão para Impressão</b></a> ·
+  <a href="Bitcoin/"><b>📁 Ver Pasta do Guia</b></a>
+</p>
+
+<table>
+<tr>
+<td width="33%"><img src="docs/previews/bitcoin-capa.png" alt="Capa"></td>
+<td width="33%"><img src="docs/previews/bitcoin-sumario.png" alt="Sumário"></td>
+<td width="33%"><img src="docs/previews/bitcoin-ferramentas.png" alt="Fichas de ferramentas"></td>
+</tr>
+</table>
+
+| Capítulo | O que você aprende |
+|---|---|
+| **01 · Antes de Acumular** | Por que Bitcoin e não "Cripto" (*shitcoins*), *Proof-of-Work* vs. *Proof-of-Stake*, *Blocksize Wars* e as 5 Regras de Ouro da Auto-Custódia |
+| **02 · DCA, P2P & o Papel do Monero** | Estratégia DCA (*Stacking Sats*), os perigos físicos do KYC, Bipa para iniciantes, corretoras P2P descentralizadas (Bisq, RoboSats, Peach) e o Monero (XMR) apenas como anonimato rápido/ponte (nunca reserva de valor) |
+| **03 · Nodes & Mineração de Loteria** | Rodando seu próprio Full Node (Bitcoin Core / Knots, StartOS, UmbrelOS), Mempool.space via Tor e mineração solo de loteria em casa com **Bitaxe** (15W) e pool **OCEAN (DATUM)** |
+| **04 · Lightning Network & Sidechains** | Canais Lightning não-custodiais (Phoenix, Zeus), custodiais para iniciantes (Wallet of Satoshi) e a verdade sobre Sidechains (Liquid L-BTC, Cashu, Fedimint) + swaps via **Boltz.exchange** |
+| **05 · Carteiras para PC, Celular & Multisig** | Carteiras *Watch-Only*, Sparrow Wallet, Electrum, BlueWallet, Blockstream Green, Nunchuk e arquitetura **Multisig (2-de-3)** sem ponto único de falha |
+| **06 · UTXOs, Mixers & Privacidade On-Chain** | Anatomia dos UTXOs, regras de *Coin Control*, defesa contra *Dust Attacks*, por que fugir de Mixers custodiais e como usar **JoinMarket (CoinJoin)**, **Ashigaru** (sucessor da Samourai), **PayJoin** e pontes atômicas |
+| **07 · Setups de Cold Wallet & Segurança Física** | **Pendrive + Tails OS + Electrum**, **Celular Antigo + BlueWallet**, **ESP32 + Jade DIY / Krux** e **Jade Oficial / SeedSigner / Coldcard / BitBox02**, lista negra (Ledger, Atomic, Trust, Tangem), padrão **BIP39** (**Ian Coleman** e **Seedpicker**) e backup em **Aço Inox (Modelo 1248 / Stackbit e Arruelas)** + **Passphrase BIP39** |
+| **08 · O Mapa do Bitcoiner** | Comunidade e tutoriais dos **Bitcoinheiros**, WalletScrutiny, Learn Me A Bitcoin, Bitcoin Optech, Bitcoiner.guide, KYCnot.me, verificação GPG no terminal, checklist e glossário |
+
 ---
 
 ## 🛠️ Compilar
@@ -153,6 +185,9 @@ PousadaGuides/
 ├── Privacy/                # #02 — Privacy Guide
 │   ├── privacy.tex
 │   └── assets/             #   capa e avatar temáticos cypherpunk
+├── Bitcoin/                # #03 — Bitcoin Guide
+│   ├── bitcoin.tex
+│   └── assets/             #   capa e avatar temáticos soberanos
 ├── assets/                 # recursos compartilhados entre guias
 │   ├── logo-*.png          #   logo Pousada (creme/teal)
 │   ├── pousadinha*.png     #   mascote padrão + avatar
@@ -163,6 +198,7 @@ PousadaGuides/
 │   ├── banner.png          #   banner geral do projeto (clicável -> lista de guias)
 │   ├── banner-piracy.png   #   banner temático #01 (clicável -> download do PDF)
 │   ├── banner-privacy.png  #   banner temático #02 (clicável -> download do PDF)
+│   ├── banner-bitcoin.png  #   banner temático #03 (clicável -> download do PDF)
 │   ├── social-preview.png  #   card para compartilhamento em redes (1280×640)
 │   ├── banner/             #   fontes TikZ dos banners
 │   └── previews/           #   prévias das páginas para o README
