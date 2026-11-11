@@ -194,8 +194,7 @@ def card(g, cfg):
     return f'''
     <article class="guide-card reveal" id="guia-{g["id"]}" style="--d:{g["index"] * 90}ms">
       <a class="cover" href="{g["id"]}/" aria-label="Ler o {esc(g["title"])} online">
-        <img src="img/covers/{g["id"]}.webp" width="640" height="905" alt="Capa do PousadaGuide #{g["num"]} — {esc(g["title"])}" loading="lazy" decoding="async">
-        <span class="cover-num">#{g["num"]}</span>
+        <img src="img/banners/{g["id"]}.webp" width="960" height="480" alt="Banner do PousadaGuide #{g["num"]} — {esc(g["title"])}" loading="lazy" decoding="async">
         <span class="cover-cta">{icon("eye")} Ler online</span>
       </a>
       <div class="card-body">

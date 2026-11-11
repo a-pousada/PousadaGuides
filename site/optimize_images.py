@@ -62,10 +62,14 @@ def main():
             save_webp(fit(Image.open(mascot).convert("RGBA"), max_h=900), OUT / "mascots" / f"{gid}.webp", q=84)
         banner = ROOT / "docs" / f"banner-{gid}.png"
         if banner.exists():
+            save_webp(fit(Image.open(banner).convert("RGB"), max_w=960), OUT / "banners" / f"{gid}.webp", q=85)
             save_jpg(fit(Image.open(banner), max_w=1200), OUT / "og" / f"{gid}.jpg")
 
     print("Comuns:")
-    save_webp(fit(Image.open(ROOT / "assets" / "teacher.png").convert("RGBA"), max_h=960), OUT / "teacher.webp", q=84)
+    t_img = Image.open(ROOT / "assets" / "teacher.png").convert("RGBA")
+    save_webp(fit(t_img, max_h=960), OUT / "teacher.webp", q=84)
+    t_crop = t_img.crop((310, 0, 850, 540))
+    save_webp(fit(t_crop, max_w=192, max_h=192), OUT / "teacher-avatar.webp", q=88)
     save_webp(fit(Image.open(ROOT / "assets" / "pousadinha.png").convert("RGBA"), max_h=520), OUT / "pousadinha.webp", q=84)
     save_webp(fit(Image.open(ROOT / "assets" / "pousadinha-avatar.png").convert("RGBA"), max_w=192), OUT / "pousadinha-avatar.webp", q=88)
     save_webp(fit(Image.open(ROOT / "assets" / "logo-symbol-cream.png").convert("RGBA"), max_w=240), OUT / "logo-symbol-cream.webp", q=90)

@@ -37,9 +37,14 @@
 
   // animações de entrada
   const els = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window)) { document.documentElement.classList.add('no-io'); return; }
+  if (!('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('has-js');
   const io = new IntersectionObserver((entries) => {
     for (const en of entries) if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
-  }, { rootMargin: '0px 0px -8% 0px', threshold: .08 });
-  els.forEach((el) => io.observe(el));
+  }, { rootMargin: '200px 0px 100px 0px', threshold: 0 });
+  els.forEach((el) => {
+    io.observe(el);
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight + 200) el.classList.add('in');
+  });
 })();
