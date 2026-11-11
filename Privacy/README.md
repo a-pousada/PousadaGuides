@@ -1,17 +1,18 @@
 <div align="center">
 
-<a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf">
-  <img src="../docs/banner-privacy.png" alt="PousadaGuide #02 — Privacy Guide (Clique para baixar o PDF)" width="100%">
+<a href="https://a-pousada.github.io/PousadaGuides/privacy/">
+  <img src="../docs/banner-privacy.png" alt="PousadaGuide #02 — Privacy Guide (Clique para ler online)" width="100%">
 </a>
 
 # PousadaGuide #02 — Privacy Guide
 
 **Do zero ao anonimato prático: higiene digital, criptografia, sistemas livres e soberania dos seus dados.**<br>
-<sub>Inspirado em PrivacyGuides.org, Awesome Privacy e EFF SSD · 44 páginas revisadas pela comunidade</sub>
+<sub>Inspirado em PrivacyGuides.org, Awesome Privacy e EFF SSD · 45 páginas revisadas pela comunidade</sub>
 
 <br>
 
-[![Baixar PDF Tela](https://img.shields.io/badge/📥%20Baixar-PDF%20(Tela)-5FE3C9?style=for-the-badge&labelColor=00222A)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf)
+[![Ler Online](https://img.shields.io/badge/🌐%20Ler%20Online-no%20Navegador-5FE3C9?style=for-the-badge&labelColor=00222A)](https://a-pousada.github.io/PousadaGuides/privacy/)
+[![Baixar PDF Tela](https://img.shields.io/badge/📥%20Baixar-PDF%20(Tela)-01424A?style=for-the-badge&labelColor=00222A)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf)
 [![Baixar PDF Impressão](https://img.shields.io/badge/🖨️%20Baixar-PDF%20(Impressão)-F3EBD5?style=for-the-badge&labelColor=00222A)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy-impressao.pdf)
 [![Licença](https://img.shields.io/badge/licença-AGPL%203.0-D6C38F?style=for-the-badge&labelColor=00222A)](../LICENSE)
 

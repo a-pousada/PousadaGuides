@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PousadaGuides — guias abertos da comunidade Pousada</title>
+  <meta name="description" content="{{SITE_DESC}}">
+  <meta name="theme-color" content="#00222A">
+  <link rel="canonical" href="{{BASE_URL}}/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PousadaGuides">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="PousadaGuides — guias abertos da comunidade Pousada">
+  <meta property="og:description" content="{{SITE_DESC}}">
+  <meta property="og:url" content="{{BASE_URL}}/">
+  <meta property="og:image" content="{{BASE_URL}}/img/og/home.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="600">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="preload" href="img/teacher.webp" as="image">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="home">
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="site-header" id="top">
+    <a class="brand" href="./" aria-label="PousadaGuides — início">
+      <img src="img/logo-symbol-cream.webp" width="240" height="137" alt="">
+      <span class="brand-text"><b>POUSADA</b><small>guides // open knowledge</small></span>
+    </a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="#guias">Guias</a>
+      <a href="#leitor">Leitor</a>
+      <a href="#filosofia">Filosofia</a>
+      <a class="nav-icon" href="{{REPO}}" target="_blank" rel="noopener" aria-label="GitHub">{{ICON_GITHUB}}</a>
+      <a class="nav-icon" href="{{DISCORD}}" target="_blank" rel="noopener" aria-label="Discord">{{ICON_DISCORD}}</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ================================================================ HERO -->
+    <section class="hero">
+      <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
+      <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
+
+      <div class="hero-text">
+        <p class="prompt"><span class="glow">&gt;_</span> PousadaGuides</p>
+        <h1>Guias abertos para quem quer <span class="hl">soberania digital</span><span class="cursor" aria-hidden="true"></span></h1>
+        <p class="lead">Pirataria segura, privacidade, OpSec e Bitcoin — explicados sem enrolação, curados pela comunidade e escritos em LaTeX aberto. <strong>Leia direto no navegador</strong> ou baixe o PDF.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="#guias">{{ICON_BOOK}} Explorar os guias</a>
+          <a class="btn btn-outline btn-lg" href="{{LATEST_ID}}/"><span class="mono">#{{LATEST_NUM}}</span> {{LATEST_TITLE}} {{ICON_ARROW}}</a>
+        </div>
+        <ul class="stats" aria-label="Números do projeto">
+          <li><b>{{GUIDE_COUNT}}</b><span>guias</span></li>
+          <li><b>{{TOTAL_PAGES}}</b><span>páginas</span></li>
+          <li><b>0</b><span>rastreadores</span></li>
+          <li><b>100%</b><span>código aberto</span></li>
+        </ul>
+        <pre class="hexdump" aria-hidden="true">00000000  50 6f 75 73 61 64 61 47 75 69 64 65 73 20 3e 5f  PousadaGuides &gt;_
+00000010  6f 70 65 6e 20 6b 6e 6f 77 6c 65 64 67 65 0a 00  open knowledge..</pre>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="rings"><span></span><span></span><span></span></div>
+        <img class="hero-mascot" src="img/teacher.webp" width="640" height="960" alt="">
+        <div class="float-cover c1"><img src="img/covers/piracy.webp" alt="" width="640" height="905"></div>
+        <div class="float-cover c2"><img src="img/covers/privacy.webp" alt="" width="640" height="905"></div>
+        <div class="float-cover c3"><img src="img/covers/bitcoin.webp" alt="" width="640" height="905"></div>
+      </div>
+    </section>
+
+    <!-- ================================================================ GUIAS -->
+    <section class="section" id="guias">
+      <div class="section-head reveal">
+        <p class="eyebrow">// biblioteca</p>
+        <h2>Os guias</h2>
+        <p class="sub">Clique em <b>Ler online</b> para abrir no leitor — sem baixar nada. Cada guia tem link curto para compartilhar, inclusive para uma página específica.</p>
+      </div>
+
+      <div class="guide-grid">
+        {{GUIDE_CARDS}}
+
+        <article class="guide-card soon reveal" style="--d:300ms">
+          <div class="soon-art">
+            <img src="img/pousadinha.webp" width="385" height="520" alt="Pousadinha, a mascote da Pousada" loading="lazy">
+            <span class="cover-num">#{{NEXT_NUM}}</span>
+          </div>
+          <div class="card-body">
+            <div class="card-top"><span class="chip chip-amber">em produção</span></div>
+            <h3>O próximo guia</h3>
+            <p class="desc">Linux, self-hosting, segurança no celular? A comunidade decide o próximo tema. Sugira, revise ou escreva junto com a gente.</p>
+            <div class="actions">
+              <a class="btn btn-outline" href="{{DISCORD}}" target="_blank" rel="noopener">{{ICON_DISCORD}} Sugerir no Discord</a>
+              <a class="btn btn-ghost icon-only" href="{{REPO}}" target="_blank" rel="noopener" aria-label="GitHub">{{ICON_GITHUB}}</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================================================================ LEITOR -->
+    <section class="section" id="leitor">
+      <div class="reader-split">
+        <div class="section-head reveal">
+          <p class="eyebrow">// leitor</p>
+          <h2>Mande o link. A pessoa só lê.</h2>
+          <p class="sub">Nada de “baixa o PDF da release e abre aí”. Cada guia abre num leitor rápido, bonito e leve, no PC ou no celular.</p>
+        </div>
+        <div class="browser reveal" style="--d:120ms">
+          <div class="browser-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="url">{{ICON_LINK}} a-pousada.github.io/PousadaGuides/<b>bitcoin/</b><em>#p=27</em></span>
+          </div>
+          <div class="browser-body">
+            <img src="img/covers/bitcoin.webp" alt="" width="640" height="905" loading="lazy">
+            <div class="browser-note"><span class="mono glow">#p=27</span> abre o guia direto na página 27</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature reveal" style="--d:0ms">{{ICON_EYE}}<h3>Sem baixar nada</h3><p>Abre na hora, no navegador. Funciona no celular, tablet e PC.</p></div>
+        <div class="feature reveal" style="--d:80ms">{{ICON_LINK}}<h3>Link para a página exata</h3><p>O botão de compartilhar copia o link já apontando para a página que você está lendo.</p></div>
+        <div class="feature reveal" style="--d:160ms">{{ICON_LIST}}<h3>Sumário e links vivos</h3><p>Navegue pelos capítulos, clique nas URLs das ferramentas e copie comandos do texto.</p></div>
+        <div class="feature reveal" style="--d:240ms">{{ICON_PRINTER}}<h3>Tela ou impressão</h3><p>Quer guardar? Baixe o PDF de tela (fundo creme) ou o de impressão (fundo branco).</p></div>
+      </div>
+    </section>
+
+    <!-- ================================================================ FILOSOFIA -->
+    <section class="section" id="filosofia">
+      <div class="section-head reveal">
+        <p class="eyebrow">// filosofia</p>
+        <h2>Como os guias são feitos</h2>
+      </div>
+      <div class="pillars">
+        <div class="pillar reveal" style="--d:0ms"><span class="pillar-n">01</span>{{ICON_USERS}}<h3>Curadoria humana</h3><p>Inspirados nas grandes referências da comunidade (Megathread do r/Piracy, FMHY, PrivacyGuides), filtrando o que funciona e cortando armadilhas.</p></div>
+        <div class="pillar reveal" style="--d:80ms"><span class="pillar-n">02</span>{{ICON_SHIELD}}<h3>OpSec primeiro</h3><p>Higiene digital, fontes verificadas, sandbox, checagem de hashes e assinaturas. Segurança antes de conveniência.</p></div>
+        <div class="pillar reveal" style="--d:160ms"><span class="pillar-n">03</span>{{ICON_CODE}}<h3>LaTeX aberto</h3><p>Cada PDF nasce de código-fonte público sob GNU AGPLv3. Viu um erro? Abra uma issue ou um pull request.</p></div>
+        <div class="pillar reveal" style="--d:240ms"><span class="pillar-n">04</span>{{ICON_ZAP}}<h3>Build automático</h3><p>GitHub Actions compila tudo e publica as releases assinadas. Este site é sem cookies, sem analytics e sem CDN de terceiros.</p></div>
+      </div>
+    </section>
+
+    <!-- ================================================================ CTA -->
+    <section class="cta-band reveal">
+      <img src="img/pousadinha-avatar.webp" width="192" height="192" alt="" loading="lazy">
+      <div>
+        <h2>Bora pra Pousada?</h2>
+        <p>Tire dúvidas, sugira ferramentas e ajude a revisar os próximos guias.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="{{DISCORD}}" target="_blank" rel="noopener">{{ICON_DISCORD}} Entrar no Discord</a>
+        <a class="btn btn-outline" href="{{REPO}}" target="_blank" rel="noopener">{{ICON_GITHUB}} Ver no GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="foot-brand">
+      <img src="img/logo-symbol-cream.webp" width="240" height="137" alt="">
+      <p><b>POUSADA</b> // comunidade<br><span class="muted">Feito com LaTeX, café e paranoia saudável.</span></p>
+    </div>
+    <div class="foot-links">
+      <a href="{{REPO}}" target="_blank" rel="noopener">{{ICON_GITHUB}} GitHub</a>
+      <a href="{{DISCORD}}" target="_blank" rel="noopener">{{ICON_DISCORD}} Discord</a>
+      <a href="{{SUBSTACK}}" target="_blank" rel="noopener">{{ICON_RSS}} Substack</a>
+      <a href="{{REPO}}/releases/latest" target="_blank" rel="noopener">{{ICON_DOWNLOAD}} Releases</a>
+    </div>
+    <p class="foot-legal mono">© {{YEAR}} Comunidade Pousada · conteúdo sob GNU AGPLv3 · sem cookies · sem rastreadores</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/home.js" defer></script>
+</body>
+</html>

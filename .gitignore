@@ -13,5 +13,9 @@
 *.pdf
 dist/
 
+# Site gerado e cache do vendor
+_site/
+site/.cache/
+
 # rascunhos locais
 temp/

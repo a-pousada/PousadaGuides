@@ -1,17 +1,18 @@
 <div align="center">
 
-<a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy.pdf">
-  <img src="../docs/banner-piracy.png" alt="PousadaGuide #01 — Piracy Guide (Clique para baixar o PDF)" width="100%">
+<a href="https://a-pousada.github.io/PousadaGuides/piracy/">
+  <img src="../docs/banner-piracy.png" alt="PousadaGuide #01 — Piracy Guide (Clique para ler online)" width="100%">
 </a>
 
 # PousadaGuide #01 — Piracy Guide
 
 **Como navegar sem armadilhas, baixar com segurança e dominar as melhores ferramentas e Megathreads.**<br>
-<sub>Inspirado na lendária Megathread do <code>r/Piracy</code> e no FMHY · 43 páginas revisadas pela comunidade</sub>
+<sub>Inspirado na lendária Megathread do <code>r/Piracy</code> e no FMHY · 44 páginas revisadas pela comunidade</sub>
 
 <br>
 
-[![Baixar PDF Tela](https://img.shields.io/badge/📥%20Baixar-PDF%20(Tela)-5FE3C9?style=for-the-badge&labelColor=00222A)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy.pdf)
+[![Ler Online](https://img.shields.io/badge/🌐%20Ler%20Online-no%20Navegador-5FE3C9?style=for-the-badge&labelColor=00222A)](https://a-pousada.github.io/PousadaGuides/piracy/)
+[![Baixar PDF Tela](https://img.shields.io/badge/📥%20Baixar-PDF%20(Tela)-01424A?style=for-the-badge&labelColor=00222A)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy.pdf)
 [![Baixar PDF Impressão](https://img.shields.io/badge/🖨️%20Baixar-PDF%20(Impressão)-F3EBD5?style=for-the-badge&labelColor=00222A)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy-impressao.pdf)
 [![Licença](https://img.shields.io/badge/licença-AGPL%203.0-D6C38F?style=for-the-badge&labelColor=00222A)](../LICENSE)
 

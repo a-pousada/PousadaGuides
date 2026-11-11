@@ -7,15 +7,17 @@
 <br>
 
 [![Build](https://img.shields.io/github/actions/workflow/status/a-pousada/PousadaGuides/build.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=5FE3C9&label=build&labelColor=00222A&color=01424A)](https://github.com/a-pousada/PousadaGuides/actions/workflows/build.yml)
+[![Website](https://img.shields.io/badge/leia%20online-a--pousada.github.io-5FE3C9?style=for-the-badge&logo=googlechrome&logoColor=00222A&labelColor=00222A)](https://a-pousada.github.io/PousadaGuides/)
 [![Release](https://img.shields.io/github/v/release/a-pousada/PousadaGuides?style=for-the-badge&logo=adobeacrobatreader&logoColor=5FE3C9&label=PDF&labelColor=00222A&color=01424A)](https://github.com/a-pousada/PousadaGuides/releases/latest)
 [![Licença](https://img.shields.io/badge/licença-AGPL%203.0-D6C38F?style=for-the-badge&labelColor=00222A)](LICENSE)
 [![LaTeX](https://img.shields.io/badge/feito%20em-XeLaTeX-5FE3C9?style=for-the-badge&logo=latex&logoColor=5FE3C9&labelColor=00222A)](pousadaguide.cls)
 [![Idioma](https://img.shields.io/badge/idioma-pt--BR-F3EBD5?style=for-the-badge&labelColor=00222A)](#)
 
 **Guias abertos, diretos e seguros da comunidade Pousada.**<br>
-Cada guia é um PDF bonito, organizado e revisado pela comunidade — gerado a partir de código LaTeX aberto.
+Cada guia pode ser lido direto no navegador (sem baixar nada) ou baixado em PDF de alta qualidade.
 
-[**📥 Baixar o último PDF**](https://github.com/a-pousada/PousadaGuides/releases/latest) ·
+[**🌐 Ler Online no Navegador**](https://a-pousada.github.io/PousadaGuides/) ·
+[**📥 Baixar os PDFs**](https://github.com/a-pousada/PousadaGuides/releases/latest) ·
 [Guias](#-guias) ·
 [Compilar](#%EF%B8%8F-compilar) ·
 [Criar um guia](#-criando-um-novo-guia) ·
@@ -27,26 +29,27 @@ Cada guia é um PDF bonito, organizado e revisado pela comunidade — gerado a p
 
 ## 📚 Guias
 
-| | Guia | Conteúdo | Download |
+| | Guia | Conteúdo | Acessar |
 |:-:|---|---|:-:|
-| <a href="#01--piracy-guide"><img src="docs/previews/piracy-capa.png" width="110" alt="Capa Piracy Guide"></a> | [**#01 — Piracy Guide**](#01--piracy-guide)<br><sub>segurança & opsec · v1.1 · 44 páginas</sub> | Como navegar sem armadilhas, baixar com segurança e dominar as melhores ferramentas e Megathreads. Inspirado na Megathread do `r/Piracy` e no FMHY. | [**Tela**](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy.pdf)<br>[Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy-impressao.pdf) |
-| <a href="#02--privacy-guide"><img src="docs/previews/privacy-capa.png" width="110" alt="Capa Privacy Guide"></a> | [**#02 — Privacy Guide**](#02--privacy-guide)<br><sub>privacidade & anonimato · v1.0 · 44 páginas</sub> | Do zero ao anonimato prático: higiene digital, criptografia, sistemas livres e soberania dos seus dados. Inspirado em PrivacyGuides e EFF. | [**Tela**](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf)<br>[Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy-impressao.pdf) |
-| <a href="#03--bitcoin-guide"><img src="docs/previews/bitcoin-capa.png" width="110" alt="Capa Bitcoin Guide"></a> | [**#03 — Bitcoin Guide**](#03--bitcoin-guide)<br><sub>soberania & criptografia · v1.0 · 56 páginas</sub> | Soberania financeira, P2P sem KYC, nodes, mineração de loteria, Lightning Network, privacidade de UTXOs e setups definitivos de Cold Wallet. | [**Tela**](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin.pdf)<br>[Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin-impressao.pdf) |
+| <a href="#01--piracy-guide"><img src="docs/previews/piracy-capa.png" width="110" alt="Capa Piracy Guide"></a> | [**#01 — Piracy Guide**](#01--piracy-guide)<br><sub>segurança & opsec · v1.1 · 44 páginas</sub> | Como navegar sem armadilhas, baixar com segurança e dominar as melhores ferramentas e Megathreads. Inspirado na Megathread do `r/Piracy` e no FMHY. | [**🌐 Ler Online**](https://a-pousada.github.io/PousadaGuides/piracy/)<br><small>[Tela (PDF)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy.pdf) · [Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy-impressao.pdf)</small> |
+| <a href="#02--privacy-guide"><img src="docs/previews/privacy-capa.png" width="110" alt="Capa Privacy Guide"></a> | [**#02 — Privacy Guide**](#02--privacy-guide)<br><sub>privacidade & anonimato · v1.0 · 44 páginas</sub> | Do zero ao anonimato prático: higiene digital, criptografia, sistemas livres e soberania dos seus dados. Inspirado em PrivacyGuides e EFF. | [**🌐 Ler Online**](https://a-pousada.github.io/PousadaGuides/privacy/)<br><small>[Tela (PDF)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf) · [Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy-impressao.pdf)</small> |
+| <a href="#03--bitcoin-guide"><img src="docs/previews/bitcoin-capa.png" width="110" alt="Capa Bitcoin Guide"></a> | [**#03 — Bitcoin Guide**](#03--bitcoin-guide)<br><sub>soberania & criptografia · v1.0 · 56 páginas</sub> | Soberania financeira, P2P sem KYC, nodes, mineração de loteria, Lightning Network, privacidade de UTXOs e setups definitivos de Cold Wallet. | [**🌐 Ler Online**](https://a-pousada.github.io/PousadaGuides/bitcoin/)<br><small>[Tela (PDF)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin.pdf) · [Impressão](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin-impressao.pdf)</small> |
 | — | **#00 — Guia de Exemplo** | Tour por todos os componentes do sistema visual (para quem vai escrever guias). | [PDF](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-00-Exemplo.pdf) |
 
 > [!TIP]
-> A versão de **tela** tem fundo creme (mais confortável para ler). A de **impressão** tem fundo branco e economiza tinta.
+> **Leitura direta:** clique em **Ler Online** para abrir qualquer guia no leitor web leve, com sumário, texto selecionável e links para páginas específicas. Para guardar offline, baixe a versão de **tela** (fundo creme) ou de **impressão** (fundo branco).
 
 ### 🏴‍☠️ #01 — Piracy Guide
 
-<a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy.pdf">
-  <img src="docs/banner-piracy.png" alt="PousadaGuide #01 — Piracy Guide (Clique para baixar o PDF)" width="100%">
+<a href="https://a-pousada.github.io/PousadaGuides/piracy/">
+  <img src="docs/banner-piracy.png" alt="PousadaGuide #01 — Piracy Guide (Clique para ler online)" width="100%">
 </a>
 
 <p align="center">
-  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy.pdf"><b>📥 Baixar Guia em PDF (Tela)</b></a> ·
-  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy-impressao.pdf"><b>🖨️ Versão para Impressão</b></a> ·
-  <a href="Piracy/"><b>📁 Ver Pasta do Guia</b></a>
+  <a href="https://a-pousada.github.io/PousadaGuides/piracy/"><b>🌐 Ler Online no Navegador</b></a> ·
+  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy.pdf"><b>📥 Baixar PDF (Tela)</b></a> ·
+  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-01-Piracy-impressao.pdf"><b>🖨️ Versão de Impressão</b></a> ·
+  <a href="Piracy/"><b>📁 Pasta do Guia</b></a>
 </p>
 
 <table>
@@ -72,14 +75,15 @@ Cada guia é um PDF bonito, organizado e revisado pela comunidade — gerado a p
 
 ### 🛡️ #02 — Privacy Guide
 
-<a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf">
-  <img src="docs/banner-privacy.png" alt="PousadaGuide #02 — Privacy Guide (Clique para baixar o PDF)" width="100%">
+<a href="https://a-pousada.github.io/PousadaGuides/privacy/">
+  <img src="docs/banner-privacy.png" alt="PousadaGuide #02 — Privacy Guide (Clique para ler online)" width="100%">
 </a>
 
 <p align="center">
-  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf"><b>📥 Baixar Guia em PDF (Tela)</b></a> ·
-  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy-impressao.pdf"><b>🖨️ Versão para Impressão</b></a> ·
-  <a href="Privacy/"><b>📁 Ver Pasta do Guia</b></a>
+  <a href="https://a-pousada.github.io/PousadaGuides/privacy/"><b>🌐 Ler Online no Navegador</b></a> ·
+  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy.pdf"><b>📥 Baixar PDF (Tela)</b></a> ·
+  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-02-Privacy-impressao.pdf"><b>🖨️ Versão de Impressão</b></a> ·
+  <a href="Privacy/"><b>📁 Pasta do Guia</b></a>
 </p>
 
 <table>
@@ -103,14 +107,15 @@ Cada guia é um PDF bonito, organizado e revisado pela comunidade — gerado a p
 
 ### ₿ #03 — Bitcoin Guide
 
-<a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin.pdf">
-  <img src="docs/banner-bitcoin.png" alt="PousadaGuide #03 — Bitcoin Guide (Clique para baixar o PDF)" width="100%">
+<a href="https://a-pousada.github.io/PousadaGuides/bitcoin/">
+  <img src="docs/banner-bitcoin.png" alt="PousadaGuide #03 — Bitcoin Guide (Clique para ler online)" width="100%">
 </a>
 
 <p align="center">
-  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin.pdf"><b>📥 Baixar Guia em PDF (Tela)</b></a> ·
-  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin-impressao.pdf"><b>🖨️ Versão para Impressão</b></a> ·
-  <a href="Bitcoin/"><b>📁 Ver Pasta do Guia</b></a>
+  <a href="https://a-pousada.github.io/PousadaGuides/bitcoin/"><b>🌐 Ler Online no Navegador</b></a> ·
+  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin.pdf"><b>📥 Baixar PDF (Tela)</b></a> ·
+  <a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin-impressao.pdf"><b>🖨️ Versão de Impressão</b></a> ·
+  <a href="Bitcoin/"><b>📁 Pasta do Guia</b></a>
 </p>
 
 <table>

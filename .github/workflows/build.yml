@@ -1,7 +1,8 @@
-name: Build PDFs
+name: Build & Deploy
 
-# Compila todos os guias a cada push/PR.
-# Ao enviar uma tag "v*" (ex.: v1.0.0), publica uma Release com os PDFs.
+# Compila todos os guias a cada push/PR, gera o site estático e publica
+# no GitHub Pages (https://a-pousada.github.io/PousadaGuides).
+# Ao enviar uma tag "v*" (ex.: v1.3.0), publica uma Release com os PDFs.
 on:
   push:
     branches: [main]
@@ -11,14 +12,16 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: build-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
-    name: Compilar guias
+    name: Compilar guias e site
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,6 +33,13 @@ jobs:
           path: ~/.cache/Tectonic
           key: tectonic-${{ runner.os }}-${{ hashFiles('**/*.tex', '**/*.cls') }}
           restore-keys: tectonic-${{ runner.os }}-
+
+      - name: Cache de vendor do site (PDF.js + fontes IBM Plex)
+        uses: actions/cache@v4
+        with:
+          path: site/.cache
+          key: site-vendor-${{ runner.os }}-${{ hashFiles('site/build.py') }}
+          restore-keys: site-vendor-${{ runner.os }}-
 
       - name: Instalar Tectonic
         run: |
@@ -48,6 +58,16 @@ jobs:
           path: dist/*.pdf
           if-no-files-found: error
 
+      - name: Gerar site estático (GitHub Pages)
+        run: |
+          python3 site/build.py --dist dist --out _site
+
+      - name: Upload artefato do GitHub Pages
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
       - name: Publicar Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
@@ -56,7 +76,11 @@ jobs:
           files: dist/*.pdf
           generate_release_notes: true
           body: |
-            ## 📥 Downloads
+            ## 🌐 Leia Online
+            Todos os guias estão disponíveis para leitura direta no navegador, sem baixar nada:
+            👉 **[a-pousada.github.io/PousadaGuides](https://a-pousada.github.io/PousadaGuides/)**
+
+            ## 📥 Downloads (PDFs)
 
             | Guia | Tela | Impressão |
             |---|---|---|
@@ -66,3 +90,16 @@ jobs:
             | #00 — Guia de Exemplo (sistema visual) | `PousadaGuide-00-Exemplo.pdf` | — |
 
             > A versão de **tela** tem fundo creme; a de **impressão** tem fundo branco.
+
+  deploy:
+    name: Publicar no GitHub Pages
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

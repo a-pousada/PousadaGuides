@@ -1,0 +1,51 @@
+{
+  "site": {
+    "title": "PousadaGuides",
+    "tagline": "Guias abertos, diretos e seguros da comunidade Pousada.",
+    "description": "Guias gratuitos e de código aberto da comunidade Pousada sobre pirataria segura, privacidade, OpSec e Bitcoin. Leia online, direto no navegador, ou baixe o PDF.",
+    "repo": "https://github.com/a-pousada/PousadaGuides",
+    "discord": "https://discord.gg/pousada",
+    "substack": "https://pousada.substack.com"
+  },
+  "guides": [
+    {
+      "id": "piracy",
+      "num": "01",
+      "title": "Piracy Guide",
+      "emoji": "🏴‍☠️",
+      "folder": "Piracy",
+      "tex": "Piracy/piracy.tex",
+      "pdf": "PousadaGuide-01-Piracy.pdf",
+      "print": "PousadaGuide-01-Piracy-impressao.pdf",
+      "pages": 45,
+      "inspiration": "Inspirado na Megathread do r/Piracy e no FMHY.",
+      "tags": ["navegadores", "torrents", "debrid", "vpn", "megathreads"]
+    },
+    {
+      "id": "privacy",
+      "num": "02",
+      "title": "Privacy Guide",
+      "emoji": "🕶️",
+      "folder": "Privacy",
+      "tex": "Privacy/privacy.tex",
+      "pdf": "PousadaGuide-02-Privacy.pdf",
+      "print": "PousadaGuide-02-Privacy-impressao.pdf",
+      "pages": 45,
+      "inspiration": "Inspirado em PrivacyGuides e EFF.",
+      "tags": ["senhas & 2fa", "mensageiros", "linux", "grapheneos", "tor"]
+    },
+    {
+      "id": "bitcoin",
+      "num": "03",
+      "title": "Bitcoin Guide",
+      "emoji": "₿",
+      "folder": "Bitcoin",
+      "tex": "Bitcoin/bitcoin.tex",
+      "pdf": "PousadaGuide-03-Bitcoin.pdf",
+      "print": "PousadaGuide-03-Bitcoin-impressao.pdf",
+      "pages": 56,
+      "inspiration": "Feito com a comunidade Bitcoinheiros em mente.",
+      "tags": ["p2p sem kyc", "lightning", "nodes", "cold wallet", "multisig"]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 <div align="center">
 
-<a href="https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin.pdf">
-  <img src="../docs/banner-bitcoin.png" alt="PousadaGuide #03 — Bitcoin Guide (Clique para baixar o PDF)" width="100%">
+<a href="https://a-pousada.github.io/PousadaGuides/bitcoin/">
+  <img src="../docs/banner-bitcoin.png" alt="PousadaGuide #03 — Bitcoin Guide (Clique para ler online)" width="100%">
 </a>
 
 # PousadaGuide #03 — Bitcoin Guide
@@ -11,7 +11,8 @@
 
 <br>
 
-[![Baixar PDF Tela](https://img.shields.io/badge/📥%20Baixar-PDF%20(Tela)-5FE3C9?style=for-the-badge&labelColor=00222A)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin.pdf)
+[![Ler Online](https://img.shields.io/badge/🌐%20Ler%20Online-no%20Navegador-5FE3C9?style=for-the-badge&labelColor=00222A)](https://a-pousada.github.io/PousadaGuides/bitcoin/)
+[![Baixar PDF Tela](https://img.shields.io/badge/📥%20Baixar-PDF%20(Tela)-01424A?style=for-the-badge&labelColor=00222A)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin.pdf)
 [![Baixar PDF Impressão](https://img.shields.io/badge/🖨️%20Baixar-PDF%20(Impressão)-F3EBD5?style=for-the-badge&labelColor=00222A)](https://github.com/a-pousada/PousadaGuides/releases/latest/download/PousadaGuide-03-Bitcoin-impressao.pdf)
 [![Licença](https://img.shields.io/badge/licença-AGPL%203.0-D6C38F?style=for-the-badge&labelColor=00222A)](../LICENSE)
 

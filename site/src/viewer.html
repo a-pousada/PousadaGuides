@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>#{{NUM}} {{TITLE}} — PousadaGuides</title>
+  <meta name="description" content="{{SUBTITLE}}">
+  <meta name="theme-color" content="#00222A">
+  <link rel="canonical" href="{{BASE_URL}}/{{ID}}/">
+  <meta property="og:type" content="book">
+  <meta property="og:site_name" content="PousadaGuides">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="PousadaGuide #{{NUM}} — {{TITLE}}">
+  <meta property="og:description" content="{{SUBTITLE}} Leia online, direto no navegador.">
+  <meta property="og:url" content="{{BASE_URL}}/{{ID}}/">
+  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="600">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="modulepreload" href="../vendor/pdfjs/pdf.min.mjs">
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../vendor/pdfjs/pdf_viewer.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/viewer.css">
+</head>
+<body class="reader" data-pdf="../pdf/{{PDF}}" data-print="../pdf/{{PRINT}}" data-id="{{ID}}" data-num="{{NUM}}" data-title="{{TITLE}}" data-pages="{{PAGES}}" data-nav="{{NAV_JSON}}">
+
+  <header class="rbar">
+    <div class="rbar-left">
+      <a class="rbtn rhome" href="../" title="Voltar para todos os guias" aria-label="Todos os guias">
+        <img src="../img/logo-symbol-cream.webp" width="240" height="137" alt="">
+      </a>
+      <button class="rbtn" id="btnToc" type="button" title="Sumário (S)" aria-label="Abrir sumário" aria-expanded="false">{{ICON_LIST}}</button>
+      <div class="rtitle">
+        <span class="rnum">#{{NUM}}</span>
+        <span class="rname">{{TITLE}}</span>
+        <span class="rver">{{VERSION}}</span>
+      </div>
+    </div>
+
+    <div class="rbar-center">
+      <button class="rbtn" id="btnPrev" type="button" title="Página anterior (←)" aria-label="Página anterior"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
+      <label class="pagebox" title="Ir para a página">
+        <input id="pageInput" type="text" inputmode="numeric" value="1" aria-label="Página atual">
+        <span>/ <b id="pageCount">{{PAGES}}</b></span>
+      </label>
+      <button class="rbtn" id="btnNext" type="button" title="Próxima página (→)" aria-label="Próxima página"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+    </div>
+
+    <div class="rbar-right">
+      <div class="zoom">
+        <button class="rbtn" id="btnZoomOut" type="button" title="Diminuir zoom (−)" aria-label="Diminuir zoom"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 12h12"/></svg></button>
+        <button class="zoomval" id="btnFit" type="button" title="Ajustar à largura (0)">100%</button>
+        <button class="rbtn" id="btnZoomIn" type="button" title="Aumentar zoom (+)" aria-label="Aumentar zoom"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 12h12M12 6v12"/></svg></button>
+      </div>
+      <button class="rbtn rshare" id="btnShare" type="button" title="Copiar link desta página">{{ICON_SHARE}}<span>Compartilhar</span></button>
+      <div class="dl">
+        <button class="rbtn rdl" id="btnDl" type="button" aria-haspopup="true" aria-expanded="false" title="Baixar PDF">{{ICON_DOWNLOAD}}<span>PDF</span></button>
+        <div class="dl-menu" id="dlMenu" role="menu" hidden>
+          <a role="menuitem" href="../pdf/{{PDF}}" download>{{ICON_DOWNLOAD}}<span><b>Versão de tela</b><small>fundo creme · ideal para ler</small></span></a>
+          <a role="menuitem" href="../pdf/{{PRINT}}" download>{{ICON_PRINTER}}<span><b>Versão de impressão</b><small>fundo branco · economiza tinta</small></span></a>
+        </div>
+      </div>
+    </div>
+    <div class="rprogress" aria-hidden="true"><span id="progressBar"></span></div>
+  </header>
+
+  <aside class="toc" id="toc" aria-label="Sumário">
+    <div class="toc-head">
+      <img src="../img/{{AVATAR}}" width="192" height="192" alt="">
+      <div>
+        <p class="mono glow">pousadaguide #{{NUM}}</p>
+        <h2>{{TITLE}}</h2>
+        <p class="muted">{{CATEGORY}} · {{VERSION}}</p>
+      </div>
+    </div>
+    <p class="toc-label mono">// sumário</p>
+    <nav class="toc-list" id="tocList"><p class="muted toc-loading">carregando sumário…</p></nav>
+    <div class="toc-foot">
+      <p class="toc-label mono">// outros guias</p>
+      <div id="otherGuides" class="other-guides"></div>
+    </div>
+  </aside>
+  <div class="toc-scrim" id="tocScrim" hidden></div>
+
+  <main class="stage" id="stage" tabindex="-1">
+    <div class="pages" id="pages"></div>
+  </main>
+
+  <div class="loader" id="loader">
+    <div class="loader-card">
+      <img src="../img/{{AVATAR}}" width="192" height="192" alt="">
+      <p class="mono"><span class="glow">&gt;_</span> abrindo #{{NUM}} {{TITLE}}<span class="blink">▌</span></p>
+      <div class="bar"><span id="loadBar"></span></div>
+      <p class="muted mono small" id="loadText">conectando…</p>
+    </div>
+  </div>
+
+  <div class="error" id="error" hidden>
+    <div class="loader-card">
+      <img src="../img/{{AVATAR}}" width="192" height="192" alt="">
+      <h2>Não deu para abrir aqui 😕</h2>
+      <p class="muted">Seu navegador não conseguiu carregar o leitor. Sem problema — baixe o PDF:</p>
+      <div class="actions center">
+        <a class="btn btn-primary" href="../pdf/{{PDF}}" download>{{ICON_DOWNLOAD}} Baixar PDF</a>
+        <a class="btn btn-outline" href="../pdf/{{PDF}}" target="_blank" rel="noopener">{{ICON_EYE}} Abrir PDF direto</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-page" id="mobilePage" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <noscript><div class="error"><div class="loader-card"><h2>O leitor precisa de JavaScript</h2><p><a class="btn btn-primary" href="../pdf/{{PDF}}">Baixar o PDF</a></p></div></div></noscript>
+  <script type="module" src="../js/viewer.js"></script>
+</body>
+</html>

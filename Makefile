@@ -10,6 +10,8 @@
 #  make dist         -> gera os PDFs finais em dist/ (o que vai pra release)
 #  make banner       -> regenera os banners em docs/ (geral e por guia)
 #  make previews     -> regenera as prévias de página em docs/previews/
+#  make site         -> gera o site estático para o GitHub Pages em _site/
+#  make site-serve   -> serve o site localmente em http://127.0.0.1:8000
 #  make clean        -> limpa arquivos temporários
 #
 #  Motor: usa latexmk (TeX Live) se existir, senão tectonic.
@@ -17,6 +19,7 @@
 # =====================================================================
 ENGINE ?= $(if $(shell command -v latexmk 2>/dev/null),latexmk,tectonic)
 PDFTOPPM ?= pdftoppm
+PYTHON ?= $(shell which python3 2>/dev/null || which python 2>/dev/null || ls -1d /nix/store/*python3*-env/bin/python3 2>/dev/null | head -n1 || echo python3)
 
 # compile <pasta> <arquivo sem .tex>
 ifeq ($(ENGINE),latexmk)
@@ -30,7 +33,7 @@ print-variant = sed 's/\\documentclass{pousadaguide}/\\documentclass[print]{pous
 	$(1)/$(2).tex > $(1)/$(2)-print.tex && \
 	( $(call compile,$(1),$(2)-print) ); status=$$?; rm -f $(1)/$(2)-print.tex; exit $$status
 
-.PHONY: guias all piracy privacy bitcoin exemplo print dist banner previews clean
+.PHONY: guias all piracy privacy bitcoin exemplo print dist banner previews site site-serve clean
 guias all: piracy privacy bitcoin exemplo
 
 piracy:
@@ -88,10 +91,16 @@ previews: piracy privacy bitcoin
 	$(PDFTOPPM) -png -r 100 -f 2  -l 2  -singlefile Bitcoin/bitcoin.pdf docs/previews/bitcoin-sumario
 	$(PDFTOPPM) -png -r 100 -f 10 -l 10 -singlefile Bitcoin/bitcoin.pdf docs/previews/bitcoin-ferramentas
 
+site: dist
+	$(PYTHON) site/build.py --dist dist --out _site
+
+site-serve: site
+	$(PYTHON) site/build.py --serve --out _site
+
 clean:
 	-latexmk -C 2>/dev/null
 	rm -f *.aux *.log *.out *.toc *.fls *.fdb_latexmk *.xdv *.synctex.gz exemplo.pdf
-	rm -rf dist
+	rm -rf dist _site site/.cache
 	@$(MAKE) -C Piracy clean 2>/dev/null || true
 	@$(MAKE) -C Privacy clean 2>/dev/null || true
 	@$(MAKE) -C Bitcoin clean 2>/dev/null || true
